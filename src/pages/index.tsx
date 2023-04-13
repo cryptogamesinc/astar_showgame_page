@@ -108,14 +108,14 @@ export default function Home() {
     );
     if (contract !== null && account !== null) {
       const injector = await web3FromSource(account.meta.source);
-      await contract.tx.mint(
+      await contract.tx['minting::mint'](
         {
           gasLimit: api?.registry.createType('WeightV2', {
             refTime: 100000000000,
             proofSize: PROOFSIZE,
           }) as WeightV2,
           storageDepositLimit,
-        }).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+        }, account.address).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
 
           if (status.isInBlock) {
               console.log(`Completed at block hash #${status.asInBlock.toString()}`);

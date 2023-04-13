@@ -151,6 +151,22 @@
   background-clip: content-box;
 }
 
+.rotatebutton {
+  display: block;
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  /* border-radius: 50%; */
+  border: 2px solid black;
+  /* transform: rotate(-45deg); */
+}
+
+.rotatebutton:hover {
+  cursor: pointer;
+}
+
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {

@@ -59,38 +59,11 @@ export default function Home() {
   const [connectedAccount, setConnectedAccount] = useState<InjectedAccountWithMeta | null>(null);
 
 
-  const handleConnected = (account: InjectedAccountWithMeta) => {
+  const handleConnected = (account: InjectedAccountWithMeta, address: string, source: string) => {
     setConnectedAccount(account);
-  };
-
-
-  async function connectWallet () {
-
-    const { web3Accounts, web3Enable} = await import(
-      "@polkadot/extension-dapp"
-    );
-
-    const allInjected = await web3Enable('my dapp');
-  
-    if (allInjected.length === 0) {
-      return;
-    }
-    const accounts = await web3Accounts();
-    console.log("accounts",accounts)
-
-    const account = accounts[0];
-    setAccount(account);
-    console.log("account",account)
-
-    const address = account?.address
-    const source = account?.meta?.source
-
-    console.log("address",address)
-    console.log("source",source)
-
     setAddress(address);
     setSource(source);
-  }
+  };
 
   async function getContract () {
     try{
@@ -166,6 +139,7 @@ export default function Home() {
   }
 
   async function getTotalSupply() {
+    console.log("address",address)
     if (contract !== null) {
       const { output } = await contract.query['psp34::totalSupply'](address, {
         gasLimit: api?.registry.createType('WeightV2', {
@@ -316,10 +290,7 @@ export default function Home() {
         <h1 style={{marginBottom: "80px"}}>Get Your Contract Information(psp34)</h1>
         <div className={styles.description}>
           <div>
-          <ConnectWalletButton onConnected={handleConnected} />
-            <button className={styles.rotatebutton} onClick={connectWallet}>Connect Wallet</button>
-            {address && <p style={{marginBottom: "20px"}}>Address: {address}</p>}
-            {source && <p style={{marginBottom: "20px"}}>Source: {source}</p>}
+            <ConnectWalletButton onConnected={handleConnected} />
             
             contractAddress:<input  style={{width: "400px"}} type="text" value={contractAddress} onChange={(e) => setContractAddress(e.target.value)} />
             <h6 style={{color: "red",marginBottom: "20px",fontWeight: 300}}>

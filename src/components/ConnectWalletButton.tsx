@@ -4,7 +4,7 @@ import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 
 
 interface ConnectWalletButtonProps {
-  onConnected: (account: InjectedAccountWithMeta) => void;
+  onConnected: (account: InjectedAccountWithMeta, address: string, source: string) => void;
 }
 
 const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected }) => {
@@ -40,7 +40,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected }
       setSource(source);
 
     // アカウント情報が変更されたことを親コンポーネントに通知
-    onConnected(account);
+    onConnected(account, address, source);
   }
 
   return (

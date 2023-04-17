@@ -1,0 +1,57 @@
+import { useState } from 'react';
+import styles from '@/styles/Home.module.css';
+import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
+
+
+interface ConnectWalletButtonProps {
+  onConnected: (account: InjectedAccountWithMeta) => void;
+}
+
+const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected }) => {
+  const [address, setAddress] = useState('');
+  const [source, setSource] = useState('');
+  const [account, setAccount] = useState<InjectedAccountWithMeta | null>(null);;
+
+  async function connectWallet() {
+    // ... (connectWallet 関数のコードをここに貼り付け)
+    const { web3Accounts, web3Enable} = await import(
+        "@polkadot/extension-dapp"
+      );
+  
+      const allInjected = await web3Enable('my dapp');
+    
+      if (allInjected.length === 0) {
+        return;
+      }
+      const accounts = await web3Accounts();
+      console.log("accounts",accounts)
+  
+      const account = accounts[0];
+      setAccount(account);
+      console.log("account",account)
+  
+      const address = account?.address
+      const source = account?.meta?.source
+  
+      console.log("address",address)
+      console.log("source",source)
+  
+      setAddress(address);
+      setSource(source);
+
+    // アカウント情報が変更されたことを親コンポーネントに通知
+    onConnected(account);
+  }
+
+  return (
+    <>
+      <button className={styles.rotatebutton} onClick={connectWallet}>
+        Connect Wallet
+      </button>
+      {address && <p style={{ marginBottom: '20px' }}>Address: {address}</p>}
+      {source && <p style={{ marginBottom: '20px' }}>Source: {source}</p>}
+    </>
+  );
+};
+
+export default ConnectWalletButton;

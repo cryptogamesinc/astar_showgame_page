@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react'
 const { Keyring } = require('@polkadot/keyring');
 import { css } from "@emotion/react";
 import { RingLoader } from "react-spinners";
+import ConnectWalletButton from '@/components/ConnectWalletButton';
 
 import metadata from "./metadata.json";
 
@@ -53,6 +54,14 @@ export default function Home() {
 
   const [tokenId, setTokenId] = useState('');;
   const [baseUri, setBaseUri] = useState('');;
+
+  const [status, setStatus] = useState('');;
+  const [connectedAccount, setConnectedAccount] = useState<InjectedAccountWithMeta | null>(null);
+
+
+  const handleConnected = (account: InjectedAccountWithMeta) => {
+    setConnectedAccount(account);
+  };
 
 
   async function connectWallet () {
@@ -177,7 +186,7 @@ export default function Home() {
 
   async function getTokenUri () {
     if (contract !== null) {
-      const { output }  = await contract.query['psp34Traits::tokenUri'](address,
+      const { output }  = await contract.query['minting::tokenUri'](address,
         {
           gasLimit: api?.registry.createType('WeightV2', {
             refTime: MAX_CALL_WEIGHT,
@@ -212,6 +221,44 @@ export default function Home() {
         setNftName(name || "");
         setNftDescription(description || "");
         setNftImageUri(imate_uri || "");
+
+    }
+  }
+
+  async function getStatus () {
+    if (contract !== null) {
+
+      console.log("tokenId",tokenId)
+      const bigIntValue = BigInt(tokenId);
+      console.log("bigIntValue",bigIntValue)
+      const u64Value = api?.createType('u64', bigIntValue);
+      console.log("u64Value",u64Value)
+
+      
+
+      const { output }  = await contract.query['multiAsset::getStatus'](address,
+        {
+          gasLimit: api?.registry.createType('WeightV2', {
+            refTime: MAX_CALL_WEIGHT,
+            proofSize: PROOFSIZE,
+          }) as WeightV2,
+          storageDepositLimit,
+        },u64Value)
+    
+        const humanOutput = output?.toHuman();
+        let url = ""
+        if (typeof humanOutput === 'object' && humanOutput && 'Ok' in humanOutput)  {
+
+          const uri = humanOutput.Ok
+          
+          if (typeof uri === 'string') {
+            url = `https://cloudflare-ipfs.com/ipfs/${uri.replace('ipfs://', '')}`;
+            setStatus(uri || "");
+          }
+          
+        } else {
+          console.error('Unexpected output format:', humanOutput);
+        }
 
     }
   }
@@ -269,6 +316,7 @@ export default function Home() {
         <h1 style={{marginBottom: "80px"}}>Get Your Contract Information(psp34)</h1>
         <div className={styles.description}>
           <div>
+          <ConnectWalletButton onConnected={handleConnected} />
             <button className={styles.rotatebutton} onClick={connectWallet}>Connect Wallet</button>
             {address && <p style={{marginBottom: "20px"}}>Address: {address}</p>}
             {source && <p style={{marginBottom: "20px"}}>Source: {source}</p>}
@@ -318,6 +366,10 @@ export default function Home() {
             </>
             
             )}
+
+            tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} />
+            <button className={styles.rotatebutton} onClick={getStatus}>get Status</button>
+            {tokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>}
 
           </div>
         </div>

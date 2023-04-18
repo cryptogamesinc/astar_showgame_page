@@ -12,7 +12,9 @@ import { useState, useEffect } from 'react'
 const { Keyring } = require('@polkadot/keyring');
 import { css } from "@emotion/react";
 import { RingLoader } from "react-spinners";
+
 import ConnectWalletButton from '@/components/ConnectWalletButton';
+import GetContractButton from '@/components/GetContractButton';
 
 import metadata from "./metadata.json";
 
@@ -65,24 +67,12 @@ export default function Home() {
     setSource(source);
   };
 
-  async function getContract () {
-    try{
-      // Initialise the provider to connect to the local node
-      const provider = new WsProvider('wss://rpc.shibuya.astar.network');
-      const api = await ApiPromise.create({ provider});
-      setApi(api);
-
-      const contract = new ContractPromise(api, metadata, contractAddress)
-      setContract(contract)
-      console.log("contract", contract)
-      setGetContractResult("OK");
-    }catch (error) {
-      console.error(error);
-      // If there's an error, set getContractResult to the error message
-      setGetContractResult("NG");
-    }
-    
-  }
+  const handleContractFetched = (api: ApiPromise, contract: ContractPromise) => {
+    setApi(api);
+    setContract(contract);
+    console.log("contract", contract);
+    setGetContractResult("OK");
+  };
 
   async function mint () {
     const { web3FromSource} = await import(
@@ -291,13 +281,15 @@ export default function Home() {
         <div className={styles.description}>
           <div>
             <ConnectWalletButton onConnected={handleConnected} />
-            
+
             contractAddress:<input  style={{width: "400px"}} type="text" value={contractAddress} onChange={(e) => setContractAddress(e.target.value)} />
             <h6 style={{color: "red",marginBottom: "20px",fontWeight: 300}}>
               contracts made by ArtZero can be set<br/>
               https://github.com/ArtZero-io/Contracts/tree/feature/ink-4-version/Azero_Contracts/contracts/psp34_standard
             </h6>
-            <button className={styles.rotatebutton} onClick={getContract}>getContract</button>
+
+            <GetContractButton contractAddress={contractAddress} onContractFetched={handleContractFetched} />
+
             {getContractResult && <p>Get Contract result: {getContractResult}</p>}
 
             baseURI:<input  style={{width: "400px"}} type="text" value={baseUri} onChange={(e) => setBaseUri(e.target.value)} />

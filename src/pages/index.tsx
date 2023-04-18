@@ -74,6 +74,14 @@ export default function Home() {
     setGetContractResult("OK");
   };
 
+  function createGasLimit(refTime: number | BN) {
+    const refTimeBN = refTime instanceof BN ? refTime : new BN(refTime);
+    return api?.registry.createType('WeightV2', {
+      refTime: refTimeBN,
+      proofSize: PROOFSIZE,
+    }) as WeightV2;
+  }
+
   async function mint () {
     const { web3FromSource} = await import(
       "@polkadot/extension-dapp"
@@ -82,10 +90,7 @@ export default function Home() {
       const injector = await web3FromSource(account.meta.source);
       await contract.tx['minting::mint'](
         {
-          gasLimit: api?.registry.createType('WeightV2', {
-            refTime: 100000000000,
-            proofSize: PROOFSIZE,
-          }) as WeightV2,
+          gasLimit: createGasLimit(100000000000),
           storageDepositLimit,
         }, account.address).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
 
@@ -109,10 +114,7 @@ export default function Home() {
       const injector = await web3FromSource(account.meta.source);
       await contract.tx['psp34Traits::setBaseUri'](
         {
-          gasLimit: api?.registry.createType('WeightV2', {
-            refTime: 100000000000,
-            proofSize: PROOFSIZE,
-          }) as WeightV2,
+          gasLimit: createGasLimit(100000000000),
           storageDepositLimit,
         },baseUri).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
 
@@ -132,10 +134,7 @@ export default function Home() {
     console.log("address",address)
     if (contract !== null) {
       const { output } = await contract.query['psp34::totalSupply'](address, {
-        gasLimit: api?.registry.createType('WeightV2', {
-          refTime: MAX_CALL_WEIGHT,
-          proofSize: PROOFSIZE,
-        }) as WeightV2,
+        gasLimit: createGasLimit(MAX_CALL_WEIGHT),
         storageDepositLimit,
       });
   
@@ -152,10 +151,7 @@ export default function Home() {
     if (contract !== null) {
       const { output }  = await contract.query['minting::tokenUri'](address,
         {
-          gasLimit: api?.registry.createType('WeightV2', {
-            refTime: MAX_CALL_WEIGHT,
-            proofSize: PROOFSIZE,
-          }) as WeightV2,
+          gasLimit: createGasLimit(MAX_CALL_WEIGHT),
           storageDepositLimit,
         },tokenId)
     
@@ -202,10 +198,7 @@ export default function Home() {
 
       const { output }  = await contract.query['multiAsset::getStatus'](address,
         {
-          gasLimit: api?.registry.createType('WeightV2', {
-            refTime: MAX_CALL_WEIGHT,
-            proofSize: PROOFSIZE,
-          }) as WeightV2,
+          gasLimit: createGasLimit(MAX_CALL_WEIGHT),
           storageDepositLimit,
         },u64Value)
     
@@ -243,10 +236,7 @@ export default function Home() {
         const { output } = await contract.query['psp34Enumerable::ownersTokenByIndex'](
           address,
           {
-            gasLimit: api?.registry.createType('WeightV2', {
-              refTime: MAX_CALL_WEIGHT,
-              proofSize: PROOFSIZE,
-            }) as WeightV2,
+            gasLimit: createGasLimit(MAX_CALL_WEIGHT),
             storageDepositLimit,
           },
           address,

@@ -15,6 +15,7 @@ import { RingLoader } from "react-spinners";
 
 import ConnectWalletButton from '@/components/ConnectWalletButton';
 import GetContractButton from '@/components/GetContractButton';
+import TotalSupply from '@/components/TotalSupply';
 
 import metadata from "./metadata.json";
 
@@ -129,24 +130,6 @@ export default function Home() {
         });
     }
   }
-
-  async function getTotalSupply() {
-    console.log("address",address)
-    if (contract !== null) {
-      const { output } = await contract.query['psp34::totalSupply'](address, {
-        gasLimit: createGasLimit(MAX_CALL_WEIGHT),
-        storageDepositLimit,
-      });
-  
-      type TotalSupplyHumanOutputType = {
-        Ok?: string | number;
-      };
-  
-      const totalSupplyHumanOutput = output?.toHuman() as TotalSupplyHumanOutputType;
-      setTotalSupply(String(totalSupplyHumanOutput?.Ok) || '');
-    }
-  }
-
   async function getTokenUri () {
     if (contract !== null) {
       const { output }  = await contract.query['minting::tokenUri'](address,
@@ -293,7 +276,8 @@ export default function Home() {
             <button className={styles.rotatebutton} style={{marginBottom: "20px"}} onClick={mint}>mint</button>
 
             
-            <button className={styles.rotatebutton} onClick={getTotalSupply}>get Total Supply</button>
+            <TotalSupply contract={contract} address={address} />
+
             {totalSupply && <p style={{marginBottom: "20px"}}>TotalSupply: {totalSupply}</p>}
 
             <button className={styles.rotatebutton} onClick={get}>get your TokenIDs</button>

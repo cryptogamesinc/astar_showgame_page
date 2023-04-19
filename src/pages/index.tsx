@@ -61,11 +61,10 @@ export default function Home() {
   const [baseUri, setBaseUri] = useState('');;
 
   const [status, setStatus] = useState('');;
-  const [connectedAccount, setConnectedAccount] = useState<InjectedAccountWithMeta | null>(null);
 
 
   const handleConnected = (account: InjectedAccountWithMeta, address: string, source: string) => {
-    setConnectedAccount(account);
+    setAccount(account);
     setAddress(address);
     setSource(source);
   };
@@ -110,10 +109,15 @@ export default function Home() {
   }
 
   async function setToBaseUri () {
+    console.log("dgegt")
     const { web3FromSource} = await import(
       "@polkadot/extension-dapp"
     );
+    console.log("dgegtwww")
+    console.log("contract",contract)
+    console.log("account",account)
     if (contract !== null && account !== null) {
+      console.log("dgegtwwweetet")
       const injector = await web3FromSource(account.meta.source);
       await contract.tx['psp34Traits::setBaseUri'](
         {
@@ -142,6 +146,7 @@ export default function Home() {
         },tokenId)
     
         const humanOutput = output?.toHuman();
+        console.log("humanOutput",humanOutput)
         let url = ""
         if (typeof humanOutput === 'object' && humanOutput && 'Ok' in humanOutput)  {
 
@@ -155,7 +160,7 @@ export default function Home() {
         } else {
           console.error('Unexpected output format:', humanOutput);
         }
-    
+    console.log("dddd")
         const response = await fetch(url);
         const json = await response.json();
         const name = json.name;
@@ -171,40 +176,40 @@ export default function Home() {
     }
   }
 
-  async function getStatus () {
-    if (contract !== null) {
+  // async function getStatus () {
+  //   if (contract !== null) {
 
-      console.log("tokenId",tokenId)
-      const bigIntValue = BigInt(tokenId);
-      console.log("bigIntValue",bigIntValue)
-      const u64Value = api?.createType('u64', bigIntValue);
-      console.log("u64Value",u64Value)
+  //     // console.log("tokenId",tokenId)
+  //     // const bigIntValue = BigInt(tokenId);
+  //     // console.log("bigIntValue",bigIntValue)
+  //     // const u64Value = api?.createType('u64', bigIntValue);
+  //     // console.log("u64Value",u64Value)
 
       
 
-      const { output }  = await contract.query['multiAsset::getStatus'](address,
-        {
-          gasLimit: createGasLimit(MAX_CALL_WEIGHT),
-          storageDepositLimit,
-        },u64Value)
+  //     const { output }  = await contract.query['multiAsset::getStatus'](address,
+  //       {
+  //         gasLimit: createGasLimit(MAX_CALL_WEIGHT),
+  //         storageDepositLimit,
+  //       },u64Value)
     
-        const humanOutput = output?.toHuman();
-        let url = ""
-        if (typeof humanOutput === 'object' && humanOutput && 'Ok' in humanOutput)  {
+  //       const humanOutput = output?.toHuman();
+  //       let url = ""
+  //       if (typeof humanOutput === 'object' && humanOutput && 'Ok' in humanOutput)  {
 
-          const uri = humanOutput.Ok
+  //         const uri = humanOutput.Ok
           
-          if (typeof uri === 'string') {
-            url = `https://cloudflare-ipfs.com/ipfs/${uri.replace('ipfs://', '')}`;
-            setStatus(uri || "");
-          }
+  //         if (typeof uri === 'string') {
+  //           url = `https://cloudflare-ipfs.com/ipfs/${uri.replace('ipfs://', '')}`;
+  //           setStatus(uri || "");
+  //         }
           
-        } else {
-          console.error('Unexpected output format:', humanOutput);
-        }
+  //       } else {
+  //         console.error('Unexpected output format:', humanOutput);
+  //       }
 
-    }
-  }
+  //   }
+  // }
 
   return (
     <>
@@ -269,7 +274,7 @@ export default function Home() {
             )}
 
             tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} />
-            <button className={styles.rotatebutton} onClick={getStatus}>get Status</button>
+            {/* <button className={styles.rotatebutton} onClick={getStatus}>get Status</button> */}
             {tokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>}
 
           </div>

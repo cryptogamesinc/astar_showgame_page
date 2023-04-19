@@ -7,10 +7,12 @@ import styles from '@/styles/Home.module.css'
 type TotalSupplyProps = {
   contract: ContractPromise | null;
   address: string;
+  totalSupply: string;
+  setTotalSupply: (value: string) => void;
 };
 
-const TotalSupply: React.FC<TotalSupplyProps> = ({ contract, address }) => {
-  const [totalSupply, setTotalSupply] = useState('');
+const TotalSupply: React.FC<TotalSupplyProps> = ({ contract, address, totalSupply, setTotalSupply  }) => {
+  // const [totalSupply, setTotalSupply] = useState('');
 
   const MAX_CALL_WEIGHT = new BN(5_000_000_000_000).isub(BN_ONE);
   const PROOFSIZE = new BN(1_000_000);

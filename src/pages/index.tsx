@@ -45,6 +45,7 @@ export default function Home() {
   const [contract, setContract] = useState<ContractPromise | null>(null);
 
   const [totalSupply, setTotalSupply] = useState('');
+  
   const [tokenUri, setTokenUri] = useState('');
   const [nftName, setNftName] = useState('');
   const [nftDescription, setNftDescription] = useState('');
@@ -132,6 +133,7 @@ export default function Home() {
   }
   async function getTokenUri () {
     if (contract !== null) {
+      console.log("address",address)
       const { output }  = await contract.query['minting::tokenUri'](address,
         {
           gasLimit: createGasLimit(MAX_CALL_WEIGHT),
@@ -204,6 +206,8 @@ export default function Home() {
   }
 
   async function get() {
+    console.log("contract",contract)
+    console.log("totalSupply",totalSupply)
     if (contract !== null && totalSupply !== null) {
       const newOutputs = [];
   
@@ -276,7 +280,7 @@ export default function Home() {
             <button className={styles.rotatebutton} style={{marginBottom: "20px"}} onClick={mint}>mint</button>
 
             
-            <TotalSupply contract={contract} address={address} />
+            <TotalSupply contract={contract} address={address} totalSupply={totalSupply} setTotalSupply={setTotalSupply}/>
 
             {totalSupply && <p style={{marginBottom: "20px"}}>TotalSupply: {totalSupply}</p>}
 

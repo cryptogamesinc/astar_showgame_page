@@ -85,34 +85,6 @@ export default function Home() {
     }) as WeightV2;
   }
 
-  async function setToBaseUri () {
-    console.log("dgegt")
-    const { web3FromSource} = await import(
-      "@polkadot/extension-dapp"
-    );
-    console.log("dgegtwww")
-    console.log("contract",contract)
-    console.log("account",account)
-    if (contract !== null && account !== null) {
-      console.log("dgegtwwweetet")
-      const injector = await web3FromSource(account.meta.source);
-      await contract.tx['psp34Traits::setBaseUri'](
-        {
-          gasLimit: createGasLimit(100000000000),
-          storageDepositLimit,
-        },baseUri).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
-
-          if (status.isInBlock) {
-              console.log(`Completed at block hash #${status.asInBlock.toString()}`);
-          } else {
-              console.log(`Current status: ${status.type}`);
-              console.log(`Current status: ${status.hash.toString()}`);
-          }
-        }).catch((error: any) => {
-            console.log(':( transaction failed', error);
-        });
-    }
-  }
   async function getTokenUri () {
     if (contract !== null) {
       console.log("address",address)
@@ -218,7 +190,6 @@ export default function Home() {
               ex1. set ipfs://QmYJhYes1kzp2soWYEYKzvA84V8YivL8BCpsnN773xyufr/<br/>
               ex2. set ipfs://QmXtnr9aEJVywiLs1keZdyiKbQwignZT3FhwKYivF15oZp/<br/>
             </h6>
-            <button className={styles.rotatebutton} onClick={setToBaseUri}>set base uri</button>
 
             <Mint contract={contract} account={account} />
             

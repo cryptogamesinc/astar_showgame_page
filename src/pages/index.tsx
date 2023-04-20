@@ -85,46 +85,6 @@ export default function Home() {
     }) as WeightV2;
   }
 
-  async function getTokenUri () {
-    if (contract !== null) {
-      console.log("address",address)
-      const { output }  = await contract.query['minting::tokenUri'](address,
-        {
-          gasLimit: createGasLimit(MAX_CALL_WEIGHT),
-          storageDepositLimit,
-        },tokenId)
-    
-        const humanOutput = output?.toHuman();
-        console.log("humanOutput",humanOutput)
-        let url = ""
-        if (typeof humanOutput === 'object' && humanOutput && 'Ok' in humanOutput)  {
-
-          const uri = humanOutput.Ok
-          
-          if (typeof uri === 'string') {
-            url = `https://cloudflare-ipfs.com/ipfs/${uri.replace('ipfs://', '')}`;
-            setTokenUri(uri || "");
-          }
-          
-        } else {
-          console.error('Unexpected output format:', humanOutput);
-        }
-    console.log("dddd")
-        const response = await fetch(url);
-        const json = await response.json();
-        const name = json.name;
-        const description = json.description;
-        const image = json.image;
-        const imate_uri =  `https://cloudflare-ipfs.com/ipfs/${image.replace('ipfs://', '')}`;
-        console.log("imate_url",imate_uri)
-
-        setNftName(name || "");
-        setNftDescription(description || "");
-        setNftImageUri(imate_uri || "");
-
-    }
-  }
-
   // async function getStatus () {
   //   if (contract !== null) {
 
@@ -208,7 +168,7 @@ export default function Home() {
             </>
 
             tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} />
-            <button className={styles.rotatebutton} onClick={getTokenUri}>get Token Information</button>
+
             {tokenUri && <p style={{marginBottom: "20px"}}>TokenURI: {tokenUri}</p>}
             {nftName && <p style={{marginBottom: "20px"}}>Name: {nftName}</p>}
             {nftDescription && <p style={{marginBottom: "20px"}}>Description: {nftDescription}</p>}

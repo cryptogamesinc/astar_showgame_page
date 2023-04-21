@@ -18,6 +18,7 @@ import GetContractButton from '@/components/GetContractButton';
 import TotalSupply from '@/components/TotalSupply';
 import GetTokens from '@/components/GetTokens';
 import Mint from '@/components/Mint';
+import GetStatus from '@/components/GetStatus';
 
 import metadata from "./metadata.json";
 
@@ -85,45 +86,6 @@ export default function Home() {
     proofSize: new BN("10000000000"),
   });
 
-  async function getStatus () {
-
-    if (contract !== null) {
-
-      const { output }  = await contract.query['multiAsset::getStatus'](address,
-        {
-          gasLimit: gasLimit,
-          storageDepositLimit,
-        },{u64:'2'})
-  
-        console.log("output",output)
-        const humanOutput = output?.toHuman();
-
-        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput) {
-          const okObject = humanOutput.Ok;
-          if (typeof okObject === 'object' && okObject !== null && 'hungry' in okObject && 'health' in okObject && 'happy' in okObject) {
-            const hungryValue = okObject.hungry;
-            const healthValue = okObject.health;
-            const happyValue = okObject.happy;
-          
-            // hungryValue が string または number であることを確認
-            if ((typeof hungryValue === 'string' || typeof hungryValue === 'number') && 
-                (typeof healthValue === 'string' || typeof healthValue === 'number') &&
-                (typeof happyValue === 'string' || typeof happyValue === 'number')
-              ){
-              console.log("hungryValue", hungryValue);
-          
-              // setState を使って hungryValue を保存
-              setHungryStatus(hungryValue);
-              setHealthStatus(healthValue);
-              setHappyStatus(happyValue);
-              console.log("hungryStatus",hungryStatus)
-              console.log("healthStatus",healthStatus)
-              console.log("happyStatus",happyStatus)
-            } 
-          }
-        }
-      }
-  }
 
   return (
     <>
@@ -160,8 +122,11 @@ export default function Home() {
             
             <TotalSupply contract={contract} address={address} totalSupply={totalSupply} setTotalSupply={setTotalSupply}/>
 
+            <GetStatus contract={contract} address={address} gasLimit={gasLimit} hungryStatus={hungryStatus} healthStatus={healthStatus} happyStatus={happyStatus} setHungryStatus={setHungryStatus} setHealthStatus={setHealthStatus} setHappyStatus={setHappyStatus}/>
+
             <GetTokens contract={contract} address={address} totalSupply={totalSupply} setOutputs={setOutputs}/>
 
+            
 
             <>
               {outputs.map((output, index) => (
@@ -186,10 +151,7 @@ export default function Home() {
             )}
 
             tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} />
-            <button className={styles.rotatebutton} onClick={getStatus}>get Status</button>
-            {hungryStatus && <p style={{marginBottom: "20px"}}>Status: {hungryStatus}</p>}
-            {healthStatus && <p style={{marginBottom: "20px"}}>healthStatus: {healthStatus}</p>}
-            {happyStatus && <p style={{marginBottom: "20px"}}>happyStatus: {happyStatus}</p>}
+
             {tokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>}
 
           </div>

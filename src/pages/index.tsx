@@ -11,7 +11,7 @@ import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 import { useState, useEffect } from 'react'
 const { Keyring } = require('@polkadot/keyring');
 import { css } from "@emotion/react";
-import { RingLoader } from "react-spinners";
+
 
 import ConnectWalletButton from '@/components/ConnectWalletButton';
 import GetContractButton from '@/components/GetContractButton';
@@ -23,8 +23,6 @@ import metadata from "./metadata.json";
 
 const inter = Inter({ subsets: ['latin'] })
 
-const MAX_CALL_WEIGHT = new BN(5_000_000_000_000).isub(BN_ONE);
-const PROOFSIZE = new BN(1_000_000);
 const storageDepositLimit = null;
 
 const apiKey = process.env.NEXT_PUBLIC_MNEMONIC;
@@ -55,7 +53,7 @@ export default function Home() {
   const [outputs, setOutputs] = useState<string[]>([]);
 
   const [contractAddress, setContractAddress] = useState('');
-  const [toContractAddress, setToContractAddress] = useState('');
+
   const [getContractResult, setGetContractResult] = useState("");
 
   const [tokenId, setTokenId] = useState('');;
@@ -77,48 +75,50 @@ export default function Home() {
     setGetContractResult("OK");
   };
 
-  function createGasLimit(refTime: number | BN) {
-    const refTimeBN = refTime instanceof BN ? refTime : new BN(refTime);
-    return api?.registry.createType('WeightV2', {
-      refTime: refTimeBN,
-      proofSize: PROOFSIZE,
-    }) as WeightV2;
-  }
+  const gasLimit: any = api?.registry.createType("WeightV2", {
+    refTime: new BN("10000000000"),
+    proofSize: new BN("10000000000"),
+  });
 
-  // async function getStatus () {
-  //   if (contract !== null) {
+  async function getStatus () {
+    console.log("dddd")
+    console.log("contract",contract)
+    if (contract !== null) {
 
-  //     // console.log("tokenId",tokenId)
-  //     // const bigIntValue = BigInt(tokenId);
-  //     // console.log("bigIntValue",bigIntValue)
-  //     // const u64Value = api?.createType('u64', bigIntValue);
-  //     // console.log("u64Value",u64Value)
+      console.log("tokenId",tokenId)
+      const bigIntValue = BigInt(tokenId);
+      console.log("bigIntValue",bigIntValue)
+      const u64Value = api?.createType('u64', bigIntValue);
+      console.log("u64Value",u64Value)
 
       
 
-  //     const { output }  = await contract.query['multiAsset::getStatus'](address,
-  //       {
-  //         gasLimit: createGasLimit(MAX_CALL_WEIGHT),
-  //         storageDepositLimit,
-  //       },u64Value)
-    
-  //       const humanOutput = output?.toHuman();
-  //       let url = ""
-  //       if (typeof humanOutput === 'object' && humanOutput && 'Ok' in humanOutput)  {
+      const { output }  = await contract.query['multiAsset::getStatus'](address,
+        {
+          gasLimit: gasLimit,
+          storageDepositLimit,
+        },{u64:'2'})
+  
+        console.log("output",output)
+        const humanOutput = output?.toHuman();
 
-  //         const uri = humanOutput.Ok
-          
-  //         if (typeof uri === 'string') {
-  //           url = `https://cloudflare-ipfs.com/ipfs/${uri.replace('ipfs://', '')}`;
-  //           setStatus(uri || "");
-  //         }
-          
-  //       } else {
-  //         console.error('Unexpected output format:', humanOutput);
-  //       }
+        console.log("humanOutput",humanOutput)
+        let url = ""
+        if (typeof humanOutput === 'object' && humanOutput && 'Ok' in humanOutput)  {
 
-  //   }
-  // }
+          const uri = humanOutput.Ok
+          
+          if (typeof uri === 'string') {
+            url = `https://cloudflare-ipfs.com/ipfs/${uri.replace('ipfs://', '')}`;
+            setStatus(uri || "");
+          }
+          
+        } else {
+          console.error('Unexpected output format:', humanOutput);
+        }
+
+    }
+  }
 
   return (
     <>
@@ -181,7 +181,7 @@ export default function Home() {
             )}
 
             tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} />
-            {/* <button className={styles.rotatebutton} onClick={getStatus}>get Status</button> */}
+            <button className={styles.rotatebutton} onClick={getStatus}>get Status</button>
             {tokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>}
 
           </div>

@@ -62,6 +62,11 @@ export default function Home() {
   const [status, setStatus] = useState('');;
 
 
+  const [hungryStatus, setHungryStatus] = useState<string | number | null>(null);
+  const [healthStatus, setHealthStatus] = useState<string | number | null>(null);
+  const [happyStatus, setHappyStatus] = useState<string | number | null>(null);
+
+
   const handleConnected = (account: InjectedAccountWithMeta, address: string, source: string) => {
     setAccount(account);
     setAddress(address);
@@ -81,17 +86,8 @@ export default function Home() {
   });
 
   async function getStatus () {
-    console.log("dddd")
-    console.log("contract",contract)
+
     if (contract !== null) {
-
-      console.log("tokenId",tokenId)
-      const bigIntValue = BigInt(tokenId);
-      console.log("bigIntValue",bigIntValue)
-      const u64Value = api?.createType('u64', bigIntValue);
-      console.log("u64Value",u64Value)
-
-      
 
       const { output }  = await contract.query['multiAsset::getStatus'](address,
         {
@@ -102,22 +98,31 @@ export default function Home() {
         console.log("output",output)
         const humanOutput = output?.toHuman();
 
-        console.log("humanOutput",humanOutput)
-        let url = ""
-        if (typeof humanOutput === 'object' && humanOutput && 'Ok' in humanOutput)  {
-
-          const uri = humanOutput.Ok
+        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput) {
+          const okObject = humanOutput.Ok;
+          if (typeof okObject === 'object' && okObject !== null && 'hungry' in okObject && 'health' in okObject && 'happy' in okObject) {
+            const hungryValue = okObject.hungry;
+            const healthValue = okObject.health;
+            const happyValue = okObject.happy;
           
-          if (typeof uri === 'string') {
-            url = `https://cloudflare-ipfs.com/ipfs/${uri.replace('ipfs://', '')}`;
-            setStatus(uri || "");
+            // hungryValue が string または number であることを確認
+            if ((typeof hungryValue === 'string' || typeof hungryValue === 'number') && 
+                (typeof healthValue === 'string' || typeof healthValue === 'number') &&
+                (typeof happyValue === 'string' || typeof happyValue === 'number')
+              ){
+              console.log("hungryValue", hungryValue);
+          
+              // setState を使って hungryValue を保存
+              setHungryStatus(hungryValue);
+              setHealthStatus(healthValue);
+              setHappyStatus(happyValue);
+              console.log("hungryStatus",hungryStatus)
+              console.log("healthStatus",healthStatus)
+              console.log("happyStatus",happyStatus)
+            } 
           }
-          
-        } else {
-          console.error('Unexpected output format:', humanOutput);
         }
-
-    }
+      }
   }
 
   return (
@@ -182,6 +187,9 @@ export default function Home() {
 
             tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} />
             <button className={styles.rotatebutton} onClick={getStatus}>get Status</button>
+            {hungryStatus && <p style={{marginBottom: "20px"}}>Status: {hungryStatus}</p>}
+            {healthStatus && <p style={{marginBottom: "20px"}}>healthStatus: {healthStatus}</p>}
+            {happyStatus && <p style={{marginBottom: "20px"}}>happyStatus: {happyStatus}</p>}
             {tokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>}
 
           </div>

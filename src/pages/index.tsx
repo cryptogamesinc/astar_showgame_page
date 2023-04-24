@@ -19,8 +19,13 @@ import TotalSupply from '@/components/TotalSupply';
 import GetTokens from '@/components/GetTokens';
 import Mint from '@/components/Mint';
 import GetStatus from '@/components/GetStatus';
+import EatAnApple from '@/components/EatAnApple';
+
 
 import metadata from "./metadata.json";
+import SetDeathStatus from '@/components/SetDeathStatus';
+
+import { setDeathStatus } from '@/components/SetDeath';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -82,9 +87,11 @@ export default function Home() {
   };
 
   const gasLimit: any = api?.registry.createType("WeightV2", {
-    refTime: new BN("10000000000"),
-    proofSize: new BN("10000000000"),
+    refTime: new BN(100_000_000_000),
+    proofSize: new BN(1_000_000),
   });
+
+  
 
 
   return (
@@ -126,6 +133,10 @@ export default function Home() {
 
             <GetTokens contract={contract} address={address} totalSupply={totalSupply} setOutputs={setOutputs}/>
 
+            <SetDeathStatus contract={contract} account={account} gasLimit={gasLimit}/>
+
+
+            <EatAnApple contract={contract} account={account} gasLimit={gasLimit}/>
             
 
             <>

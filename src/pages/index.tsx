@@ -26,6 +26,7 @@ import metadata from "./metadata.json";
 import SetDeathStatus from '@/components/SetDeathStatus';
 
 import { setDeathStatus } from '@/components/SetDeath';
+import TokenUri from '@/components/TokenURI';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -52,7 +53,7 @@ export default function Home() {
 
   const [totalSupply, setTotalSupply] = useState('');
   
-  const [tokenUri, setTokenUri] = useState('');
+  const [tokenUri, setTokenUri] = useState<String>('');
   const [nftName, setNftName] = useState('');
   const [nftDescription, setNftDescription] = useState('');
   const [nftImageUri, setNftImageUri] = useState('');
@@ -73,6 +74,7 @@ export default function Home() {
   const [happyStatus, setHappyStatus] = useState<string | number | null>(null);
 
 
+
   const handleConnected = (account: InjectedAccountWithMeta, address: string, source: string) => {
     setAccount(account);
     setAddress(address);
@@ -91,6 +93,24 @@ export default function Home() {
     proofSize: new BN(1_000_000),
   });
 
+  async function extractNameFromTokenUri() {
+
+      if (typeof tokenUri === 'string') {
+        let url = `https://cloudflare-ipfs.com/ipfs/${tokenUri.replace('ipfs://', '')}`;
+        const response = await fetch("https://cloudflare-ipfs.com/ipfs/QmYJhYes1kzp2soWYEYKzvA84V8YivL8BCpsnN773xyufr/1.json");
+        console.log("response",response)
+        const json = await response.json();
+        console.log("json",json)
+        const name = json.name;
+        const description = json.description;
+        const image = json.image;
+        const imate_uri =  `https://cloudflare-ipfs.com/ipfs/${image.replace('ipfs://', '')}`;
+        setNftName(name || "");
+        setNftDescription(description || "");
+        setNftImageUri(imate_uri || "");
+        // return name;
+      } 
+  }
   
 
 
@@ -137,8 +157,23 @@ export default function Home() {
 
 
             <EatAnApple contract={contract} account={account} gasLimit={gasLimit}/>
-            
 
+            <button onClick={extractNameFromTokenUri}>Extract Name</button>
+            {nftName && <p>nftName: {nftName}</p>}
+            {nftDescription && <p>nftDescription: {nftDescription}</p>}
+            {nftImageUri && (
+            <>
+              <h4 style={{marginBottom: "10px"}}>Image</h4>
+              <img src={nftImageUri} alt="Image"  width="300" height="300" />
+            </>
+            
+            )}
+      {/* 追加：取り出された name を表示 */}
+      {/* {name && <p>Name: {name}</p>} */}
+
+            <TokenUri contract={contract} address={address} gasLimit={gasLimit} setTokenUri={setTokenUri} />
+            
+            {tokenUri && <p>tokenUri: {tokenUri}</p>}
             <>
               {outputs.map((output, index) => (
                 <div key={index}>

@@ -160,7 +160,7 @@ export default function Home() {
 
             <GetStatus contract={mainContract} address={address} gasLimit={gasLimit} hungryStatus={hungryStatus} healthStatus={healthStatus} happyStatus={happyStatus} setHungryStatus={setHungryStatus} setHealthStatus={setHealthStatus} setHappyStatus={setHappyStatus}/>
 
-            <GetTokens contract={mainContract} address={address} totalSupply={totalSupply} setOutputs={setOutputs}/>
+            <GetTokens contract={mainContract} address={address} gasLimit={gasLimit} totalSupply={totalSupply} setOutputs={setOutputs}/>
 
             <SetDeathStatus contract={mainContract} account={account} gasLimit={gasLimit}/>
 

@@ -7,11 +7,12 @@ import styles from '@/styles/Home.module.css'
 type GetTokensProps = {
     contract: ContractPromise | null;
     address: string;
+    gasLimit: any;
     totalSupply: string;
     setOutputs: (value: string[]) => void;
   };
 
-const GetTokens: React.FC<GetTokensProps> = ({ contract, address, totalSupply, setOutputs  }) => {
+const GetTokens: React.FC<GetTokensProps> = ({ contract, address, gasLimit, totalSupply, setOutputs  }) => {
 
   const MAX_CALL_WEIGHT = new BN(5_000_000_000_000).isub(BN_ONE);
   const PROOFSIZE = new BN(1_000_000);
@@ -33,7 +34,7 @@ const GetTokens: React.FC<GetTokensProps> = ({ contract, address, totalSupply, s
         const { output } = await contract.query['psp34Enumerable::ownersTokenByIndex'](
           address,
           {
-            gasLimit: createGasLimit(MAX_CALL_WEIGHT),
+            gasLimit: gasLimit,
             storageDepositLimit,
           },
           address,
@@ -49,13 +50,6 @@ const GetTokens: React.FC<GetTokensProps> = ({ contract, address, totalSupply, s
       setOutputs(newOutputs);
       console.log('newOutputs', newOutputs);
     }
-  }
-  function createGasLimit(refTime: number | BN) {
-    const refTimeBN = refTime instanceof BN ? refTime : new BN(refTime);
-    return contract?.api.registry.createType('WeightV2', {
-      refTime: refTimeBN,
-      proofSize: PROOFSIZE,
-    }) as WeightV2;
   }
 
   return (

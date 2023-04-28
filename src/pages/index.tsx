@@ -18,6 +18,7 @@ import GetContractButton from '@/components/GetContractButton';
 import TotalSupply from '@/components/TotalSupply';
 import GetTokens from '@/components/GetTokens';
 import Mint from '@/components/Mint';
+import Claim0Token from '@/components/Claim0Token';
 import GetStatus from '@/components/GetStatus';
 import EatAnApple from '@/components/EatAnApple';
 import TokenUri from '@/components/TokenUri';
@@ -51,7 +52,7 @@ const override = css`
 
 
 const mainContractAddress = "YYn9H63s8eKogSoE3jAprEszMo7KM8K415fGFnxp92Szb7t"
-const psp37ContractAddress = "WNpnTGGAsUzoEWkEKgQ3iAqtEuVYG8guguoRwd3NRDnnpvt"
+const psp37ContractAddress = "Wdfab9ufHYsthx4k5zaNmrRn6J1two8U8H92BUwEETCXMcC"
   
 // main().then(() => console.log('completed'))
 
@@ -216,6 +217,8 @@ export default function Home() {
 
             <Psp37BaseUri contract={psp37Contract} address={address} gasLimit={gasLimit} setPsp37BaseUri={setPsp37BaseUri}/>
             {psp37BaseUri && <p>Get Contract result: {psp37BaseUri}</p>}
+
+            <Claim0Token contract={psp37Contract} account={account} gasLimit={gasLimit} />
 
           </div>
         </div>

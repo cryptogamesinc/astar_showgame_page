@@ -30,8 +30,11 @@ import { setDeathStatus } from '@/components/SetDeath';
 
 import { Abi } from '@polkadot/api-contract';
 
+// metadataの設定
 const metadata = new Abi(mainMetadata);
 const psp37metadata = new Abi(myPsp37Metadata);
+
+
 const inter = Inter({ subsets: ['latin'] })
 
 const storageDepositLimit = null;
@@ -45,6 +48,9 @@ const override = css`
     border-color: red;
   `;
 
+
+const mainContractAddress = "aAvEKZ4fyddW8fKLTkyFkYsyPGFdTy1GoYi1PVjFgVSBaww"
+const psp37ContractAddress = "WNpnTGGAsUzoEWkEKgQ3iAqtEuVYG8guguoRwd3NRDnnpvt"
   
 // main().then(() => console.log('completed'))
 
@@ -53,7 +59,7 @@ export default function Home() {
   const [source, setSource] = useState('');
   const [account, setAccount] = useState<InjectedAccountWithMeta | null>(null);;
   const [api, setApi] = useState<ApiPromise | null>(null);
-  const [contract, setContract] = useState<ContractPromise | null>(null);
+
 
   const [totalSupply, setTotalSupply] = useState('');
   
@@ -65,7 +71,13 @@ export default function Home() {
 
   const [contractAddress, setContractAddress] = useState('');
 
-  const [getContractResult, setGetContractResult] = useState("");
+  // mainコントラクトの結果
+  const [mainContract, setMainContract] = useState<ContractPromise | null>(null);
+  const [getMainContractResult, setGetMainContractResult] = useState("");
+
+  // psp37コントラクトの結果
+  const [psp37Contract, setPsp37Contract] = useState<ContractPromise | null>(null);
+  const [getPsp37ContractResult, setGetPsp37ContractResult] = useState("");
 
   const [tokenId, setTokenId] = useState('');;
   const [baseUri, setBaseUri] = useState('');;
@@ -83,13 +95,6 @@ export default function Home() {
     setAccount(account);
     setAddress(address);
     setSource(source);
-  };
-
-  const handleContractFetched = (api: ApiPromise, contract: ContractPromise) => {
-    setApi(api);
-    setContract(contract);
-    console.log("contract", contract);
-    setGetContractResult("OK");
   };
 
   const gasLimit: any = api?.registry.createType("WeightV2", {
@@ -138,9 +143,9 @@ export default function Home() {
               https://github.com/ArtZero-io/Contracts/tree/feature/ink-4-version/Azero_Contracts/contracts/psp34_standard
             </h6>
 
-            <GetContractButton contractAddress={contractAddress} metadata={metadata} setApi={setApi} setContract={setContract} setGetContractResult={setGetContractResult}/>
+            <GetContractButton contractAddress={mainContractAddress} metadata={metadata} setApi={setApi} setContract={setMainContract} setGetContractResult={setGetMainContractResult}/>
 
-            {getContractResult && <p>Get Contract result: {getContractResult}</p>}
+            {getMainContractResult && <p>Get Contract result: {getMainContractResult}</p>}
 
             baseURI:<input  style={{width: "400px"}} type="text" value={baseUri} onChange={(e) => setBaseUri(e.target.value)} />
             <h6 style={{color: "red",marginBottom: "20px",fontWeight: 300}}>
@@ -149,18 +154,18 @@ export default function Home() {
               ex2. set ipfs://QmXtnr9aEJVywiLs1keZdyiKbQwignZT3FhwKYivF15oZp/<br/>
             </h6>
 
-            <Mint contract={contract} account={account} />
+            <Mint contract={mainContract} account={account} />
             
-            <TotalSupply contract={contract} address={address} totalSupply={totalSupply} setTotalSupply={setTotalSupply}/>
+            <TotalSupply contract={mainContract} address={address} totalSupply={totalSupply} setTotalSupply={setTotalSupply}/>
 
-            <GetStatus contract={contract} address={address} gasLimit={gasLimit} hungryStatus={hungryStatus} healthStatus={healthStatus} happyStatus={happyStatus} setHungryStatus={setHungryStatus} setHealthStatus={setHealthStatus} setHappyStatus={setHappyStatus}/>
+            <GetStatus contract={mainContract} address={address} gasLimit={gasLimit} hungryStatus={hungryStatus} healthStatus={healthStatus} happyStatus={happyStatus} setHungryStatus={setHungryStatus} setHealthStatus={setHealthStatus} setHappyStatus={setHappyStatus}/>
 
-            <GetTokens contract={contract} address={address} totalSupply={totalSupply} setOutputs={setOutputs}/>
+            <GetTokens contract={mainContract} address={address} totalSupply={totalSupply} setOutputs={setOutputs}/>
 
-            <SetDeathStatus contract={contract} account={account} gasLimit={gasLimit}/>
+            <SetDeathStatus contract={mainContract} account={account} gasLimit={gasLimit}/>
 
 
-            <EatAnApple contract={contract} account={account} gasLimit={gasLimit}/>
+            <EatAnApple contract={mainContract} account={account} gasLimit={gasLimit}/>
 
             <button onClick={extractNameFromTokenUri}>Extract Name</button>
             {nftName && <p>nftName: {nftName}</p>}
@@ -175,7 +180,7 @@ export default function Home() {
       {/* 追加：取り出された name を表示 */}
       {/* {name && <p>Name: {name}</p>} */}
 
-            <TokenUri contract={contract} address={address} gasLimit={gasLimit} setTokenUri={setTokenUri} />
+            <TokenUri contract={mainContract} address={address} gasLimit={gasLimit} setTokenUri={setTokenUri} />
             
             {tokenUri && <p>tokenUri: {tokenUri}</p>}
             <>
@@ -204,9 +209,9 @@ export default function Home() {
 
             {tokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>}
 
-            {/* <GetContractButton contractAddress="WNpnTGGAsUzoEWkEKgQ3iAqtEuVYG8guguoRwd3NRDnnpvt" metadata={psp37metadata} onContractFetched={handleContractFetched} /> */}
+            <GetContractButton contractAddress={psp37ContractAddress} metadata={psp37metadata} setApi={setApi} setContract={setPsp37Contract} setGetContractResult={setGetPsp37ContractResult}/>
 
-            {getContractResult && <p>Get Contract result: {getContractResult}</p>}
+            {getPsp37ContractResult && <p>Get Contract result: {getPsp37ContractResult}</p>}
 
           </div>
         </div>

@@ -7,16 +7,21 @@ import styles from '@/styles/Home.module.css'
 type GetContractButtonProps = {
   contractAddress: string;
   metadata: Abi;
-  onContractFetched: (api: ApiPromise, contract: ContractPromise) => void;
+  setApi:  (value: ApiPromise | null) => void;
+  setContract: (value: ContractPromise | null) => void;
+  setGetContractResult: (value: string) => void;
 };
 
-const GetContractButton: React.FC<GetContractButtonProps> = ({ contractAddress, metadata, onContractFetched }) => {
+const GetContractButton: React.FC<GetContractButtonProps> = ({contractAddress, metadata, setApi, setContract, setGetContractResult }) => {
   async function getContract() {
     try {
       const provider = new WsProvider('wss://rpc.shibuya.astar.network');
       const api = await ApiPromise.create({ provider });
       const contract = new ContractPromise(api, metadata, contractAddress);
-      onContractFetched(api, contract);
+      setApi(api);
+      setContract(contract);
+      setGetContractResult("OK")
+
     } catch (error) {
       console.error(error);
     }

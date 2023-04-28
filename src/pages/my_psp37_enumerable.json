@@ -1,0 +1,1576 @@
+{
+  "source": {
+    "hash": "0xe680d1877a744e36f45ae5fa160d8e0eba967faef5942c4dce2048b4ab2ebecc",
+    "language": "ink! 4.2.0",
+    "compiler": "rustc 1.69.0-nightly",
+    "build_info": {
+      "build_mode": "Debug",
+      "cargo_contract_version": "2.1.0",
+      "rust_toolchain": "nightly-aarch64-apple-darwin",
+      "wasm_opt_settings": {
+        "keep_debug_symbols": false,
+        "optimization_passes": "Z"
+      }
+    }
+  },
+  "contract": {
+    "name": "my_psp37_enumerable",
+    "version": "3.0.0",
+    "authors": [
+      "Brushfam <artem.lech@727.ventures>"
+    ]
+  },
+  "spec": {
+    "constructors": [
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "new",
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink_primitives",
+            "ConstructorResult"
+          ],
+          "type": 8
+        },
+        "selector": "0x9bae9d5e"
+      }
+    ],
+    "docs": [],
+    "environment": {
+      "accountId": {
+        "displayName": [
+          "AccountId"
+        ],
+        "type": 14
+      },
+      "balance": {
+        "displayName": [
+          "Balance"
+        ],
+        "type": 4
+      },
+      "blockNumber": {
+        "displayName": [
+          "BlockNumber"
+        ],
+        "type": 2
+      },
+      "chainExtension": {
+        "displayName": [
+          "ChainExtension"
+        ],
+        "type": 23
+      },
+      "hash": {
+        "displayName": [
+          "Hash"
+        ],
+        "type": 22
+      },
+      "maxEventTopics": 4,
+      "timestamp": {
+        "displayName": [
+          "Timestamp"
+        ],
+        "type": 3
+      }
+    },
+    "events": [],
+    "lang_error": {
+      "displayName": [
+        "ink",
+        "LangError"
+      ],
+      "type": 9
+    },
+    "messages": [
+      {
+        "args": [
+          {
+            "label": "base_uri",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 7
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "set_base_uri",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0xec403dee"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_base_uri",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 13
+        },
+        "selector": "0x6e06617c"
+      },
+      {
+        "args": [
+          {
+            "label": "owner",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "BalanceOfInput1"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "BalanceOfInput2"
+              ],
+              "type": 16
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Returns the amount of tokens of token type `id` owned by `account`.",
+          "",
+          " If `id` is `None` returns the total number of `owner`'s tokens."
+        ],
+        "label": "PSP37::balance_of",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 18
+        },
+        "selector": "0xc42919e2"
+      },
+      {
+        "args": [
+          {
+            "label": "owner",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "AllowanceInput1"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "operator",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "AllowanceInput2"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "AllowanceInput3"
+              ],
+              "type": 16
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Returns amount of `id` token of `owner` that `operator` can withdraw",
+          " If `id` is `None` returns allowance `Balance::MAX` of all tokens of `owner`"
+        ],
+        "label": "PSP37::allowance",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 18
+        },
+        "selector": "0xcb78a065"
+      },
+      {
+        "args": [
+          {
+            "label": "operator",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "ApproveInput1"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "ApproveInput2"
+              ],
+              "type": 16
+            }
+          },
+          {
+            "label": "value",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "ApproveInput3"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Allows `operator` to withdraw the `id` token from the caller's account",
+          " multiple times, up to the `value` amount.",
+          " If this function is called again it overwrites the current allowance with `value`",
+          " If `id` is `None` approves or disapproves the operator for all tokens of the caller.",
+          "",
+          " An `Approval` event is emitted."
+        ],
+        "label": "PSP37::approve",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0x31a1a453"
+      },
+      {
+        "args": [
+          {
+            "label": "to",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferInput1"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferInput2"
+              ],
+              "type": 17
+            }
+          },
+          {
+            "label": "value",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferInput3"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "label": "data",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferInput4"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Transfers `value` of `id` token from `caller` to `to`",
+          "",
+          " On success a `TransferSingle` event is emitted.",
+          "",
+          " # Errors",
+          "",
+          " Returns `TransferToZeroAddress` error if recipient is zero account.",
+          "",
+          " Returns `NotAllowed` error if transfer is not approved.",
+          "",
+          " Returns `InsufficientBalance` error if `caller` doesn't contain enough balance.",
+          "",
+          " Returns `SafeTransferCheckFailed` error if `to` doesn't accept transfer."
+        ],
+        "label": "PSP37::transfer",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0x04e09961"
+      },
+      {
+        "args": [
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TotalSupplyInput1"
+              ],
+              "type": 16
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Returns the total amount of token type `id` in the supply.",
+          "",
+          " If `id` is `None` returns the total number of tokens."
+        ],
+        "label": "PSP37::total_supply",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 18
+        },
+        "selector": "0x9a49e85a"
+      },
+      {
+        "args": [
+          {
+            "label": "from",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferFromInput1"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "to",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferFromInput2"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferFromInput3"
+              ],
+              "type": 17
+            }
+          },
+          {
+            "label": "amount",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferFromInput4"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "label": "data",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferFromInput5"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Transfers `amount` tokens of token type `id` from `from` to `to`. Also some `data` can be passed.",
+          "",
+          " On success a `TransferSingle` event is emitted.",
+          "",
+          " # Errors",
+          "",
+          " Returns `TransferToZeroAddress` error if recipient is zero account.",
+          "",
+          " Returns `NotAllowed` error if transfer is not approved.",
+          "",
+          " Returns `InsufficientBalance` error if `from` doesn't contain enough balance.",
+          "",
+          " Returns `SafeTransferCheckFailed` error if `to` doesn't accept transfer."
+        ],
+        "label": "PSP37::transfer_from",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0x5cf8b7d4"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "PSP37Mintable::claim_0_token",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0x82227c12"
+      },
+      {
+        "args": [
+          {
+            "label": "to",
+            "type": {
+              "displayName": [
+                "psp37mintable_external",
+                "MintInput1"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "ids_amounts",
+            "type": {
+              "displayName": [
+                "psp37mintable_external",
+                "MintInput2"
+              ],
+              "type": 19
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Mints `amount` tokens of token type `id` to `to`",
+          "",
+          " See [`PSP37::_mint_to`]."
+        ],
+        "label": "PSP37Mintable::mint",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0xe29c08ce"
+      },
+      {
+        "args": [
+          {
+            "label": "from",
+            "type": {
+              "displayName": [
+                "psp37burnable_external",
+                "BurnInput1"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "ids_amounts",
+            "type": {
+              "displayName": [
+                "psp37burnable_external",
+                "BurnInput2"
+              ],
+              "type": 19
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Destroys `amount` tokens of token type `id` from `from`",
+          "",
+          " See [`PSP37::_burn_from`]."
+        ],
+        "label": "PSP37Burnable::burn",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0xdec267e2"
+      },
+      {
+        "args": [
+          {
+            "label": "owner",
+            "type": {
+              "displayName": [
+                "psp37enumerable_external",
+                "OwnersTokenByIndexInput1"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "index",
+            "type": {
+              "displayName": [
+                "psp37enumerable_external",
+                "OwnersTokenByIndexInput2"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Returns a token `Id` owned by `owner` at a given `index` of its token list.",
+          " Use along with `balance_of` to enumerate all of ``owner``'s tokens.",
+          "",
+          " The start index is zero."
+        ],
+        "label": "PSP37Enumerable::owners_token_by_index",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 21
+        },
+        "selector": "0x4cc01ee0"
+      },
+      {
+        "args": [
+          {
+            "label": "index",
+            "type": {
+              "displayName": [
+                "psp37enumerable_external",
+                "TokenByIndexInput1"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Returns a token `Id` at a given `index` of all the tokens stored by the contract.",
+          " Use along with `total_supply` to enumerate all tokens.",
+          "",
+          " The start index is zero."
+        ],
+        "label": "PSP37Enumerable::token_by_index",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 21
+        },
+        "selector": "0x127b5477"
+      },
+      {
+        "args": [
+          {
+            "label": "to",
+            "type": {
+              "displayName": [
+                "psp37batch_external",
+                "BatchTransferInput1"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "ids_amounts",
+            "type": {
+              "displayName": [
+                "psp37batch_external",
+                "BatchTransferInput2"
+              ],
+              "type": 19
+            }
+          },
+          {
+            "label": "data",
+            "type": {
+              "displayName": [
+                "psp37batch_external",
+                "BatchTransferInput3"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "PSP37Batch::batch_transfer",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0x9bfb1d2b"
+      },
+      {
+        "args": [
+          {
+            "label": "from",
+            "type": {
+              "displayName": [
+                "psp37batch_external",
+                "BatchTransferFromInput1"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "to",
+            "type": {
+              "displayName": [
+                "psp37batch_external",
+                "BatchTransferFromInput2"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "ids_amounts",
+            "type": {
+              "displayName": [
+                "psp37batch_external",
+                "BatchTransferFromInput3"
+              ],
+              "type": 19
+            }
+          },
+          {
+            "label": "data",
+            "type": {
+              "displayName": [
+                "psp37batch_external",
+                "BatchTransferFromInput4"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "PSP37Batch::batch_transfer_from",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0xf4ebeed2"
+      }
+    ]
+  },
+  "storage": {
+    "root": {
+      "layout": {
+        "struct": {
+          "fields": [
+            {
+              "layout": {
+                "struct": {
+                  "fields": [
+                    {
+                      "layout": {
+                        "struct": {
+                          "fields": [
+                            {
+                              "layout": {
+                                "root": {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0xe8daae9e",
+                                      "name": "Id",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0xe8daae9e",
+                                                  "ty": 0
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "U8"
+                                        },
+                                        "1": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0xe8daae9e",
+                                                  "ty": 1
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "U16"
+                                        },
+                                        "2": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0xe8daae9e",
+                                                  "ty": 2
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "U32"
+                                        },
+                                        "3": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0xe8daae9e",
+                                                  "ty": 3
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "U64"
+                                        },
+                                        "4": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0xe8daae9e",
+                                                  "ty": 4
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "U128"
+                                        },
+                                        "5": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0xe8daae9e",
+                                                  "ty": 5
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "Bytes"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "root_key": "0xe8daae9e"
+                                }
+                              },
+                              "name": "enumerable"
+                            },
+                            {
+                              "layout": {
+                                "root": {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0xd5403d74",
+                                      "ty": 4
+                                    }
+                                  },
+                                  "root_key": "0xd5403d74"
+                                }
+                              },
+                              "name": "balances"
+                            },
+                            {
+                              "layout": {
+                                "root": {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x997630a9",
+                                      "ty": 4
+                                    }
+                                  },
+                                  "root_key": "0x997630a9"
+                                }
+                              },
+                              "name": "supply"
+                            },
+                            {
+                              "layout": {
+                                "enum": {
+                                  "dispatchKey": "0x00000000",
+                                  "name": "Option",
+                                  "variants": {
+                                    "0": {
+                                      "fields": [],
+                                      "name": "None"
+                                    },
+                                    "1": {
+                                      "fields": [
+                                        {
+                                          "layout": {
+                                            "leaf": {
+                                              "key": "0x00000000",
+                                              "ty": 6
+                                            }
+                                          },
+                                          "name": "0"
+                                        }
+                                      ],
+                                      "name": "Some"
+                                    }
+                                  }
+                                }
+                              },
+                              "name": "_reserved"
+                            }
+                          ],
+                          "name": "Balances"
+                        }
+                      },
+                      "name": "balances"
+                    },
+                    {
+                      "layout": {
+                        "root": {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x58ae529f",
+                              "ty": 4
+                            }
+                          },
+                          "root_key": "0x58ae529f"
+                        }
+                      },
+                      "name": "operator_approvals"
+                    },
+                    {
+                      "layout": {
+                        "enum": {
+                          "dispatchKey": "0x00000000",
+                          "name": "Option",
+                          "variants": {
+                            "0": {
+                              "fields": [],
+                              "name": "None"
+                            },
+                            "1": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x00000000",
+                                      "ty": 6
+                                    }
+                                  },
+                                  "name": "0"
+                                }
+                              ],
+                              "name": "Some"
+                            }
+                          }
+                        }
+                      },
+                      "name": "_reserved"
+                    }
+                  ],
+                  "name": "Data"
+                }
+              },
+              "name": "psp37"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 7
+                }
+              },
+              "name": "base_uri"
+            }
+          ],
+          "name": "Contract"
+        }
+      },
+      "root_key": "0x00000000"
+    }
+  },
+  "types": [
+    {
+      "id": 0,
+      "type": {
+        "def": {
+          "primitive": "u8"
+        }
+      }
+    },
+    {
+      "id": 1,
+      "type": {
+        "def": {
+          "primitive": "u16"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": {
+        "def": {
+          "primitive": "u32"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": {
+        "def": {
+          "primitive": "u128"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 0
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": {
+        "def": {
+          "tuple": []
+        }
+      }
+    },
+    {
+      "id": 7,
+      "type": {
+        "def": {
+          "primitive": "str"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 6
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 1,
+                "name": "CouldNotReadInput"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "LangError"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 11
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 11
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 12
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 6
+          },
+          {
+            "name": "E",
+            "type": 12
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 5,
+                    "typeName": "String"
+                  }
+                ],
+                "index": 0,
+                "name": "Custom"
+              },
+              {
+                "index": 1,
+                "name": "InsufficientBalance"
+              },
+              {
+                "index": 2,
+                "name": "TransferToZeroAddress"
+              },
+              {
+                "index": 3,
+                "name": "TokenNotExists"
+              },
+              {
+                "index": 4,
+                "name": "NotAllowed"
+              },
+              {
+                "index": 5,
+                "name": "SelfApprove"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 5,
+                    "typeName": "String"
+                  }
+                ],
+                "index": 6,
+                "name": "SafeTransferCheckFailed"
+              },
+              {
+                "index": 7,
+                "name": "HasMinted"
+              }
+            ]
+          }
+        },
+        "path": [
+          "openbrush_contracts",
+          "traits",
+          "errors",
+          "psp37",
+          "PSP37Error"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 7
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 7
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 15,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "AccountId"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "array": {
+            "len": 32,
+            "type": 0
+          }
+        }
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 17
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 17
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 0,
+                    "typeName": "u8"
+                  }
+                ],
+                "index": 0,
+                "name": "U8"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 1,
+                    "typeName": "u16"
+                  }
+                ],
+                "index": 1,
+                "name": "U16"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 2,
+                    "typeName": "u32"
+                  }
+                ],
+                "index": 2,
+                "name": "U32"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 3,
+                    "typeName": "u64"
+                  }
+                ],
+                "index": 3,
+                "name": "U64"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 4,
+                    "typeName": "u128"
+                  }
+                ],
+                "index": 4,
+                "name": "U128"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 5,
+                    "typeName": "Vec<u8>"
+                  }
+                ],
+                "index": 5,
+                "name": "Bytes"
+              }
+            ]
+          }
+        },
+        "path": [
+          "openbrush_contracts",
+          "traits",
+          "types",
+          "Id"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 20
+          }
+        }
+      }
+    },
+    {
+      "id": 20,
+      "type": {
+        "def": {
+          "tuple": [
+            17,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": 21,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 16
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 16
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 15,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "Hash"
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "type": {
+        "def": {
+          "variant": {}
+        },
+        "path": [
+          "ink_env",
+          "types",
+          "NoChainExtension"
+        ]
+      }
+    }
+  ],
+  "version": "4"
+}

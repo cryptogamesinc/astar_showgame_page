@@ -23,6 +23,7 @@ import EatAnApple from '@/components/EatAnApple';
 import TokenUri from '@/components/TokenUri';
 
 import mainMetadata from "./metadata.json";
+import myPsp37Metadata from "./my_psp37_enumerable.json";
 import SetDeathStatus from '@/components/SetDeathStatus';
 
 import { setDeathStatus } from '@/components/SetDeath';
@@ -30,6 +31,7 @@ import { setDeathStatus } from '@/components/SetDeath';
 import { Abi } from '@polkadot/api-contract';
 
 const metadata = new Abi(mainMetadata);
+const psp37metadata = new Abi(myPsp37Metadata);
 const inter = Inter({ subsets: ['latin'] })
 
 const storageDepositLimit = null;
@@ -136,7 +138,7 @@ export default function Home() {
               https://github.com/ArtZero-io/Contracts/tree/feature/ink-4-version/Azero_Contracts/contracts/psp34_standard
             </h6>
 
-            <GetContractButton contractAddress={contractAddress} metadata={metadata} onContractFetched={handleContractFetched} />
+            <GetContractButton contractAddress={contractAddress} metadata={metadata} setApi={setApi} setContract={setContract} setGetContractResult={setGetContractResult}/>
 
             {getContractResult && <p>Get Contract result: {getContractResult}</p>}
 
@@ -201,6 +203,10 @@ export default function Home() {
             tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} />
 
             {tokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>}
+
+            {/* <GetContractButton contractAddress="WNpnTGGAsUzoEWkEKgQ3iAqtEuVYG8guguoRwd3NRDnnpvt" metadata={psp37metadata} onContractFetched={handleContractFetched} /> */}
+
+            {getContractResult && <p>Get Contract result: {getContractResult}</p>}
 
           </div>
         </div>

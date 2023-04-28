@@ -93,6 +93,8 @@ export default function Home() {
 
   const [psp37BaseUri, setPsp37BaseUri] = useState<string>("");
 
+  const [hasMintedError, setHasMintedError] = useState<string | null>(null);
+
   const handleConnected = (account: InjectedAccountWithMeta, address: string, source: string) => {
     setAccount(account);
     setAddress(address);
@@ -218,7 +220,8 @@ export default function Home() {
             <Psp37BaseUri contract={psp37Contract} address={address} gasLimit={gasLimit} setPsp37BaseUri={setPsp37BaseUri}/>
             {psp37BaseUri && <p>Get Contract result: {psp37BaseUri}</p>}
 
-            <Claim0Token contract={psp37Contract} account={account} gasLimit={gasLimit} />
+            <Claim0Token contract={psp37Contract} account={account} gasLimit={gasLimit} setError={setHasMintedError}/>
+            {hasMintedError && <p>Error: {hasMintedError}</p>}
 
           </div>
         </div>

@@ -7,9 +7,10 @@ type Claim0TokenProps = {
     contract: ContractPromise | null;
     account: InjectedAccountWithMeta | null;
     gasLimit: any;
+    setError: (value: string | null) => void;
 };
 
-const Claim0Token: React.FC<Claim0TokenProps> = ({ contract, account, gasLimit }) => {
+const Claim0Token: React.FC<Claim0TokenProps> = ({ contract, account, gasLimit, setError }) => {
 
 const storageDepositLimit = null;
 
@@ -19,6 +20,23 @@ async function claim0Token () {
     );
     if (contract !== null && account !== null) {
       const injector = await web3FromSource(account.meta.source);
+
+      const {result} = await contract.query['psp37Mintable::claim0Token'](account.address,
+        {
+          gasLimit: gasLimit,
+          storageDepositLimit,
+        })
+      
+      console.log("result",result)
+
+      const result2 = await contract.tx['psp37Mintable::claim0Token'](
+        {
+          gasLimit: gasLimit,
+          storageDepositLimit,
+        })
+      
+      console.log("result2",result2)
+
       await contract.tx['psp37Mintable::claim0Token'](
         {
           gasLimit: gasLimit,
@@ -33,6 +51,7 @@ async function claim0Token () {
           }
         }).catch((error: any) => {
             console.log(':( transaction failed', error);
+            setError("既にミント済みです。")
         });
     }
   }

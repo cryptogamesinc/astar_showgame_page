@@ -25,6 +25,7 @@ import TokenUri from '@/components/TokenUri';
 import mainMetadata from "./metadata.json";
 import myPsp37Metadata from "./my_psp37_enumerable.json";
 import SetDeathStatus from '@/components/SetDeathStatus';
+import Psp37BaseUri from '@/components/Psp37BaseUri';
 
 import { setDeathStatus } from '@/components/SetDeath';
 
@@ -49,7 +50,7 @@ const override = css`
   `;
 
 
-const mainContractAddress = "aAvEKZ4fyddW8fKLTkyFkYsyPGFdTy1GoYi1PVjFgVSBaww"
+const mainContractAddress = "YYn9H63s8eKogSoE3jAprEszMo7KM8K415fGFnxp92Szb7t"
 const psp37ContractAddress = "WNpnTGGAsUzoEWkEKgQ3iAqtEuVYG8guguoRwd3NRDnnpvt"
   
 // main().then(() => console.log('completed'))
@@ -89,7 +90,7 @@ export default function Home() {
   const [healthStatus, setHealthStatus] = useState<string | number | null>(null);
   const [happyStatus, setHappyStatus] = useState<string | number | null>(null);
 
-
+  const [psp37BaseUri, setPsp37BaseUri] = useState<string>("");
 
   const handleConnected = (account: InjectedAccountWithMeta, address: string, source: string) => {
     setAccount(account);
@@ -154,7 +155,7 @@ export default function Home() {
               ex2. set ipfs://QmXtnr9aEJVywiLs1keZdyiKbQwignZT3FhwKYivF15oZp/<br/>
             </h6>
 
-            <Mint contract={mainContract} account={account} />
+            <Mint contract={mainContract} account={account} gasLimit={gasLimit} />
             
             <TotalSupply contract={mainContract} address={address} totalSupply={totalSupply} setTotalSupply={setTotalSupply}/>
 
@@ -212,6 +213,9 @@ export default function Home() {
             <GetContractButton contractAddress={psp37ContractAddress} metadata={psp37metadata} setApi={setApi} setContract={setPsp37Contract} setGetContractResult={setGetPsp37ContractResult}/>
 
             {getPsp37ContractResult && <p>Get Contract result: {getPsp37ContractResult}</p>}
+
+            <Psp37BaseUri contract={psp37Contract} address={address} gasLimit={gasLimit} setPsp37BaseUri={setPsp37BaseUri}/>
+            {psp37BaseUri && <p>Get Contract result: {psp37BaseUri}</p>}
 
           </div>
         </div>

@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
-import type { WeightV2 } from '@polkadot/types/interfaces'
-import { BN, BN_ONE } from "@polkadot/util";
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 
 type MintProps = {
     contract: ContractPromise | null;
     account: InjectedAccountWithMeta | null;
+    gasLimit: any;
 };
 
-const GetTokens: React.FC<MintProps> = ({ contract, account }) => {
+const GetTokens: React.FC<MintProps> = ({ contract, account, gasLimit }) => {
 
-const PROOFSIZE = new BN(1_000_000);
 const storageDepositLimit = null;
 
 async function mint () {
@@ -23,7 +21,7 @@ async function mint () {
       const injector = await web3FromSource(account.meta.source);
       await contract.tx['minting::mint'](
         {
-          gasLimit: createGasLimit(100000000000),
+          gasLimit: gasLimit,
           storageDepositLimit,
         }, account.address).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
 
@@ -38,15 +36,6 @@ async function mint () {
         });
     }
   }
-
-
-function createGasLimit(refTime: number | BN) {
-    const refTimeBN = refTime instanceof BN ? refTime : new BN(refTime);
-    return contract?.api.registry.createType('WeightV2', {
-    refTime: refTimeBN,
-    proofSize: PROOFSIZE,
-    }) as WeightV2;
-}
 
 return (
     <>

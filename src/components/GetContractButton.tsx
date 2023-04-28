@@ -1,15 +1,16 @@
 import React from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ContractPromise } from '@polkadot/api-contract';
-import metadata from "../pages/metadata.json";
+import { Abi } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 
 type GetContractButtonProps = {
   contractAddress: string;
+  metadata: Abi;
   onContractFetched: (api: ApiPromise, contract: ContractPromise) => void;
 };
 
-const GetContractButton: React.FC<GetContractButtonProps> = ({ contractAddress, onContractFetched }) => {
+const GetContractButton: React.FC<GetContractButtonProps> = ({ contractAddress, metadata, onContractFetched }) => {
   async function getContract() {
     try {
       const provider = new WsProvider('wss://rpc.shibuya.astar.network');

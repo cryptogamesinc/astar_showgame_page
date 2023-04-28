@@ -20,14 +20,16 @@ import GetTokens from '@/components/GetTokens';
 import Mint from '@/components/Mint';
 import GetStatus from '@/components/GetStatus';
 import EatAnApple from '@/components/EatAnApple';
+import TokenUri from '@/components/TokenUri';
 
-
-import metadata from "./metadata.json";
+import mainMetadata from "./metadata.json";
 import SetDeathStatus from '@/components/SetDeathStatus';
 
 import { setDeathStatus } from '@/components/SetDeath';
-import TokenUri from '@/components/TokenURI';
 
+import { Abi } from '@polkadot/api-contract';
+
+const metadata = new Abi(mainMetadata);
 const inter = Inter({ subsets: ['latin'] })
 
 const storageDepositLimit = null;
@@ -134,7 +136,7 @@ export default function Home() {
               https://github.com/ArtZero-io/Contracts/tree/feature/ink-4-version/Azero_Contracts/contracts/psp34_standard
             </h6>
 
-            <GetContractButton contractAddress={contractAddress} onContractFetched={handleContractFetched} />
+            <GetContractButton contractAddress={contractAddress} metadata={metadata} onContractFetched={handleContractFetched} />
 
             {getContractResult && <p>Get Contract result: {getContractResult}</p>}
 

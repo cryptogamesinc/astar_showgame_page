@@ -18,48 +18,45 @@ async function claim0Token () {
       "@polkadot/extension-dapp"
     );
 
-    const checkEventsAndInculueError = (events: any[]): boolean => {
-      let ret = false;
-      events.forEach(({ event: { data } }) => {
-        console.log("### data.method:", data.method);
-        if (String(data.method) == "ExtrinsicFailed") {
-          console.log("### check ExtrinsicFailed");
-          ret = true;
-        }
-      });
-      console.log("### ret is:", ret);
-      return ret;
-    };
-
     if (contract !== null && account !== null) {
       const injector = await web3FromSource(account.meta.source);
 
-
-      await contract.tx['psp37Mintable::claim0Token'](
+      const  { output } = await contract.query['psp37Mintable::claim0Token'](account.address,
         {
           value: 0, 
           gasLimit: gasLimit,
           storageDepositLimit,
-        }).signAndSend(account.address, { signer: injector.signer }, ({ events = [],status }) => {
-
-          if (status.isInBlock) {
-              console.log(`Completed at block hash #${status.asInBlock.toString()}`);
-          } 
-          
-          else if (status.isFinalized) {
-            if (checkEventsAndInculueError(events)) {
-              alert("Transaction is failure.");
-            }
-          }
-          
-          else {
-              console.log(`Current status: ${status.type}`);
-              console.log(`Current status: ${status.hash.toString()}`);
-          }
-          
-        }).catch((error: any) => {
-            console.log(':( transaction failed', error);
         });
+
+        console.log("### output:", output?.toHuman());
+
+        const humanOutput = output?.toHuman();
+        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok) {
+          console.log("humanReadable",humanOutput.Ok?.Err)
+          alert("Time(5min) has not passed");
+        } 
+        
+        else {
+          await contract.tx['psp37Mintable::claim0Token'](
+            {
+              value: 0, 
+              gasLimit: gasLimit,
+              storageDepositLimit,
+            }).signAndSend(account.address, { signer: injector.signer }, ({ events = [],status }) => {
+    
+              if (status.isInBlock) {
+                  console.log(`Completed at block hash #${status.asInBlock.toString()}`);
+              } 
+              
+              else {
+                  console.log(`Current status: ${status.type}`);
+                  console.log(`Current status: ${status.hash.toString()}`);
+              }
+              
+            }).catch((error: any) => {
+                console.log(':( transaction failed', error);
+            });
+        }
     }
   }
 

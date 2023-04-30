@@ -22,21 +22,39 @@ async function eatAnApple () {
     if (contract !== null && account !== null) {
       const injector = await web3FromSource(account.meta.source);
       console.log("contract",contract)
-      await contract.tx["multiAsset::eatAnApple"](
+
+
+      const { gasRequired, gasConsumed ,result, output }  = await contract.query["multiAsset::eatAnApple"](account.address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        }, {u64: '2'}).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+        }, {u64: '2'})
 
-          if (status.isInBlock) {
-              console.log(`Completed at block hash #${status.asInBlock.toString()}`);
-          } else {
-              console.log(`Current status: ${status.type}`);
-              console.log(`Current status: ${status.hash.toString()}`);
-          }
-        }).catch((error: any) => {
-            console.log(':( transaction failed', error);
-        });
+        console.log("### result of dry run ###" );
+        console.log("### output:", output?.toHuman());
+        const humanOutput = output?.toHuman();
+        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok) {
+          console.log("humanReadable",humanOutput.Ok?.Err)
+          alert("Time(5min) has not passed");
+        } else {
+
+          await contract.tx["multiAsset::eatAnApple"](
+            {
+              gasLimit: gasLimit,
+              storageDepositLimit,
+            }, {u64: '2'}).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+    
+              if (status.isInBlock) {
+                  console.log(`Completed at block hash #${status.asInBlock.toString()}`);
+              } else {
+                  console.log(`Current status: ${status.type}`);
+                  console.log(`Current status: ${status.hash.toString()}`);
+              }
+            }).catch((error: any) => {
+                console.log(':( transaction failed', error);
+            });
+
+        }
     }
   }
 

@@ -1785,7 +1785,7 @@
           }
         ],
         "docs": [
-          " Accepts an asset at from the pending array of given token.",
+          " Accepts  an asset at from the pending array of given token.",
           " Migrates the asset from the token's pending asset array to the token's active asset array.",
           " Active assets cannot be removed by anyone, but can be replaced by a new asset.",
           " # Requirements:",

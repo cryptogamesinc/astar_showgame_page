@@ -33,7 +33,7 @@ async function claim0Token () {
         const humanOutput = output?.toHuman();
         if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok) {
           console.log("humanReadable",humanOutput.Ok?.Err)
-          alert("Time(5min) has not passed");
+          alert("You have already claimed");
         } 
         
         else {

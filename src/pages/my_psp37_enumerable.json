@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0xe680d1877a744e36f45ae5fa160d8e0eba967faef5942c4dce2048b4ab2ebecc",
+    "hash": "0xcb5af54bf1354d346cfb4ca5c3a1cfd261cd66df01ac062a6854d098b97c88af",
     "language": "ink! 4.2.0",
     "compiler": "rustc 1.69.0-nightly",
     "build_info": {
@@ -132,6 +132,118 @@
       {
         "args": [
           {
+            "label": "from",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferFromInput1"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "to",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferFromInput2"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferFromInput3"
+              ],
+              "type": 16
+            }
+          },
+          {
+            "label": "amount",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferFromInput4"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "label": "data",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TransferFromInput5"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Transfers `amount` tokens of token type `id` from `from` to `to`. Also some `data` can be passed.",
+          "",
+          " On success a `TransferSingle` event is emitted.",
+          "",
+          " # Errors",
+          "",
+          " Returns `TransferToZeroAddress` error if recipient is zero account.",
+          "",
+          " Returns `NotAllowed` error if transfer is not approved.",
+          "",
+          " Returns `InsufficientBalance` error if `from` doesn't contain enough balance.",
+          "",
+          " Returns `SafeTransferCheckFailed` error if `to` doesn't accept transfer."
+        ],
+        "label": "PSP37::transfer_from",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0x5cf8b7d4"
+      },
+      {
+        "args": [
+          {
+            "label": "id",
+            "type": {
+              "displayName": [
+                "psp37_external",
+                "TotalSupplyInput1"
+              ],
+              "type": 17
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Returns the total amount of token type `id` in the supply.",
+          "",
+          " If `id` is `None` returns the total number of tokens."
+        ],
+        "label": "PSP37::total_supply",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 18
+        },
+        "selector": "0x9a49e85a"
+      },
+      {
+        "args": [
+          {
             "label": "owner",
             "type": {
               "displayName": [
@@ -148,7 +260,7 @@
                 "psp37_external",
                 "BalanceOfInput2"
               ],
-              "type": 16
+              "type": 17
             }
           }
         ],
@@ -199,7 +311,7 @@
                 "psp37_external",
                 "AllowanceInput3"
               ],
-              "type": 16
+              "type": 17
             }
           }
         ],
@@ -239,7 +351,7 @@
                 "psp37_external",
                 "ApproveInput2"
               ],
-              "type": 16
+              "type": 17
             }
           },
           {
@@ -293,7 +405,7 @@
                 "psp37_external",
                 "TransferInput2"
               ],
-              "type": 17
+              "type": 16
             }
           },
           {
@@ -344,118 +456,6 @@
           "type": 10
         },
         "selector": "0x04e09961"
-      },
-      {
-        "args": [
-          {
-            "label": "id",
-            "type": {
-              "displayName": [
-                "psp37_external",
-                "TotalSupplyInput1"
-              ],
-              "type": 16
-            }
-          }
-        ],
-        "default": false,
-        "docs": [
-          " Returns the total amount of token type `id` in the supply.",
-          "",
-          " If `id` is `None` returns the total number of tokens."
-        ],
-        "label": "PSP37::total_supply",
-        "mutates": false,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 18
-        },
-        "selector": "0x9a49e85a"
-      },
-      {
-        "args": [
-          {
-            "label": "from",
-            "type": {
-              "displayName": [
-                "psp37_external",
-                "TransferFromInput1"
-              ],
-              "type": 14
-            }
-          },
-          {
-            "label": "to",
-            "type": {
-              "displayName": [
-                "psp37_external",
-                "TransferFromInput2"
-              ],
-              "type": 14
-            }
-          },
-          {
-            "label": "id",
-            "type": {
-              "displayName": [
-                "psp37_external",
-                "TransferFromInput3"
-              ],
-              "type": 17
-            }
-          },
-          {
-            "label": "amount",
-            "type": {
-              "displayName": [
-                "psp37_external",
-                "TransferFromInput4"
-              ],
-              "type": 4
-            }
-          },
-          {
-            "label": "data",
-            "type": {
-              "displayName": [
-                "psp37_external",
-                "TransferFromInput5"
-              ],
-              "type": 5
-            }
-          }
-        ],
-        "default": false,
-        "docs": [
-          " Transfers `amount` tokens of token type `id` from `from` to `to`. Also some `data` can be passed.",
-          "",
-          " On success a `TransferSingle` event is emitted.",
-          "",
-          " # Errors",
-          "",
-          " Returns `TransferToZeroAddress` error if recipient is zero account.",
-          "",
-          " Returns `NotAllowed` error if transfer is not approved.",
-          "",
-          " Returns `InsufficientBalance` error if `from` doesn't contain enough balance.",
-          "",
-          " Returns `SafeTransferCheckFailed` error if `to` doesn't accept transfer."
-        ],
-        "label": "PSP37::transfer_from",
-        "mutates": true,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 10
-        },
-        "selector": "0x5cf8b7d4"
       },
       {
         "args": [],
@@ -558,6 +558,38 @@
       {
         "args": [
           {
+            "label": "index",
+            "type": {
+              "displayName": [
+                "psp37enumerable_external",
+                "TokenByIndexInput1"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Returns a token `Id` at a given `index` of all the tokens stored by the contract.",
+          " Use along with `total_supply` to enumerate all tokens.",
+          "",
+          " The start index is zero."
+        ],
+        "label": "PSP37Enumerable::token_by_index",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 21
+        },
+        "selector": "0x127b5477"
+      },
+      {
+        "args": [
+          {
             "label": "owner",
             "type": {
               "displayName": [
@@ -596,38 +628,6 @@
           "type": 21
         },
         "selector": "0x4cc01ee0"
-      },
-      {
-        "args": [
-          {
-            "label": "index",
-            "type": {
-              "displayName": [
-                "psp37enumerable_external",
-                "TokenByIndexInput1"
-              ],
-              "type": 4
-            }
-          }
-        ],
-        "default": false,
-        "docs": [
-          " Returns a token `Id` at a given `index` of all the tokens stored by the contract.",
-          " Use along with `total_supply` to enumerate all tokens.",
-          "",
-          " The start index is zero."
-        ],
-        "label": "PSP37Enumerable::token_by_index",
-        "mutates": false,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 21
-        },
-        "selector": "0x127b5477"
       },
       {
         "args": [
@@ -1330,39 +1330,6 @@
           "variant": {
             "variants": [
               {
-                "index": 0,
-                "name": "None"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 17
-                  }
-                ],
-                "index": 1,
-                "name": "Some"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 17
-          }
-        ],
-        "path": [
-          "Option"
-        ]
-      }
-    },
-    {
-      "id": 17,
-      "type": {
-        "def": {
-          "variant": {
-            "variants": [
-              {
                 "fields": [
                   {
                     "type": 0,
@@ -1434,6 +1401,39 @@
       }
     },
     {
+      "id": 17,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 16
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 16
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
       "id": 18,
       "type": {
         "def": {
@@ -1490,7 +1490,7 @@
       "type": {
         "def": {
           "tuple": [
-            17,
+            16,
             4
           ]
         }
@@ -1505,7 +1505,7 @@
               {
                 "fields": [
                   {
-                    "type": 16
+                    "type": 17
                   }
                 ],
                 "index": 0,
@@ -1526,7 +1526,7 @@
         "params": [
           {
             "name": "T",
-            "type": 16
+            "type": 17
           },
           {
             "name": "E",

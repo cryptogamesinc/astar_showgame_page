@@ -52,7 +52,7 @@ const override = css`
 
 
 const mainContractAddress = "YYn9H63s8eKogSoE3jAprEszMo7KM8K415fGFnxp92Szb7t"
-const psp37ContractAddress = "Wdfab9ufHYsthx4k5zaNmrRn6J1two8U8H92BUwEETCXMcC"
+const psp37ContractAddress = "VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x"
   
 // main().then(() => console.log('completed'))
 
@@ -93,7 +93,6 @@ export default function Home() {
 
   const [psp37BaseUri, setPsp37BaseUri] = useState<string>("");
 
-  const [hasMintedError, setHasMintedError] = useState<string | null>(null);
 
   const handleConnected = (account: InjectedAccountWithMeta, address: string, source: string) => {
     setAccount(account);
@@ -220,8 +219,7 @@ export default function Home() {
             <Psp37BaseUri contract={psp37Contract} address={address} gasLimit={gasLimit} setPsp37BaseUri={setPsp37BaseUri}/>
             {psp37BaseUri && <p>Get Contract result: {psp37BaseUri}</p>}
 
-            <Claim0Token contract={psp37Contract} account={account} gasLimit={gasLimit} setError={setHasMintedError}/>
-            {hasMintedError && <p>Error: {hasMintedError}</p>}
+            <Claim0Token contract={psp37Contract} account={account} gasLimit={gasLimit}/>
 
           </div>
         </div>

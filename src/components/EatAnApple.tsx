@@ -9,9 +9,10 @@ type EatAnAppleProps = {
     contract: ContractPromise | null;
     account: InjectedAccountWithMeta | null;
     gasLimit: any;
+    token_number: number;
 };
 
-const EatAnApple: React.FC<EatAnAppleProps> = ({ contract, account, gasLimit }) => {
+const EatAnApple: React.FC<EatAnAppleProps> = ({ contract, account, gasLimit, token_number }) => {
 
 const storageDepositLimit = null;
 
@@ -28,7 +29,7 @@ async function eatAnApple () {
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        }, {u64: '2'})
+        }, {u64: token_number.toString()})
 
         console.log("### result of dry run ###" );
         console.log("### output:", output?.toHuman());

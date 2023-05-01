@@ -14,20 +14,21 @@ type GetStatusProps = {
     setHungryStatus: (value: string | number | null) => void;
     setHealthStatus: (value: string | number | null) => void;
     setHappyStatus: (value: string | number | null) => void;
+    token_number:number | null;
   };
 
-const GetStatus: React.FC<GetStatusProps> = ({ contract, address, gasLimit, hungryStatus,healthStatus, happyStatus, setHungryStatus, setHealthStatus, setHappyStatus }) => {
+const GetStatus: React.FC<GetStatusProps> = ({ contract, address, gasLimit, hungryStatus,healthStatus, happyStatus, setHungryStatus, setHealthStatus, setHappyStatus, token_number }) => {
 
   const storageDepositLimit = null;
   async function getStatus () {
 
-    if (contract !== null) {
+    if (contract !== null && token_number!== null) {
 
       const { output }  = await contract.query['multiAsset::getStatus'](address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        },{u64:'2'})
+        },{u64:token_number.toString()})
   
         console.log("output",output)
         const humanOutput = output?.toHuman();

@@ -8,11 +8,11 @@ type TokenUriProps = {
     contract: ContractPromise | null;
     address: string;
     gasLimit: any;
-
+    token_number: number;
     setTokenUri: (value: string)=> void;
   };
 
-const TokenUri: React.FC<TokenUriProps> = ({ contract, address, gasLimit, setTokenUri }) => {
+const TokenUri: React.FC<TokenUriProps> = ({ contract, address, gasLimit, token_number, setTokenUri }) => {
 
   const storageDepositLimit = null;
   async function tokenUri () {
@@ -23,7 +23,7 @@ const TokenUri: React.FC<TokenUriProps> = ({ contract, address, gasLimit, setTok
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        },{u64:'2'})
+        },{u64:token_number.toString()})
   
         console.log("output",output)
         const humanOutput = output?.toHuman();

@@ -9,9 +9,10 @@ type SetDeathStatusProps = {
     contract: ContractPromise | null;
     account: InjectedAccountWithMeta | null;
     gasLimit: any;
+    token_number: number | null;
 };
 
-const SetDeathStatus: React.FC<SetDeathStatusProps> = ({ contract, account, gasLimit }) => {
+const SetDeathStatus: React.FC<SetDeathStatusProps> = ({ contract, account, gasLimit, token_number }) => {
 
 const storageDepositLimit = null;
 
@@ -25,7 +26,7 @@ async function setDeathStatus () {
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        }, {u64: '2'}).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+        }, {u64: token_number.toString()}).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
 
           if (status.isInBlock) {
               console.log(`Completed at block hash #${status.asInBlock.toString()}`);

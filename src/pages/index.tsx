@@ -92,7 +92,7 @@ export default function Home() {
   const [psp37Contract, setPsp37Contract] = useState<ContractPromise | null>(null);
   const [getPsp37ContractResult, setGetPsp37ContractResult] = useState("");
 
-  const [tokenId, setTokenId] = useState('');;
+  const [tokenId, setTokenId] = useState<number | null>(null);
   const [baseUri, setBaseUri] = useState('');;
 
   const [status, setStatus] = useState('');;
@@ -152,14 +152,37 @@ export default function Home() {
             
             <TotalSupply contract={mainContract} address={address} totalSupply={totalSupply} setTotalSupply={setTotalSupply}/>
 
-            <GetStatus contract={mainContract} address={address} gasLimit={gasLimit} hungryStatus={hungryStatus} healthStatus={healthStatus} happyStatus={happyStatus} setHungryStatus={setHungryStatus} setHealthStatus={setHealthStatus} setHappyStatus={setHappyStatus}/>
+            tokenID:
+            <input  
+              style={{width: "400px",marginTop: "20px"}} 
+              type="text" value={tokenId !== null ? tokenId : ""} 
+              onChange={(e) => setTokenId(Number(e.target.value))} 
+            />
+            
+            <GetStatus 
+              contract={mainContract} 
+              address={address} 
+              gasLimit={gasLimit} 
+              hungryStatus={hungryStatus} 
+              healthStatus={healthStatus} 
+              happyStatus={happyStatus} 
+              setHungryStatus={setHungryStatus} 
+              setHealthStatus={setHealthStatus} 
+              setHappyStatus={setHappyStatus} 
+              token_number={tokenId}
+            />
 
             <GetTokens contract={mainContract} address={address} gasLimit={gasLimit} totalSupply={totalSupply} setOutputs={setOutputs}/>
 
-            <SetDeathStatus contract={mainContract} account={account} gasLimit={gasLimit}/>
+            <SetDeathStatus 
+              contract={mainContract} 
+              account={account} 
+              gasLimit={gasLimit} 
+              token_number={tokenId}
+            />
 
 
-            <EatAnApple contract={mainContract} account={account} gasLimit={gasLimit}/>
+            <EatAnApple contract={mainContract} account={account} gasLimit={gasLimit} token_number={1}/>
 
             <button
               onClick={() => {
@@ -181,7 +204,7 @@ export default function Home() {
       {/* 追加：取り出された name を表示 */}
       {/* {name && <p>Name: {name}</p>} */}
 
-            <TokenUri contract={mainContract} address={address} gasLimit={gasLimit} setMainTokenUri={setMainTokenUri} />
+            <TokenUri contract={mainContract} address={address} gasLimit={gasLimit} token_number={3} setTokenUri={setMainTokenUri} />
             
             {mainTokenUri && <p>mainTokenUri: {mainTokenUri}</p>}
             <>
@@ -193,9 +216,9 @@ export default function Home() {
               ))}
             </>
 
-            tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} />
+            
 
-            {mainTokenUri && <p style={{marginBottom: "20px"}}>TokenURI: {mainTokenUri}</p>}
+            {/* {mainTokenUri && <p style={{marginBottom: "20px"}}>TokenURI: {mainTokenUri}</p>} */}
             {mainNftName && <p style={{marginBottom: "20px"}}>Name: {mainNftName}</p>}
             {mainNftDescription && <p style={{marginBottom: "20px"}}>Description: {mainNftDescription}</p>}
             {mainNftImageUri && (
@@ -206,9 +229,9 @@ export default function Home() {
             
             )}
 
-            tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} />
+            {/* tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} /> */}
 
-            {mainTokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>}
+            {/* {mainTokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>} */}
 
             <GetContractButton contractAddress={psp37ContractAddress} metadata={psp37metadata} setApi={setApi} setContract={setPsp37Contract} setGetContractResult={setGetPsp37ContractResult}/>
 

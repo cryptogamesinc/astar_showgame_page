@@ -67,10 +67,19 @@ export default function Home() {
 
   const [totalSupply, setTotalSupply] = useState('');
   
-  const [tokenUri, setTokenUri] = useState<String>('');
-  const [nftName, setNftName] = useState('');
-  const [nftDescription, setNftDescription] = useState('');
-  const [nftImageUri, setNftImageUri] = useState('');
+  // main
+  const [mainTokenUri, setMainTokenUri] = useState<String>('');
+  const [mainNftName, setMainNftName] = useState('');
+  const [mainNftDescription, setMainNftDescription] = useState('');
+  const [mainNftImageUri, setMainNftImageUri] = useState('');
+
+  // psp37
+  const [psp37TokenUri, setPsp37TokenUri] = useState<String>('');
+  const [psp37NftName, setPsp37NftName] = useState('');
+  const [psp37NftDescription, setPsp37NftDescription] = useState('');
+  const [psp37NftImageUri, setPsp37NftImageUri] = useState('');
+
+  
   const [outputs, setOutputs] = useState<string[]>([]);
 
   const [contractAddress, setContractAddress] = useState('');
@@ -154,26 +163,27 @@ export default function Home() {
 
             <button
               onClick={() => {
-                tokenInfo(mainContract, address, gasLimit, setTokenUri, setNftName, setNftDescription, setNftImageUri);
+                // 最後の0はメインこんとらくとフラグ
+                tokenInfo(mainContract, address, gasLimit, setMainTokenUri, setMainNftName, setMainNftDescription, setMainNftImageUri, 0);
               }}
             >
               Extract Name
             </button>
-            {nftName && <p>nftName: {nftName}</p>}
-            {nftDescription && <p>nftDescription: {nftDescription}</p>}
-            {nftImageUri && (
+            {mainNftName && <p>mainNftName: {mainNftName}</p>}
+            {mainNftDescription && <p>mainNftDescription: {mainNftDescription}</p>}
+            {mainNftImageUri && (
             <>
               <h4 style={{marginBottom: "10px"}}>Image</h4>
-              <img src={nftImageUri} alt="Image"  width="300" height="300" />
+              <img src={mainNftImageUri} alt="Image"  width="300" height="300" />
             </>
             
             )}
       {/* 追加：取り出された name を表示 */}
       {/* {name && <p>Name: {name}</p>} */}
 
-            <TokenUri contract={mainContract} address={address} gasLimit={gasLimit} setTokenUri={setTokenUri} />
+            <TokenUri contract={mainContract} address={address} gasLimit={gasLimit} setMainTokenUri={setMainTokenUri} />
             
-            {tokenUri && <p>tokenUri: {tokenUri}</p>}
+            {mainTokenUri && <p>mainTokenUri: {mainTokenUri}</p>}
             <>
               {outputs.map((output, index) => (
                 <div key={index}>
@@ -185,20 +195,20 @@ export default function Home() {
 
             tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} />
 
-            {tokenUri && <p style={{marginBottom: "20px"}}>TokenURI: {tokenUri}</p>}
-            {nftName && <p style={{marginBottom: "20px"}}>Name: {nftName}</p>}
-            {nftDescription && <p style={{marginBottom: "20px"}}>Description: {nftDescription}</p>}
-            {nftImageUri && (
+            {mainTokenUri && <p style={{marginBottom: "20px"}}>TokenURI: {mainTokenUri}</p>}
+            {mainNftName && <p style={{marginBottom: "20px"}}>Name: {mainNftName}</p>}
+            {mainNftDescription && <p style={{marginBottom: "20px"}}>Description: {mainNftDescription}</p>}
+            {mainNftImageUri && (
             <>
               <h4 style={{marginBottom: "10px"}}>Image</h4>
-              <img src={nftImageUri} alt="Image"  width="300" height="300" />
+              <img src={mainNftImageUri} alt="Image"  width="300" height="300" />
             </>
             
             )}
 
             tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} />
 
-            {tokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>}
+            {mainTokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>}
 
             <GetContractButton contractAddress={psp37ContractAddress} metadata={psp37metadata} setApi={setApi} setContract={setPsp37Contract} setGetContractResult={setGetPsp37ContractResult}/>
 
@@ -208,6 +218,26 @@ export default function Home() {
             {psp37BaseUri && <p>Get Contract result: {psp37BaseUri}</p>}
 
             <Claim0Token contract={psp37Contract} account={account} gasLimit={gasLimit}/>
+
+            <button
+              onClick={() => {
+                // 最後の0はメインこんとらくとフラグ
+                tokenInfo(psp37Contract, address, gasLimit, setPsp37TokenUri, setPsp37NftName, setPsp37NftDescription, setPsp37NftImageUri, 1);
+              }}
+            >
+              Extract Name
+            </button>
+            {psp37NftName && <p>psp37NftName: {psp37NftName}</p>}
+            {psp37NftDescription && <p>psp37NftDescription: {psp37NftDescription}</p>}
+            {psp37NftImageUri && (
+            <>
+              <h4 style={{marginBottom: "10px"}}>Image</h4>
+              <img src={psp37NftImageUri} alt="Image"  width="300" height="300" />
+            </>
+            
+            )}
+            
+            
 
           </div>
         </div>

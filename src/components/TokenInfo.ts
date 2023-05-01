@@ -1,21 +1,29 @@
 import { ContractPromise } from "@polkadot/api-contract";
 import currentTokenUri from "@/components/CurrentTokenUri";
+import currentPsp37TokenUri from "@/components/CurrentPsp37TokenUri";
 
 export default async function tokenInfo(
-  mainContract: ContractPromise | null,
+  contract: ContractPromise | null,
   address: string,
   gasLimit: any,
   setTokenUri: (value: string) => void,
   setNftName: (value: string) => void,
   setNftDescription: (value: string) => void,
-  setNftImageUri: (value: string) => void
+  setNftImageUri: (value: string) => void,
+  contractFlag: number
 ) {
-  const token = await currentTokenUri(
-    mainContract,
-    address,
-    gasLimit,
-    setTokenUri
-  );
+  let token;
+
+  if (contractFlag == 0) {
+    token = await currentTokenUri(contract, address, gasLimit, setTokenUri);
+  } else {
+    token = await currentPsp37TokenUri(
+      contract,
+      address,
+      gasLimit,
+      setTokenUri
+    );
+  }
 
   if (typeof token === "string") {
     let url = `https://cloudflare-ipfs.com/ipfs/${token.replace(

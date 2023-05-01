@@ -22,6 +22,8 @@ import Claim0Token from '@/components/Claim0Token';
 import GetStatus from '@/components/GetStatus';
 import EatAnApple from '@/components/EatAnApple';
 import TokenUri from '@/components/TokenUri';
+import currentTokenUri from '@/components/CurrentTokenUri';
+import tokenInfo from '@/components/TokenInfo';
 
 import mainMetadata from "./metadata.json";
 import myPsp37Metadata from "./my_psp37_enumerable.json";
@@ -105,26 +107,6 @@ export default function Home() {
     proofSize: new BN(1_000_000),
   });
 
-  async function extractNameFromTokenUri() {
-
-      if (typeof tokenUri === 'string') {
-        let url = `https://cloudflare-ipfs.com/ipfs/${tokenUri.replace('ipfs://', '')}`;
-        const response = await fetch("https://cloudflare-ipfs.com/ipfs/QmYJhYes1kzp2soWYEYKzvA84V8YivL8BCpsnN773xyufr/1.json");
-        console.log("response",response)
-        const json = await response.json();
-        console.log("json",json)
-        const name = json.name;
-        const description = json.description;
-        const image = json.image;
-        const imate_uri =  `https://cloudflare-ipfs.com/ipfs/${image.replace('ipfs://', '')}`;
-        setNftName(name || "");
-        setNftDescription(description || "");
-        setNftImageUri(imate_uri || "");
-        // return name;
-      } 
-  }
-  
-
 
   return (
     <>
@@ -170,7 +152,13 @@ export default function Home() {
 
             <EatAnApple contract={mainContract} account={account} gasLimit={gasLimit}/>
 
-            <button onClick={extractNameFromTokenUri}>Extract Name</button>
+            <button
+              onClick={() => {
+                tokenInfo(mainContract, address, gasLimit, setTokenUri, setNftName, setNftDescription, setNftImageUri);
+              }}
+            >
+              Extract Name
+            </button>
             {nftName && <p>nftName: {nftName}</p>}
             {nftDescription && <p>nftDescription: {nftDescription}</p>}
             {nftImageUri && (

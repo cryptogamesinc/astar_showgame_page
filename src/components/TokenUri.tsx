@@ -35,14 +35,6 @@ const TokenUri: React.FC<TokenUriProps> = ({ contract, address, gasLimit, setTok
           let a = console.log("aaa",humanOutput?.Ok)
           setTokenUri(String(humanOutput?.Ok));
         }
-
-        // if (humanOutput && typeof humanOutput === 'object' && 'Ok' in humanOutput) {
-        //   setTokenUri(String(humanOutput.Ok));
-        // } else {
-        //   console.error("Unexpected humanOutput:", humanOutput);
-        //   setTokenUri(""); // デフォルト値として空文字列を設定
-        // }
-        
       }
   }
   

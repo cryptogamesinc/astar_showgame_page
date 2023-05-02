@@ -28,6 +28,7 @@ import mainMetadata from "./metadata.json";
 import myPsp37Metadata from "./my_psp37_enumerable.json";
 import SetDeathStatus from '@/components/SetDeathStatus';
 import Psp37BaseUri from '@/components/Psp37BaseUri';
+import GetYourApple from '@/components/GetYourApple';
 
 
 import { Abi } from '@polkadot/api-contract';
@@ -90,17 +91,14 @@ export default function Home() {
   const [psp37Contract, setPsp37Contract] = useState<ContractPromise | null>(null);
   const [getPsp37ContractResult, setGetPsp37ContractResult] = useState("");
 
-  const [tokenId, setTokenId] = useState<number | null>(null);
-  const [baseUri, setBaseUri] = useState('');;
-
-  const [status, setStatus] = useState('');;
-
 
   const [hungryStatus, setHungryStatus] = useState<string | number | null>(null);
   const [healthStatus, setHealthStatus] = useState<string | number | null>(null);
   const [happyStatus, setHappyStatus] = useState<string | number | null>(null);
 
   const [psp37BaseUri, setPsp37BaseUri] = useState<string>("");
+
+  const [appleNumber, setAppleNumber] = useState<number | null>(null);
 
 
   const handleConnected = (account: InjectedAccountWithMeta, address: string, source: string) => {
@@ -151,6 +149,14 @@ export default function Home() {
               account={account} 
               gasLimit={gasLimit} 
             />
+
+            <GetYourApple 
+              contract={mainContract} 
+              address={address} 
+              gasLimit={gasLimit} 
+              setAppleNumber = {setAppleNumber}
+            />
+            <p>Your Apple Number: {appleNumber}</p>
 
             <EatAnApple 
               contract={mainContract} 

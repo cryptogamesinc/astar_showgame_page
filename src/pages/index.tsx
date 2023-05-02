@@ -29,6 +29,7 @@ import mainMetadata from "./metadata.json";
 import myPsp37Metadata from "./my_psp37_enumerable.json";
 import SetDeathStatus from '@/components/SetDeathStatus';
 import Psp37BaseUri from '@/components/Psp37BaseUri';
+import ownersTokenByIndex from '@/components/OwnersTokenByIndex';
 
 import { setDeathStatus } from '@/components/SetDeath';
 
@@ -169,7 +170,6 @@ export default function Home() {
               setHungryStatus={setHungryStatus} 
               setHealthStatus={setHealthStatus} 
               setHappyStatus={setHappyStatus} 
-              token_number={tokenId}
             />
 
             <GetTokens contract={mainContract} address={address} gasLimit={gasLimit} totalSupply={totalSupply} setOutputs={setOutputs}/>
@@ -186,7 +186,6 @@ export default function Home() {
               contract={mainContract} 
               account={account} 
               gasLimit={gasLimit} 
-              token_number={tokenId}
             />
 
             <button

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
-import type { WeightV2 } from '@polkadot/types/interfaces'
-import { BN, BN_ONE } from "@polkadot/util";
 import styles from '@/styles/Home.module.css'
+import ownersTokenByIndex from '@/components/OwnersTokenByIndex';
 
 type GetStatusProps = {
     contract: ContractPromise | null;
@@ -14,21 +13,22 @@ type GetStatusProps = {
     setHungryStatus: (value: string | number | null) => void;
     setHealthStatus: (value: string | number | null) => void;
     setHappyStatus: (value: string | number | null) => void;
-    token_number:number | null;
   };
 
-const GetStatus: React.FC<GetStatusProps> = ({ contract, address, gasLimit, hungryStatus,healthStatus, happyStatus, setHungryStatus, setHealthStatus, setHappyStatus, token_number }) => {
+const GetStatus: React.FC<GetStatusProps> = ({ contract, address, gasLimit, hungryStatus,healthStatus, happyStatus, setHungryStatus, setHealthStatus, setHappyStatus}) => {
 
   const storageDepositLimit = null;
   async function getStatus () {
 
-    if (contract !== null && token_number!== null) {
+    if (contract !== null) {
+
+      const token_number = await ownersTokenByIndex(contract, address, gasLimit);
 
       const { output , result}  = await contract.query['multiAsset::getStatus'](address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        },{u64:token_number.toString()})
+        },{u64:token_number})
   
       console.log("output",output);
       console.log("result",result);

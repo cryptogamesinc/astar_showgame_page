@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
-import type { WeightV2 } from '@polkadot/types/interfaces'
-import { BN, BN_ONE } from "@polkadot/util";
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
+import ownersTokenByIndex from '@/components/OwnersTokenByIndex';
 
 type EatAnAppleProps = {
     contract: ContractPromise | null;
     account: InjectedAccountWithMeta | null;
     gasLimit: any;
-    token_number: number | null;
 };
 
-const EatAnApple: React.FC<EatAnAppleProps> = ({ contract, account, gasLimit, token_number }) => {
+const EatAnApple: React.FC<EatAnAppleProps> = ({ contract, account, gasLimit }) => {
 
 const storageDepositLimit = null;
 
@@ -20,16 +18,19 @@ async function eatAnApple () {
     const { web3FromSource} = await import(
       "@polkadot/extension-dapp"
     );
-    if (contract !== null && account !== null && token_number!== null) {
+    if (contract !== null && account !== null) {
       const injector = await web3FromSource(account.meta.source);
       console.log("contract",contract)
+      const token_number = await ownersTokenByIndex(contract, account.address, gasLimit);
+
+      console.log("token_number",token_number)
 
 
       const { gasRequired, gasConsumed ,result, output }  = await contract.query["multiAsset::eatAnApple"](account.address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        }, {u64: token_number.toString()})
+        }, {u64: token_number})
 
         console.log("### result of dry run ###" );
         console.log("### output:", output?.toHuman());
@@ -43,7 +44,7 @@ async function eatAnApple () {
             {
               gasLimit: gasLimit,
               storageDepositLimit,
-            }, {u64: token_number.toString()}).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+            }, {u64: token_number}).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
     
               if (status.isInBlock) {
                   console.log(`Completed at block hash #${status.asInBlock.toString()}`);

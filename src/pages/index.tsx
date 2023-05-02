@@ -15,9 +15,7 @@ import { css } from "@emotion/react";
 
 import ConnectWalletButton from '@/components/ConnectWalletButton';
 import GetContractButton from '@/components/GetContractButton';
-import TotalSupply from '@/components/TotalSupply';
-import GetTokens from '@/components/GetTokens';
-import Mint from '@/components/Mint';
+
 import Claim0Token from '@/components/Claim0Token';
 import GetStatus from '@/components/GetStatus';
 import EatAnApple from '@/components/EatAnApple';
@@ -29,6 +27,7 @@ import myPsp37Metadata from "./my_psp37_enumerable.json";
 import SetDeathStatus from '@/components/SetDeathStatus';
 import Psp37BaseUri from '@/components/Psp37BaseUri';
 import GetYourApple from '@/components/GetYourApple';
+import GetYourMoney from '@/components/GetYourMoney';
 
 
 import { Abi } from '@polkadot/api-contract';
@@ -63,9 +62,6 @@ export default function Home() {
   const [account, setAccount] = useState<InjectedAccountWithMeta | null>(null);;
   const [api, setApi] = useState<ApiPromise | null>(null);
 
-
-  const [totalSupply, setTotalSupply] = useState('');
-  
   // main
   const [mainTokenUri, setMainTokenUri] = useState<String>('');
   const [mainNftName, setMainNftName] = useState('');
@@ -73,7 +69,6 @@ export default function Home() {
   const [mainNftImageUri, setMainNftImageUri] = useState('');
 
   // psp37
-  const [psp37TokenUri, setPsp37TokenUri] = useState<String>('');
   const [psp37NftName, setPsp37NftName] = useState('');
   const [psp37NftDescription, setPsp37NftDescription] = useState('');
   const [psp37NftImageUri, setPsp37NftImageUri] = useState('');
@@ -81,7 +76,6 @@ export default function Home() {
   
   const [outputs, setOutputs] = useState<string[]>([]);
 
-  const [contractAddress, setContractAddress] = useState('');
 
   // mainコントラクトの結果
   const [mainContract, setMainContract] = useState<ContractPromise | null>(null);
@@ -99,6 +93,7 @@ export default function Home() {
   const [psp37BaseUri, setPsp37BaseUri] = useState<string>("");
 
   const [appleNumber, setAppleNumber] = useState<number | null>(null);
+  const [moneyNumber, setMoneyNumber] = useState<number | null>(null);
 
 
   const handleConnected = (account: InjectedAccountWithMeta, address: string, source: string) => {
@@ -127,7 +122,12 @@ export default function Home() {
           <div>
             <ConnectWalletButton onConnected={handleConnected} />
 
-            <GetContractButton contractAddress={mainContractAddress} metadata={metadata} setApi={setApi} setContract={setMainContract} setGetContractResult={setGetMainContractResult}/>
+            <GetContractButton 
+              contractAddress={mainContractAddress} 
+              metadata={metadata} setApi={setApi} 
+              setContract={setMainContract} 
+              setGetContractResult={setGetMainContractResult}
+            />
 
             {getMainContractResult && <p>Get Contract result: {getMainContractResult}</p>}
 
@@ -164,6 +164,14 @@ export default function Home() {
               gasLimit={gasLimit} 
             />
 
+            <GetYourMoney 
+              contract={mainContract} 
+              address={address} 
+              gasLimit={gasLimit} 
+              setAppleNumber = {setMoneyNumber}
+            />
+            <p>Your Money: {moneyNumber}</p>
+
             <button
               onClick={() => {
                 // 最後の0はメインこんとらくとフラグ
@@ -184,7 +192,13 @@ export default function Home() {
       {/* 追加：取り出された name を表示 */}
       {/* {name && <p>Name: {name}</p>} */}
 
-            <TokenUri contract={mainContract} address={address} gasLimit={gasLimit} token_number={3} setTokenUri={setMainTokenUri} />
+            <TokenUri 
+              contract={mainContract} 
+              address={address} 
+              gasLimit={gasLimit} 
+              token_number={3} 
+              setTokenUri={setMainTokenUri} 
+            />
             
             {mainTokenUri && <p>mainTokenUri: {mainTokenUri}</p>}
             <>
@@ -213,14 +227,30 @@ export default function Home() {
 
             {/* {mainTokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>} */}
 
-            <GetContractButton contractAddress={psp37ContractAddress} metadata={psp37metadata} setApi={setApi} setContract={setPsp37Contract} setGetContractResult={setGetPsp37ContractResult}/>
+            <GetContractButton 
+              contractAddress={psp37ContractAddress} 
+              metadata={psp37metadata} 
+              setApi={setApi} 
+              setContract={setPsp37Contract} 
+              setGetContractResult={setGetPsp37ContractResult}
+            />
 
             {getPsp37ContractResult && <p>Get Contract result: {getPsp37ContractResult}</p>}
 
-            <Psp37BaseUri contract={psp37Contract} address={address} gasLimit={gasLimit} setPsp37BaseUri={setPsp37BaseUri}/>
+            <Psp37BaseUri 
+              contract={psp37Contract} 
+              address={address} 
+              gasLimit={gasLimit} 
+              setPsp37BaseUri={setPsp37BaseUri}
+            />
+
             {psp37BaseUri && <p>Get Contract result: {psp37BaseUri}</p>}
 
-            <Claim0Token contract={psp37Contract} account={account} gasLimit={gasLimit}/>
+            <Claim0Token 
+              contract={psp37Contract} 
+              account={account} 
+              gasLimit={gasLimit}
+            />
 
             <button
               onClick={() => {

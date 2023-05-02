@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
-import type { WeightV2 } from '@polkadot/types/interfaces'
-import { BN, BN_ONE } from "@polkadot/util";
 import styles from '@/styles/Home.module.css'
+import ownersTokenByIndex from "@/components/OwnersTokenByIndex";
 
 type TokenUriProps = {
     contract: ContractPromise | null;
     address: string;
     gasLimit: any;
-    token_number: number;
     setTokenUri: (value: string)=> void;
+
   };
 
-const TokenUri: React.FC<TokenUriProps> = ({ contract, address, gasLimit, token_number, setTokenUri }) => {
+const TokenUri: React.FC<TokenUriProps> = ({ contract, address, gasLimit, setTokenUri }) => {
 
   const storageDepositLimit = null;
   async function tokenUri () {
 
     if (contract !== null) {
+      const token_number = await ownersTokenByIndex(contract, address, gasLimit);
 
       const { output }  = await contract.query['multiAsset::tokenUri'](address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        },{u64:token_number.toString()})
+        },{u64:token_number})
   
         console.log("output",output)
         const humanOutput = output?.toHuman();

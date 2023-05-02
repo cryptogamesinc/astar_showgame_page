@@ -2,21 +2,21 @@ import React from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 
-type GetYourAppleProps = {
+type GetYourMoneyProps = {
     contract: ContractPromise | null;
     address: string;
     gasLimit: any;
     setAppleNumber:(value: number | null)=> void;
   };
 
-const GetYourApple: React.FC<GetYourAppleProps> = ({ contract, address, gasLimit,setAppleNumber}) => {
+const GetYourMoney: React.FC<GetYourMoneyProps> = ({ contract, address, gasLimit,setAppleNumber}) => {
 
   const storageDepositLimit = null;
-  async function getYourApple () {
+  async function getYourMoney () {
 
     if (contract !== null) {
 
-      const { output }  = await contract.query['multiAsset::getYourApple'](address,
+      const { output }  = await contract.query['multiAsset::getYourMoney'](address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
@@ -38,7 +38,7 @@ const GetYourApple: React.FC<GetYourAppleProps> = ({ contract, address, gasLimit
 
   return (
     <>
-      <button className={styles.rotatebutton} onClick={getYourApple}>your Money</button>
+      <button className={styles.rotatebutton} onClick={getYourMoney}>your Apple</button>
       
       
 
@@ -46,4 +46,4 @@ const GetYourApple: React.FC<GetYourAppleProps> = ({ contract, address, gasLimit
   );
 };
 
-export default GetYourApple;
+export default GetYourMoney;

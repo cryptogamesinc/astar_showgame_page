@@ -24,37 +24,45 @@ const GetStatus: React.FC<GetStatusProps> = ({ contract, address, gasLimit, hung
 
     if (contract !== null && token_number!== null) {
 
-      const { output }  = await contract.query['multiAsset::getStatus'](address,
+      const { output , result}  = await contract.query['multiAsset::getStatus'](address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
         },{u64:token_number.toString()})
   
-        console.log("output",output)
-        const humanOutput = output?.toHuman();
+      console.log("output",output);
+      console.log("result",result);
+      const humanOutput = output?.toHuman();
+      console.log("humanOutput",humanOutput);
 
-        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput) {
-          const okObject = humanOutput.Ok;
-          if (typeof okObject === 'object' && okObject !== null && 'hungry' in okObject && 'health' in okObject && 'happy' in okObject) {
-            const hungryValue = okObject.hungry;
-            const healthValue = okObject.health;
-            const happyValue = okObject.happy;
-          
-            // hungryValue が string または number であることを確認
-            if ((typeof hungryValue === 'string' || typeof hungryValue === 'number') && 
-                (typeof healthValue === 'string' || typeof healthValue === 'number') &&
-                (typeof happyValue === 'string' || typeof happyValue === 'number')
-              ){
-              console.log("hungryValue", hungryValue);
-          
-              // setStatus を使って hungryValue を保存
-              setHungryStatus(hungryValue);
-              setHealthStatus(healthValue);
-              setHappyStatus(happyValue);
-            } 
-          }
+      if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput) {
+        const okObject = humanOutput.Ok;
+        // 設定されていない場合
+        if (okObject === null) {
+          setHungryStatus(null);
+          setHealthStatus(null);
+          setHappyStatus(null);
+        }
+        if (typeof okObject === 'object' && okObject !== null && 'hungry' in okObject && 'health' in okObject && 'happy' in okObject) {
+          const hungryValue = okObject.hungry;
+          const healthValue = okObject.health;
+          const happyValue = okObject.happy;
+        
+          // hungryValue が string または number であることを確認
+          if ((typeof hungryValue === 'string' || typeof hungryValue === 'number') && 
+              (typeof healthValue === 'string' || typeof healthValue === 'number') &&
+              (typeof happyValue === 'string' || typeof happyValue === 'number')
+            ){
+            console.log("hungryValue", hungryValue);
+        
+            // setStatus を使って hungryValue を保存
+            setHungryStatus(hungryValue);
+            setHealthStatus(healthValue);
+            setHappyStatus(happyValue);
+          } 
         }
       }
+    }
   }
   
 

@@ -9,7 +9,7 @@ type EatAnAppleProps = {
     contract: ContractPromise | null;
     account: InjectedAccountWithMeta | null;
     gasLimit: any;
-    token_number: number;
+    token_number: number | null;
 };
 
 const EatAnApple: React.FC<EatAnAppleProps> = ({ contract, account, gasLimit, token_number }) => {
@@ -20,7 +20,7 @@ async function eatAnApple () {
     const { web3FromSource} = await import(
       "@polkadot/extension-dapp"
     );
-    if (contract !== null && account !== null) {
+    if (contract !== null && account !== null && token_number!== null) {
       const injector = await web3FromSource(account.meta.source);
       console.log("contract",contract)
 
@@ -43,7 +43,7 @@ async function eatAnApple () {
             {
               gasLimit: gasLimit,
               storageDepositLimit,
-            }, {u64: '2'}).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+            }, {u64: token_number.toString()}).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
     
               if (status.isInBlock) {
                   console.log(`Completed at block hash #${status.asInBlock.toString()}`);

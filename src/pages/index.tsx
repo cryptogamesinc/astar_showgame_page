@@ -158,7 +158,7 @@ export default function Home() {
               type="text" value={tokenId !== null ? tokenId : ""} 
               onChange={(e) => setTokenId(Number(e.target.value))} 
             />
-            
+
             <GetStatus 
               contract={mainContract} 
               address={address} 
@@ -182,7 +182,12 @@ export default function Home() {
             />
 
 
-            <EatAnApple contract={mainContract} account={account} gasLimit={gasLimit} token_number={1}/>
+            <EatAnApple 
+              contract={mainContract} 
+              account={account} 
+              gasLimit={gasLimit} 
+              token_number={tokenId}
+            />
 
             <button
               onClick={() => {

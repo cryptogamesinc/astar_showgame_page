@@ -1,11 +1,10 @@
 import Head from 'next/head'
-import Image from 'next/image'
+
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ContractPromise } from '@polkadot/api-contract';
 import { BN, BN_ONE } from "@polkadot/util";
-import type { WeightV2 } from '@polkadot/types/interfaces'
 import '@polkadot/api-augment'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 import { useState, useEffect } from 'react'
@@ -27,6 +26,7 @@ import myPsp37Metadata from "./my_psp37_enumerable.json";
 import SetDeathStatus from '@/components/SetDeathStatus';
 import Psp37BaseUri from '@/components/Psp37BaseUri';
 import GetYourApple from '@/components/GetYourApple';
+import BuyAnApple from '@/components/BuyAnApple';
 import GetYourMoney from '@/components/GetYourMoney';
 
 
@@ -164,6 +164,12 @@ export default function Home() {
               gasLimit={gasLimit} 
             />
 
+            <BuyAnApple 
+              contract={mainContract} 
+              account={account} 
+              gasLimit={gasLimit} 
+            />
+
             <GetYourMoney 
               contract={mainContract} 
               address={address} 
@@ -196,7 +202,6 @@ export default function Home() {
               contract={mainContract} 
               address={address} 
               gasLimit={gasLimit} 
-              token_number={3} 
               setTokenUri={setMainTokenUri} 
             />
             
@@ -209,23 +214,6 @@ export default function Home() {
                 </div>
               ))}
             </>
-
-            
-
-            {/* {mainTokenUri && <p style={{marginBottom: "20px"}}>TokenURI: {mainTokenUri}</p>} */}
-            {mainNftName && <p style={{marginBottom: "20px"}}>Name: {mainNftName}</p>}
-            {mainNftDescription && <p style={{marginBottom: "20px"}}>Description: {mainNftDescription}</p>}
-            {mainNftImageUri && (
-            <>
-              <h4 style={{marginBottom: "10px"}}>Image</h4>
-              <img src={mainNftImageUri} alt="Image"  width="300" height="300" />
-            </>
-            
-            )}
-
-            {/* tokenID:<input  style={{width: "400px",marginTop: "20px"}} type="text" value={tokenId} onChange={(e) => setTokenId(e.target.value)} /> */}
-
-            {/* {mainTokenUri && <p style={{marginBottom: "20px"}}>Status: {status}</p>} */}
 
             <GetContractButton 
               contractAddress={psp37ContractAddress} 

@@ -8,7 +8,6 @@ type TokenUriProps = {
     address: string;
     gasLimit: any;
     setTokenUri: (value: string)=> void;
-
   };
 
 const TokenUri: React.FC<TokenUriProps> = ({ contract, address, gasLimit, setTokenUri }) => {

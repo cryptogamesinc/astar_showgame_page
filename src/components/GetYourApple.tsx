@@ -38,7 +38,7 @@ const GetYourApple: React.FC<GetYourAppleProps> = ({ contract, address, gasLimit
 
   return (
     <>
-      <button className={styles.rotatebutton} onClick={getYourApple}>your Money</button>
+      <button className={styles.rotatebutton} onClick={getYourApple}>your Apple</button>
       
       
 

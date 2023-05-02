@@ -1,4 +1,5 @@
 import { ContractPromise } from "@polkadot/api-contract";
+import ownersTokenByIndex from "@/components/OwnersTokenByIndex";
 
 const storageDepositLimit = null;
 export default async function currentTokenUri(
@@ -8,13 +9,14 @@ export default async function currentTokenUri(
   setTokenUri: (value: string) => void
 ) {
   if (contract !== null) {
+    const token_number = await ownersTokenByIndex(contract, address, gasLimit);
     const { output } = await contract.query["multiAsset::tokenUri"](
       address,
       {
         gasLimit: gasLimit,
         storageDepositLimit,
       },
-      { u64: "2" }
+      { u64: token_number }
     );
 
     console.log("output", output);

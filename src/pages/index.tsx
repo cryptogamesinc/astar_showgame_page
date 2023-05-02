@@ -169,6 +169,7 @@ export default function Home() {
               account={account} 
               gasLimit={gasLimit} 
               setAppleNumber = {setAppleNumber}
+              setMoneyNumber = {setMoneyNumber}
             />
 
             <GetYourMoney 

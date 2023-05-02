@@ -191,7 +191,7 @@ export default function Home() {
             <button
               onClick={() => {
                 // 最後の0はメインこんとらくとフラグ
-                tokenInfo(mainContract, address, gasLimit, setMainTokenUri, setMainNftName, setMainNftDescription, setMainNftImageUri, 0);
+                tokenInfo(mainContract, address, gasLimit, setMainNftName, setMainNftDescription, setMainNftImageUri, 0);
               }}
             >
               Extract Name
@@ -249,7 +249,7 @@ export default function Home() {
             <button
               onClick={() => {
                 // 最後の0はメインこんとらくとフラグ
-                tokenInfo(psp37Contract, address, gasLimit, setPsp37TokenUri, setPsp37NftName, setPsp37NftDescription, setPsp37NftImageUri, 1);
+                tokenInfo(psp37Contract, address, gasLimit,setPsp37NftName, setPsp37NftDescription, setPsp37NftImageUri, 1);
               }}
             >
               Extract Name

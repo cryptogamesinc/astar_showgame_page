@@ -6,7 +6,6 @@ export default async function tokenInfo(
   contract: ContractPromise | null,
   address: string,
   gasLimit: any,
-  setTokenUri: (value: string) => void,
   setNftName: (value: string) => void,
   setNftDescription: (value: string) => void,
   setNftImageUri: (value: string) => void,
@@ -15,14 +14,9 @@ export default async function tokenInfo(
   let token;
 
   if (contractFlag == 0) {
-    token = await currentTokenUri(contract, address, gasLimit, setTokenUri);
+    token = await currentTokenUri(contract, address, gasLimit);
   } else {
-    token = await currentPsp37TokenUri(
-      contract,
-      address,
-      gasLimit,
-      setTokenUri
-    );
+    token = await currentPsp37TokenUri(contract, address, gasLimit);
   }
 
   if (typeof token === "string") {

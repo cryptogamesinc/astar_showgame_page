@@ -22,16 +22,13 @@ import Claim0Token from '@/components/Claim0Token';
 import GetStatus from '@/components/GetStatus';
 import EatAnApple from '@/components/EatAnApple';
 import TokenUri from '@/components/TokenUri';
-import currentTokenUri from '@/components/CurrentTokenUri';
 import tokenInfo from '@/components/TokenInfo';
 
 import mainMetadata from "./metadata.json";
 import myPsp37Metadata from "./my_psp37_enumerable.json";
 import SetDeathStatus from '@/components/SetDeathStatus';
 import Psp37BaseUri from '@/components/Psp37BaseUri';
-import ownersTokenByIndex from '@/components/OwnersTokenByIndex';
 
-import { setDeathStatus } from '@/components/SetDeath';
 
 import { Abi } from '@polkadot/api-contract';
 
@@ -132,22 +129,10 @@ export default function Home() {
           <div>
             <ConnectWalletButton onConnected={handleConnected} />
 
-            contractAddress:<input  style={{width: "400px"}} type="text" value={contractAddress} onChange={(e) => setContractAddress(e.target.value)} />
-            <h6 style={{color: "red",marginBottom: "20px",fontWeight: 300}}>
-              contracts made by ArtZero can be set<br/>
-              https://github.com/ArtZero-io/Contracts/tree/feature/ink-4-version/Azero_Contracts/contracts/psp34_standard
-            </h6>
-
             <GetContractButton contractAddress={mainContractAddress} metadata={metadata} setApi={setApi} setContract={setMainContract} setGetContractResult={setGetMainContractResult}/>
 
             {getMainContractResult && <p>Get Contract result: {getMainContractResult}</p>}
 
-            baseURI:<input  style={{width: "400px"}} type="text" value={baseUri} onChange={(e) => setBaseUri(e.target.value)} />
-            <h6 style={{color: "red",marginBottom: "20px",fontWeight: 300}}>
-              Now only ipfs can be set<br/>
-              ex1. set ipfs://QmYJhYes1kzp2soWYEYKzvA84V8YivL8BCpsnN773xyufr/<br/>
-              ex2. set ipfs://QmXtnr9aEJVywiLs1keZdyiKbQwignZT3FhwKYivF15oZp/<br/>
-            </h6>
 
             <GetStatus 
               contract={mainContract} 
@@ -161,15 +146,11 @@ export default function Home() {
               setHappyStatus={setHappyStatus} 
             />
 
-            <GetTokens contract={mainContract} address={address} gasLimit={gasLimit} totalSupply={totalSupply} setOutputs={setOutputs}/>
-
             <SetDeathStatus 
               contract={mainContract} 
               account={account} 
               gasLimit={gasLimit} 
-              token_number={tokenId}
             />
-
 
             <EatAnApple 
               contract={mainContract} 

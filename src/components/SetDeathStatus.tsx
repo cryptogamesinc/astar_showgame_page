@@ -4,15 +4,15 @@ import type { WeightV2 } from '@polkadot/types/interfaces'
 import { BN, BN_ONE } from "@polkadot/util";
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
+import ownersTokenByIndex from '@/components/OwnersTokenByIndex';
 
 type SetDeathStatusProps = {
     contract: ContractPromise | null;
     account: InjectedAccountWithMeta | null;
     gasLimit: any;
-    token_number: number | null;
 };
 
-const SetDeathStatus: React.FC<SetDeathStatusProps> = ({ contract, account, gasLimit, token_number }) => {
+const SetDeathStatus: React.FC<SetDeathStatusProps> = ({ contract, account, gasLimit}) => {
 
 const storageDepositLimit = null;
 
@@ -20,13 +20,16 @@ async function setDeathStatus () {
     const { web3FromSource} = await import(
       "@polkadot/extension-dapp"
     );
+    
     if (contract !== null && account !== null) {
       const injector = await web3FromSource(account.meta.source);
+
+      const token_number = await ownersTokenByIndex(contract, account.address, gasLimit);
       await contract.tx['multiAsset::setDeathStatus'](
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        }, {u64: token_number.toString()}).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+        }, {u64: token_number}).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
 
           if (status.isInBlock) {
               console.log(`Completed at block hash #${status.asInBlock.toString()}`);

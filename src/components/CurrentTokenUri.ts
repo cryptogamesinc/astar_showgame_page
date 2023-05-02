@@ -5,8 +5,7 @@ const storageDepositLimit = null;
 export default async function currentTokenUri(
   contract: ContractPromise | null,
   address: string,
-  gasLimit: any,
-  setTokenUri: (value: string) => void
+  gasLimit: any
 ) {
   if (contract !== null) {
     const token_number = await ownersTokenByIndex(contract, address, gasLimit);
@@ -22,7 +21,6 @@ export default async function currentTokenUri(
     console.log("output", output);
     const humanOutput = output?.toHuman();
     if (humanOutput && typeof humanOutput === "object" && "Ok" in humanOutput) {
-      setTokenUri(String(humanOutput?.Ok));
       return String(humanOutput?.Ok);
     }
   }

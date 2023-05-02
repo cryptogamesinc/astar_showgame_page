@@ -149,17 +149,6 @@ export default function Home() {
               ex2. set ipfs://QmXtnr9aEJVywiLs1keZdyiKbQwignZT3FhwKYivF15oZp/<br/>
             </h6>
 
-            <Mint contract={mainContract} account={account} gasLimit={gasLimit} />
-            
-            <TotalSupply contract={mainContract} address={address} totalSupply={totalSupply} setTotalSupply={setTotalSupply}/>
-
-            tokenID:
-            <input  
-              style={{width: "400px",marginTop: "20px"}} 
-              type="text" value={tokenId !== null ? tokenId : ""} 
-              onChange={(e) => setTokenId(Number(e.target.value))} 
-            />
-
             <GetStatus 
               contract={mainContract} 
               address={address} 

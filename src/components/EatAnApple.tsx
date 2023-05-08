@@ -3,14 +3,16 @@ import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 import ownersTokenByIndex from '@/components/OwnersTokenByIndex';
+import getYourApple2 from "@/components/GetYourApple2";
 
 type EatAnAppleProps = {
     contract: ContractPromise | null;
     account: InjectedAccountWithMeta | null;
     gasLimit: any;
+    setAppleNumber: (value: number | null) => void;
 };
 
-const EatAnApple: React.FC<EatAnAppleProps> = ({ contract, account, gasLimit }) => {
+const EatAnApple: React.FC<EatAnAppleProps> = ({ contract, account, gasLimit, setAppleNumber }) => {
 
 const storageDepositLimit = null;
 
@@ -44,10 +46,11 @@ async function eatAnApple () {
             {
               gasLimit: gasLimit,
               storageDepositLimit,
-            }, {u64: token_number}, account.address).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+            }, {u64: token_number}, account.address).signAndSend(account.address, { signer: injector.signer }, async ({ status }) => {
     
               if (status.isInBlock) {
                   console.log(`Completed at block hash #${status.asInBlock.toString()}`);
+                  await getYourApple2(contract, account.address, gasLimit, setAppleNumber);
               } else {
                   console.log(`Current status: ${status.type}`);
                   console.log(`Current status: ${status.hash.toString()}`);

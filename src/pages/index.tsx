@@ -163,6 +163,9 @@ export default function Home() {
               account={account} 
               gasLimit={gasLimit} 
               setAppleNumber={setAppleNumber}
+              setHungryStatus={setHungryStatus}
+              setHealthStatus={setHealthStatus}
+              setHappyStatus={setHappyStatus}
             />
 
             <BuyAnApple 

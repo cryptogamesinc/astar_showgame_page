@@ -4,15 +4,19 @@ import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 import ownersTokenByIndex from '@/components/OwnersTokenByIndex';
 import getYourApple2 from "@/components/GetYourApple2";
+import getStatus2 from "@/components/GetStatus2";
 
 type EatAnAppleProps = {
     contract: ContractPromise | null;
     account: InjectedAccountWithMeta | null;
     gasLimit: any;
     setAppleNumber: (value: number | null) => void;
+    setHungryStatus: (value: string | number | null) => void;
+    setHealthStatus: (value: string | number | null) => void;
+    setHappyStatus: (value: string | number | null) => void;
 };
 
-const EatAnApple: React.FC<EatAnAppleProps> = ({ contract, account, gasLimit, setAppleNumber }) => {
+const EatAnApple: React.FC<EatAnAppleProps> = ({ contract, account, gasLimit, setAppleNumber,setHungryStatus, setHealthStatus,setHappyStatus}) => {
 
 const storageDepositLimit = null;
 
@@ -51,6 +55,8 @@ async function eatAnApple () {
               if (status.isInBlock) {
                   console.log(`Completed at block hash #${status.asInBlock.toString()}`);
                   await getYourApple2(contract, account.address, gasLimit, setAppleNumber);
+                  await getStatus2(contract, account.address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus);
+
               } else {
                   console.log(`Current status: ${status.type}`);
                   console.log(`Current status: ${status.hash.toString()}`);

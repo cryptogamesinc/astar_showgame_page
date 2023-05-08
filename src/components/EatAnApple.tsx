@@ -30,7 +30,7 @@ async function eatAnApple () {
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        }, {u64: token_number})
+        }, {u64: token_number}, account.address)
 
         console.log("### result of dry run ###" );
         console.log("### output:", output?.toHuman());
@@ -44,7 +44,7 @@ async function eatAnApple () {
             {
               gasLimit: gasLimit,
               storageDepositLimit,
-            }, {u64: token_number}).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+            }, {u64: token_number}, account.address).signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
     
               if (status.isInBlock) {
                   console.log(`Completed at block hash #${status.asInBlock.toString()}`);

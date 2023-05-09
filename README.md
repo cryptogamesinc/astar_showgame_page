@@ -55,3 +55,15 @@ Polkadot.js, Talismanなどの対応しています。
 接続を行うと、ウォレットアドレスとソース（どのウォレットで接続しているか）が表示されます。
 
 ![](src/images/1_wallet.png)
+
+### 2 Get Contractボタンについて
+
+コントラクトを取得するためには、下のように、provider, apiからContractPromiseでコントラクトを取得することになります。  
+
+![](src/images/2_getContract.png)
+
+また、コントラクト作成時にできる、jsonファイルを設定することが必要です。  
+
+これがないと、関数の実行などを行うことができません。  
+
+![](src/images/3_metadata.png)

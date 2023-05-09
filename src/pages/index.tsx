@@ -29,6 +29,7 @@ import GetYourApple from '@/components/GetYourApple';
 import BuyAnApple from '@/components/BuyAnApple';
 import GetYourMoney from '@/components/GetYourMoney';
 import DailyBonus from '@/components/DailyBonus';
+import Astar from '@/components/Astar';
 
 
 import { Abi } from '@polkadot/api-contract';
@@ -52,7 +53,7 @@ const override = css`
   `;
 
 
-const mainContractAddress = "YXXcmCFdCkh3b8FH6j6gNBgWGdmzB6TEPdYxxPHjmuEsnpu"
+const mainContractAddress = "ahu1yA51gzJbA29LbYrKkxPaFBtsJdyUTKLAY34cQiJhVuy"
 const psp37ContractAddress = "VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x"
   
 // main().then(() => console.log('completed'))
@@ -138,6 +139,8 @@ export default function Home() {
               gasLimit={gasLimit}
               setMoneyNumber={setMoneyNumber}
             />
+
+            <Astar/>
 
             <GetStatus 
               contract={mainContract} 

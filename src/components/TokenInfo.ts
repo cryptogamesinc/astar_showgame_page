@@ -26,18 +26,23 @@ export default async function tokenInfo(
     )}`;
     console.log("url", url);
     // const response = await fetch("https://cloudflare-ipfs.com/ipfs/QmYJhYes1kzp2soWYEYKzvA84V8YivL8BCpsnN773xyufr/1.json");
-    const response = await fetch(`${url}.json`);
-    const json = await response.json();
-    const name = json.name;
-    const description = json.description;
-    const image = json.image;
-    const image_uri = `https://cloudflare-ipfs.com/ipfs/${image.replace(
-      "ipfs://",
-      ""
-    )}`;
-    setNftName(name || "");
-    setNftDescription(description || "");
-    setNftImageUri(image_uri || "");
-    // return name;
+    try {
+      const response = await fetch(`${url}.json`);
+      const json = await response.json();
+      const name = json.name;
+      const description = json.description;
+      const image = json.image;
+      const image_uri = `https://cloudflare-ipfs.com/ipfs/${image.replace(
+        "ipfs://",
+        ""
+      )}`;
+      setNftName(name || "");
+      setNftDescription(description || "");
+      setNftImageUri(image_uri || "");
+      // return name;
+    } catch (error) {
+      // エラーが発生した場合の処理をここに書く
+      console.error("Fetch error:", error);
+    }
   }
 }

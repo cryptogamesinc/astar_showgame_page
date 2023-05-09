@@ -42,3 +42,16 @@ aAvEKZ4fyddW8fKLTkyFkYsyPGFdTy1GoYi1PVjFgVSBaww
 
 ex1. set ipfs://QmYJhYes1kzp2soWYEYKzvA84V8YivL8BCpsnN773xyufr/
 ex2. set ipfs://QmXtnr9aEJVywiLs1keZdyiKbQwignZT3FhwKYivF15oZp/
+
+## 機能についての説明
+
+
+### １ Connect Walletボタンについて
+
+ウォレット接続を行います。  
+
+Polkadot.js, Talismanなどの対応しています。  
+
+接続を行うと、ウォレットアドレスとソース（どのウォレットで接続しているか）が表示されます。
+
+

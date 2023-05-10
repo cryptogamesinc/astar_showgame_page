@@ -53,7 +53,7 @@ const override = css`
   `;
 
 
-const mainContractAddress = "ahu1yA51gzJbA29LbYrKkxPaFBtsJdyUTKLAY34cQiJhVuy"
+const mainContractAddress = "b9veBxoFoQgBdmUMTJwURKLbmb2hBAA4odMD9qgKH7Lt73D"
 const psp37ContractAddress = "VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x"
   
 // main().then(() => console.log('completed'))

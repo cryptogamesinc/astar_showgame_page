@@ -42,6 +42,7 @@ export default async function tokenInfo(
       // return name;
     } catch (error) {
       // エラーが発生した場合の処理をここに書く
+      alert("You don't have a NFT");
       console.error("Fetch error:", error);
     }
   }

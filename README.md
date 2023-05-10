@@ -99,10 +99,38 @@ Polkadot.js, Talismanなどの対応しています。
 
 #### 1）前回りんごを食べた時間を取得
 
-前回りんごを食べた時間を取得する。食べたことがない場合はステータスを0に設定する
+「last_eaten」で前回りんごを食べた時間を取得する。  
+
+食べたことがない場合はステータスを0に設定する  
 
 ![](src/images/6_getCurrentStatus1.png)
 
 #### ２）ステータスの減り具合を決定する
 
-![](src/images/6_getCurrentStatus1.png)
+現在時刻から「last_eaten」を引き、経過時刻を求める。  
+
+この際、単位はm秒となる。  
+
+今回は図のように、１分単位で、5変化するように設定する。  
+
+また、現在のステータスも取得する。取得できない場合は、0を取得する
+
+![](src/images/7_getCurrentStatus2.png)
+
+#### 3）変化後のステータスを取得する
+
+変化するステータスを元に、変化後のステータスを取得する。  
+
+ここでは、「saturating_sub」関数を使い、0以下になる場合は0を返すようにしている。  
+
+![](src/images/8_getCurrentStatus3.png)
+
+### 5 「Your Apple」, 「Your Money」機能について
+
+コントラクトが保持しているデータを取得する。  
+
+データは下のように、Mapping構造になっている。　　
+![](src/images/9_getYourApple1.png)
+
+取得できない場合に備え、「unwrap_or_default」関数を使用する。  　　
+![](src/images/10_getYourApple2.png)

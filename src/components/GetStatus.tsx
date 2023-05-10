@@ -24,7 +24,7 @@ const GetStatus: React.FC<GetStatusProps> = ({ contract, address, gasLimit, hung
 
       const token_number = await ownersTokenByIndex(contract, address, gasLimit);
 
-      const { output , result}  = await contract.query['multiAsset::getStatus'](address,
+      const { output , result}  = await contract.query['multiAsset::getCurrentStatus'](address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
@@ -69,9 +69,9 @@ const GetStatus: React.FC<GetStatusProps> = ({ contract, address, gasLimit, hung
   return (
     <>
       <button className={styles.rotatebutton} onClick={getStatus}>get Status</button>
-            {hungryStatus && <p style={{marginBottom: "20px"}}>Status: {hungryStatus}</p>}
-            {healthStatus && <p style={{marginBottom: "20px"}}>healthStatus: {healthStatus}</p>}
-            {happyStatus && <p style={{marginBottom: "20px"}}>happyStatus: {happyStatus}</p>}
+            {hungryStatus && <p style={{marginBottom: "20px"}}>hungry: {hungryStatus}</p>}
+            {healthStatus && <p style={{marginBottom: "20px"}}>health: {healthStatus}</p>}
+            {happyStatus && <p style={{marginBottom: "20px"}}>happy: {happyStatus}</p>}
 
     </>
   );

@@ -41,9 +41,14 @@ async function eatAnApple () {
         console.log("### result of dry run ###" );
         console.log("### output:", output?.toHuman());
         const humanOutput = output?.toHuman();
-        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok) {
-          console.log("humanReadable",humanOutput.Ok?.Err)
-          alert("Time(5min) has not passed");
+        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok && typeof humanOutput.Ok.Err === 'object' && humanOutput.Ok.Err !== null && 'Rmrk' in humanOutput.Ok.Err) {
+          const message = humanOutput.Ok?.Err?.Rmrk;
+          if (message == "NotEnoughApple") {
+            alert("Not Enough Apple");
+          } else {
+            alert("Time(5min) has not passed");
+          }
+
         } else {
 
           await contract.tx["multiAsset::eatAnApple"](

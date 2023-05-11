@@ -20,7 +20,7 @@ const GetStatus: React.FC<GetStatusProps> = ({ contract, address, gasLimit, hung
   const storageDepositLimit = null;
   async function getStatus () {
 
-    if (contract !== null) {
+    if (contract !== null && address !== "") {
 
       const token_number = await ownersTokenByIndex(contract, address, gasLimit);
 
@@ -62,6 +62,8 @@ const GetStatus: React.FC<GetStatusProps> = ({ contract, address, gasLimit, hung
           } 
         }
       }
+    } else {
+      alert("Connect your wallet and contract first");
     }
   }
   

@@ -15,7 +15,7 @@ const GetYourApple: React.FC<GetYourAppleProps> = ({ contract, address, gasLimit
   const storageDepositLimit = null;
   async function getYourApple () {
 
-    if (contract !== null) {
+    if (contract !== null && address !== "") {
 
       const { output }  = await contract.query['multiAsset::getYourApple'](address,
         {

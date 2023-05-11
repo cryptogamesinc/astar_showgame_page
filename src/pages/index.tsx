@@ -161,12 +161,6 @@ export default function Home() {
               setHappyStatus={setHappyStatus} 
             />
 
-            <SetDeathStatus 
-              contract={mainContract} 
-              account={account} 
-              gasLimit={gasLimit} 
-            />
-
             <GetYourApple 
               contract={mainContract} 
               address={address} 
@@ -218,25 +212,9 @@ export default function Home() {
             </>
             
             )}
-      {/* 追加：取り出された name を表示 */}
-      {/* {name && <p>Name: {name}</p>} */}
-
-            <TokenUri 
-              contract={mainContract} 
-              address={address} 
-              gasLimit={gasLimit} 
-              setTokenUri={setMainTokenUri} 
-            />
             
             {mainTokenUri && <p>mainTokenUri: {mainTokenUri}</p>}
-            <>
-              {outputs.map((output, index) => (
-                <div key={index}>
-                  <p>Token ID: {output}</p>
-                  {/* ここにその他の表示内容を追加 */}
-                </div>
-              ))}
-            </>
+
 
             <GetContractButton 
               contractAddress={psp37ContractAddress} 
@@ -247,15 +225,6 @@ export default function Home() {
             />
 
             {getPsp37ContractResult && <p>Get Contract result: {getPsp37ContractResult}</p>}
-
-            <Psp37BaseUri 
-              contract={psp37Contract} 
-              address={address} 
-              gasLimit={gasLimit} 
-              setPsp37BaseUri={setPsp37BaseUri}
-            />
-
-            {psp37BaseUri && <p>Get Contract result: {psp37BaseUri}</p>}
 
             <Claim0Token 
               contract={psp37Contract} 

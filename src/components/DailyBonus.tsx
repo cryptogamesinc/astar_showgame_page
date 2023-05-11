@@ -21,22 +21,36 @@ async function dailyBonus () {
     );
     if (contract !== null && account !== null) {
       const injector = await web3FromSource(account.meta.source);
-      await contract.tx['multiAsset::dailyBonus'](
+
+      const { gasRequired, gasConsumed ,result, output }  = await contract.query["multiAsset::dailyBonus"](account.address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        }, account.address).signAndSend(account.address, { signer: injector.signer }, async ({ status }) => {
+        }, account.address)
 
-          if (status.isInBlock) {
-              console.log(`Completed at block hash #${status.asInBlock.toString()}`);
-              await getYourMoney2(contract, account.address, gasLimit, setMoneyNumber);
-          } else {
-              console.log(`Current status: ${status.type}`);
-              console.log(`Current status: ${status.hash.toString()}`);
-          }
-        }).catch((error: any) => {
-            console.log(':( transaction failed', error);
-        });
+        console.log("### result of dry run ###" );
+        console.log("### output:", output?.toHuman());
+        const humanOutput = output?.toHuman();
+        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok && typeof humanOutput.Ok.Err === 'object' && humanOutput.Ok.Err !== null && 'Rmrk' in humanOutput.Ok.Err) {
+          alert("Time(5min) has not passed");
+        } else {
+          await contract.tx['multiAsset::dailyBonus'](
+            {
+              gasLimit: gasLimit,
+              storageDepositLimit,
+            }, account.address).signAndSend(account.address, { signer: injector.signer }, async ({ status }) => {
+
+              if (status.isInBlock) {
+                  console.log(`Completed at block hash #${status.asInBlock.toString()}`);
+                  await getYourMoney2(contract, account.address, gasLimit, setMoneyNumber);
+              } else {
+                  console.log(`Current status: ${status.type}`);
+                  console.log(`Current status: ${status.hash.toString()}`);
+              }
+            }).catch((error: any) => {
+                console.log(':( transaction failed', error);
+            });
+        }
     }
   }
 

@@ -148,15 +148,7 @@ export default function Home() {
           <div className={styles.headerItem}>
             <ConnectWalletButton onConnected={handleConnected} />
           </div>
-        </header>
-
-
-
-        <div className={styles.description}>
-          <div>
-            <ConnectWalletButton onConnected={handleConnected} />
-
-            <div className={styles.item}>
+          <div className={styles.headerItem}>
             <GetContractButton 
               contractAddress={mainContractAddress} 
               metadata={metadata} setApi={setApi} 
@@ -164,6 +156,14 @@ export default function Home() {
               setGetContractResult={setGetMainContractResult}
             />
             </div>
+        </header>
+
+
+
+        <div className={styles.description}>
+          <div>
+
+            
 
             {getMainContractResult && <p>Get Contract result: {getMainContractResult}</p>}
             <div className={styles.item}>

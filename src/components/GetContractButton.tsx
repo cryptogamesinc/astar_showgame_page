@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ContractPromise } from '@polkadot/api-contract';
 import { Abi } from '@polkadot/api-contract';
@@ -12,7 +12,9 @@ type GetContractButtonProps = {
   setGetContractResult: (value: string) => void;
 };
 
+
 const GetContractButton: React.FC<GetContractButtonProps> = ({contractAddress, metadata, setApi, setContract, setGetContractResult }) => {
+  const [connected, setConnected] = useState(false);
   async function getContract() {
     try {
       const provider = new WsProvider('wss://rpc.shibuya.astar.network');
@@ -21,6 +23,7 @@ const GetContractButton: React.FC<GetContractButtonProps> = ({contractAddress, m
       setApi(api);
       setContract(contract);
       setGetContractResult("OK")
+      setConnected(true);
 
     } catch (error) {
       console.error(error);
@@ -29,7 +32,7 @@ const GetContractButton: React.FC<GetContractButtonProps> = ({contractAddress, m
 
   return (
     <button className={styles.rotatebutton} onClick={getContract}>
-      Get Contract
+        {connected ? 'Connected' : 'Get Contract'}
     </button>
   );
 };

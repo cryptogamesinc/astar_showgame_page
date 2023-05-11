@@ -30,6 +30,7 @@ import BuyAnApple from '@/components/BuyAnApple';
 import GetYourMoney from '@/components/GetYourMoney';
 import DailyBonus from '@/components/DailyBonus';
 import Astar from '@/components/Astar';
+import Claim from '@/components/Claim';
 
 
 import { Abi } from '@polkadot/api-contract';
@@ -138,6 +139,12 @@ export default function Home() {
               account={account} 
               gasLimit={gasLimit}
               setMoneyNumber={setMoneyNumber}
+            />
+
+            <Claim 
+              contract={mainContract} 
+              account={account} 
+              gasLimit={gasLimit}
             />
 
             <Astar/>

@@ -129,18 +129,18 @@ export default function Home() {
               contract={mainContract} 
               address={address} 
               gasLimit={gasLimit} 
-              setAppleNumber={setMoneyNumber}
+              moneyNumber={moneyNumber}
+              setMoneyNumber={setMoneyNumber}
             />
-            <p>Your Money: {moneyNumber}</p>
           </div>
           <div className={styles.headerItem}>
             <GetYourApple 
               contract={mainContract} 
               address={address} 
               gasLimit={gasLimit} 
+              appleNumber={appleNumber}
               setAppleNumber={setAppleNumber}
             />
-            <p>Your Apple Number: {appleNumber}</p>
           </div>
           <div className={styles.headerItem}>
             <Astar />
@@ -181,8 +181,6 @@ export default function Home() {
               gasLimit={gasLimit}
             />
 
-            <Astar/>
-
             <GetStatus 
               contract={mainContract} 
               address={address} 
@@ -194,14 +192,6 @@ export default function Home() {
               setHealthStatus={setHealthStatus} 
               setHappyStatus={setHappyStatus} 
             />
-
-            <GetYourApple 
-              contract={mainContract} 
-              address={address} 
-              gasLimit={gasLimit} 
-              setAppleNumber = {setAppleNumber}
-            />
-            <p>Your Apple Number: {appleNumber}</p>
 
             <EatAnApple 
               contract={mainContract} 
@@ -220,14 +210,6 @@ export default function Home() {
               setAppleNumber = {setAppleNumber}
               setMoneyNumber = {setMoneyNumber}
             />
-
-            <GetYourMoney 
-              contract={mainContract} 
-              address={address} 
-              gasLimit={gasLimit} 
-              setAppleNumber = {setMoneyNumber}
-            />
-            <p>Your Money: {moneyNumber}</p>
 
             <GetInfo
               contract={mainContract} 

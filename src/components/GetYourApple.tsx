@@ -6,10 +6,11 @@ type GetYourAppleProps = {
     contract: ContractPromise | null;
     address: string;
     gasLimit: any;
+    appleNumber:  number | null;
     setAppleNumber:(value: number | null)=> void;
   };
 
-const GetYourApple: React.FC<GetYourAppleProps> = ({ contract, address, gasLimit,setAppleNumber}) => {
+const GetYourApple: React.FC<GetYourAppleProps> = ({ contract, address, gasLimit, appleNumber,  setAppleNumber}) => {
 
   const storageDepositLimit = null;
   async function getYourApple () {
@@ -32,16 +33,18 @@ const GetYourApple: React.FC<GetYourAppleProps> = ({ contract, address, gasLimit
           setAppleNumber(Number(humanOutput?.Ok));
           console.log("humanOutput?.Ok",humanOutput?.Ok)
         }
-      }
+    } else {
+      alert("Connect your wallet and contract first");
+    }
   }
   
 
   return (
     <>
+      <div className={styles.container}>
       <button className={styles.rotatebutton} onClick={getYourApple}>your Apple</button>
-      
-      
-
+      {appleNumber && <span className={styles.appleNumber}>{appleNumber}</span>}
+      </div>
     </>
   );
 };

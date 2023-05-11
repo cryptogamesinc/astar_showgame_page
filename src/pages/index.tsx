@@ -125,6 +125,13 @@ export default function Home() {
 
         <header className={styles.header}>
           <div className={styles.headerItem}>
+            <Claim 
+                contract={mainContract} 
+                account={account} 
+                gasLimit={gasLimit}
+              />
+          </div>
+          <div className={styles.headerItem}>
             <GetYourMoney 
               contract={mainContract} 
               address={address} 
@@ -158,14 +165,8 @@ export default function Home() {
             </div>
         </header>
 
-
-
         <div className={styles.description}>
           <div>
-
-            
-
-            {getMainContractResult && <p>Get Contract result: {getMainContractResult}</p>}
             <div className={styles.item}>
             <DailyBonus 
               contract={mainContract} 
@@ -173,26 +174,7 @@ export default function Home() {
               gasLimit={gasLimit}
               setMoneyNumber={setMoneyNumber}
             />
-            </div>
-
-            <Claim 
-              contract={mainContract} 
-              account={account} 
-              gasLimit={gasLimit}
-            />
-
-            <GetStatus 
-              contract={mainContract} 
-              address={address} 
-              gasLimit={gasLimit} 
-              hungryStatus={hungryStatus} 
-              healthStatus={healthStatus} 
-              happyStatus={happyStatus} 
-              setHungryStatus={setHungryStatus} 
-              setHealthStatus={setHealthStatus} 
-              setHappyStatus={setHappyStatus} 
-            />
-
+            </div>    
             <EatAnApple 
               contract={mainContract} 
               account={account} 
@@ -223,6 +205,29 @@ export default function Home() {
               setNftImageUri={setMainNftImageUri}
               flag={0}
               />
+              <div className={styles.container}>
+              {mainNftImageUri && (
+      <>
+        <img src={mainNftImageUri} alt="Image"  width="400" height="400" />
+      </>
+      )}
+              <div>
+              {mainNftName && <p>Name: {mainNftName}</p>}
+              {mainNftDescription && <p>Description: {mainNftDescription}</p>}
+
+              <GetStatus 
+              contract={mainContract} 
+              address={address} 
+              gasLimit={gasLimit} 
+              hungryStatus={hungryStatus} 
+              healthStatus={healthStatus} 
+              happyStatus={happyStatus} 
+              setHungryStatus={setHungryStatus} 
+              setHealthStatus={setHealthStatus} 
+              setHappyStatus={setHappyStatus} 
+            />
+              </div>
+              </div>
 
 
             <GetContractButton 

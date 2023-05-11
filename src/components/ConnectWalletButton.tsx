@@ -11,6 +11,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected }
   const [address, setAddress] = useState('');
   const [source, setSource] = useState('');
   const [account, setAccount] = useState<InjectedAccountWithMeta | null>(null);;
+  const [connected, setConnected] = useState(false);
 
   async function connectWallet() {
     // ... (connectWallet 関数のコードをここに貼り付け)
@@ -38,6 +39,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected }
   
       setAddress(address);
       setSource(source);
+      setConnected(true);
 
     // アカウント情報が変更されたことを親コンポーネントに通知
     onConnected(account, address, source);
@@ -46,10 +48,10 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected }
   return (
     <>
       <button className={styles.rotatebutton} onClick={connectWallet}>
-        Connect Wallet
+        {connected ? 'Connected' : 'Connect Wallet'}
       </button>
-      {address && <p style={{ marginBottom: '20px' }}>Address: {address}</p>}
-      {source && <p style={{ marginBottom: '20px' }}>Source: {source}</p>}
+      {/* {address && <p style={{ marginBottom: '20px' }}>Address: {address}</p>}
+      {source && <p style={{ marginBottom: '20px' }}>Source: {source}</p>} */}
     </>
   );
 };

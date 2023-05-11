@@ -153,12 +153,12 @@
 
 .rotatebutton {
   display: block;
-  margin: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
+  margin: 4px;
+  padding: 5px 5px;
+  font-size: 8px;
   font-weight: bold;
   text-transform: uppercase;
-  /* border-radius: 50%; */
+  border-radius: 4px;
   border: 2px solid black;
   /* transform: rotate(-45deg); */
 }
@@ -291,4 +291,21 @@
   to {
     transform: rotate(0deg);
   }
+}
+
+.container {
+  display: flex;
+}
+
+.item {
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.headerItem {
+  margin-right: 10px; /* 各要素の間隔を調整する場合は適宜調整してください */
 }

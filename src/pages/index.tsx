@@ -122,25 +122,58 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <h1 style={{marginBottom: "80px"}}>Get Your Contract Information(psp34)</h1>
+
+        <header className={styles.header}>
+          <div className={styles.headerItem}>
+            <GetYourMoney 
+              contract={mainContract} 
+              address={address} 
+              gasLimit={gasLimit} 
+              setAppleNumber={setMoneyNumber}
+            />
+            <p>Your Money: {moneyNumber}</p>
+          </div>
+          <div className={styles.headerItem}>
+            <GetYourApple 
+              contract={mainContract} 
+              address={address} 
+              gasLimit={gasLimit} 
+              setAppleNumber={setAppleNumber}
+            />
+            <p>Your Apple Number: {appleNumber}</p>
+          </div>
+          <div className={styles.headerItem}>
+            <Astar />
+          </div>
+          <div className={styles.headerItem}>
+            <ConnectWalletButton onConnected={handleConnected} />
+          </div>
+        </header>
+
+
+
         <div className={styles.description}>
           <div>
             <ConnectWalletButton onConnected={handleConnected} />
 
+            <div className={styles.item}>
             <GetContractButton 
               contractAddress={mainContractAddress} 
               metadata={metadata} setApi={setApi} 
               setContract={setMainContract} 
               setGetContractResult={setGetMainContractResult}
             />
+            </div>
 
             {getMainContractResult && <p>Get Contract result: {getMainContractResult}</p>}
-
+            <div className={styles.item}>
             <DailyBonus 
               contract={mainContract} 
               account={account} 
               gasLimit={gasLimit}
               setMoneyNumber={setMoneyNumber}
             />
+            </div>
 
             <Claim 
               contract={mainContract} 

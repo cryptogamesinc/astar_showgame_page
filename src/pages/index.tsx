@@ -31,6 +31,7 @@ import GetYourMoney from '@/components/GetYourMoney';
 import DailyBonus from '@/components/DailyBonus';
 import Astar from '@/components/Astar';
 import Claim from '@/components/Claim';
+import GetInfo from '@/components/GetInfo';
 
 
 import { Abi } from '@polkadot/api-contract';
@@ -195,25 +196,18 @@ export default function Home() {
             />
             <p>Your Money: {moneyNumber}</p>
 
-            <button
-              onClick={() => {
-                // 最後の0はメインこんとらくとフラグ
-                tokenInfo(mainContract, address, gasLimit, setMainNftName, setMainNftDescription, setMainNftImageUri, 0);
-              }}
-            >
-              Extract Name
-            </button>
-            {mainNftName && <p>mainNftName: {mainNftName}</p>}
-            {mainNftDescription && <p>mainNftDescription: {mainNftDescription}</p>}
-            {mainNftImageUri && (
-            <>
-              <h4 style={{marginBottom: "10px"}}>Image</h4>
-              <img src={mainNftImageUri} alt="Image"  width="300" height="300" />
-            </>
-            
-            )}
-            
-            {mainTokenUri && <p>mainTokenUri: {mainTokenUri}</p>}
+            <GetInfo
+              contract={mainContract} 
+              address={address} 
+              gasLimit={gasLimit} 
+              nftName={mainNftName}
+              nftDescription={mainNftDescription}
+              nftImageUri={mainNftImageUri}
+              setNftName={setMainNftName}
+              setNftDescription={setMainNftDescription}
+              setNftImageUri={setMainNftImageUri}
+              flag={0}
+              />
 
 
             <GetContractButton 
@@ -232,26 +226,18 @@ export default function Home() {
               gasLimit={gasLimit}
             />
 
-            <button
-              onClick={() => {
-                // 最後の0はメインこんとらくとフラグ
-                tokenInfo(psp37Contract, address, gasLimit,setPsp37NftName, setPsp37NftDescription, setPsp37NftImageUri, 1);
-              }}
-            >
-              Extract Name
-            </button>
-            {psp37NftName && <p>psp37NftName: {psp37NftName}</p>}
-            {psp37NftDescription && <p>psp37NftDescription: {psp37NftDescription}</p>}
-            {psp37NftImageUri && (
-            <>
-              <h4 style={{marginBottom: "10px"}}>Image</h4>
-              <img src={psp37NftImageUri} alt="Image"  width="300" height="300" />
-            </>
-            
-            )}
-            
-            
-
+            <GetInfo
+              contract={psp37Contract} 
+              address={address} 
+              gasLimit={gasLimit} 
+              nftName={psp37NftName}
+              nftDescription={psp37NftDescription}
+              nftImageUri={psp37NftImageUri}
+              setNftName={setPsp37NftName}
+              setNftDescription={setPsp37NftDescription}
+              setNftImageUri={setPsp37NftImageUri}
+              flag={1}
+              />
           </div>
         </div>
       </main>

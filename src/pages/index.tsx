@@ -32,6 +32,8 @@ import DailyBonus from '@/components/DailyBonus';
 import Astar from '@/components/Astar';
 import Claim from '@/components/Claim';
 import GetInfo from '@/components/GetInfo';
+import Staking from '@/components/Staking';
+import GetYourStakedMoney from '@/components/GetYourStakedMoney';
 
 
 import { Abi } from '@polkadot/api-contract';
@@ -55,7 +57,7 @@ const override = css`
   `;
 
 
-const mainContractAddress = "WWsE1pm5WJYw2ZKc5FXjRuvcRNrdtWbLtUryj8wYY1KZWpb"
+const mainContractAddress = "YdbxSuJkK7HCKht4ps3bxv4NjhzAqt4rxNwYRw7mJ4eoaA4"
 const psp37ContractAddress = "VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x"
   
 // main().then(() => console.log('completed'))
@@ -98,6 +100,7 @@ export default function Home() {
 
   const [appleNumber, setAppleNumber] = useState<number | null>(null);
   const [moneyNumber, setMoneyNumber] = useState<number | null>(null);
+  const [stakedMoney, setStakedMoney] = useState<number | null>(null);
 
 
   const handleConnected = (account: InjectedAccountWithMeta, address: string, source: string) => {
@@ -140,15 +143,7 @@ export default function Home() {
               setMoneyNumber={setMoneyNumber}
             />
           </div>
-          <div className={styles.headerItem}>
-            <GetYourApple 
-              contract={mainContract} 
-              address={address} 
-              gasLimit={gasLimit} 
-              appleNumber={appleNumber}
-              setAppleNumber={setAppleNumber}
-            />
-          </div>
+          
           <div className={styles.headerItem}>
             <Astar />
           </div>
@@ -175,15 +170,25 @@ export default function Home() {
               setMoneyNumber={setMoneyNumber}
             />
             </div>    
-            <EatAnApple 
+
+            <div className={styles.item}>
+            <Staking 
               contract={mainContract} 
               account={account} 
-              gasLimit={gasLimit} 
-              setAppleNumber={setAppleNumber}
-              setHungryStatus={setHungryStatus}
-              setHealthStatus={setHealthStatus}
-              setHappyStatus={setHappyStatus}
+              gasLimit={gasLimit}
+              setMoneyNumber={setMoneyNumber}
             />
+            </div>  
+            
+            <div className={styles.item}>
+            <GetYourStakedMoney 
+              contract={mainContract} 
+              address={address} 
+              gasLimit={gasLimit}
+              stakedMoney={stakedMoney}
+              setStakedMoney={setStakedMoney}
+            />
+            </div>  
 
             <BuyAnApple 
               contract={mainContract} 
@@ -207,27 +212,48 @@ export default function Home() {
               />
               <div className={styles.container}>
               {mainNftImageUri && (
-      <>
-        <img src={mainNftImageUri} alt="Image"  width="400" height="400" />
-      </>
-      )}
+              <>
+                <img src={mainNftImageUri} alt="Image"  width="500" height="500" />
+              </>
+              )}
               <div>
-              {mainNftName && <p>Name: {mainNftName}</p>}
-              {mainNftDescription && <p>Description: {mainNftDescription}</p>}
+                {mainNftName && <p>Name: {mainNftName}</p>}
+                {mainNftDescription && <p>Description: {mainNftDescription}</p>}
 
-              <GetStatus 
-              contract={mainContract} 
-              address={address} 
-              gasLimit={gasLimit} 
-              hungryStatus={hungryStatus} 
-              healthStatus={healthStatus} 
-              happyStatus={happyStatus} 
-              setHungryStatus={setHungryStatus} 
-              setHealthStatus={setHealthStatus} 
-              setHappyStatus={setHappyStatus} 
-            />
+                <GetStatus 
+                contract={mainContract} 
+                address={address} 
+                gasLimit={gasLimit} 
+                hungryStatus={hungryStatus} 
+                healthStatus={healthStatus} 
+                happyStatus={happyStatus} 
+                setHungryStatus={setHungryStatus} 
+                setHealthStatus={setHealthStatus} 
+                setHappyStatus={setHappyStatus} 
+                />
+
+                <div >
+                  <GetYourApple 
+                    contract={mainContract} 
+                    address={address} 
+                    gasLimit={gasLimit} 
+                    appleNumber={appleNumber}
+                    setAppleNumber={setAppleNumber}
+                  />
+                </div>
+                <div>
+                  <EatAnApple 
+                      contract={mainContract} 
+                      account={account} 
+                      gasLimit={gasLimit} 
+                      setAppleNumber={setAppleNumber}
+                      setHungryStatus={setHungryStatus}
+                      setHealthStatus={setHealthStatus}
+                      setHappyStatus={setHappyStatus}
+                    />
+                </div>
               </div>
-              </div>
+          </div>
 
 
             <GetContractButton 

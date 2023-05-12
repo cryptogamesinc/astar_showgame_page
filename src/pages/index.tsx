@@ -58,7 +58,7 @@ const override = css`
   `;
 
 
-const mainContractAddress = "YdbxSuJkK7HCKht4ps3bxv4NjhzAqt4rxNwYRw7mJ4eoaA4"
+const mainContractAddress = "Xd3cnDe9HHkMf9AhjVbUPiMYipUcyozJ2iDD1rq5f31AY8Y"
 const psp37ContractAddress = "VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x"
   
 // main().then(() => console.log('completed'))
@@ -103,12 +103,19 @@ export default function Home() {
   const [moneyNumber, setMoneyNumber] = useState<number | null>(null);
   const [stakedMoney, setStakedMoney] = useState<number | null>(null);
 
+  const [inputValue, setInputValue] = useState<number | null>(null);;
+
 
   const handleConnected = (account: InjectedAccountWithMeta, address: string, source: string) => {
     setAccount(account);
     setAddress(address);
     setSource(source);
   };
+
+  const handleInputChange = (e: any) => {
+    const newValue = parseInt(e.target.value); // 入力を数値に変換
+    setInputValue(isNaN(newValue) ? null : newValue); // 入力が数値でない場合はnullを設定
+};
 
   const gasLimit: any = api?.registry.createType("WeightV2", {
     refTime: new BN(100_000_000_000),
@@ -173,11 +180,18 @@ export default function Home() {
             </div>    
 
             <div className={styles.item}>
+            <input 
+                type="text" 
+                value={inputValue === null ? "" : inputValue.toString()} // nullの場合は空文字列を表示
+                onChange={handleInputChange} 
+            />
             <Staking 
               contract={mainContract} 
               account={account} 
               gasLimit={gasLimit}
               setMoneyNumber={setMoneyNumber}
+              setStakedMoney={setStakedMoney}
+              userInput={inputValue}
             />
             </div>  
             

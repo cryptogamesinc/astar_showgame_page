@@ -3,15 +3,18 @@ import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 import getYourMoney2 from "@/components/GetYourMoney2";
+import getYourStakedMoney2 from "@/components/GetYourStakedMoney2";
 
 type StakingProps = {
     contract: ContractPromise | null;
     account: InjectedAccountWithMeta | null;
     gasLimit: any;
     setMoneyNumber: (value: number | null) => void;
+    setStakedMoney: (value: number | null) => void;
+    userInput: number | null;
 };
 
-const Staking: React.FC<StakingProps> = ({ contract, account, gasLimit, setMoneyNumber}) => {
+const Staking: React.FC<StakingProps> = ({ contract, account, gasLimit, setMoneyNumber, setStakedMoney, userInput}) => {
 
 const storageDepositLimit = null;
 
@@ -26,7 +29,7 @@ async function staking () {
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        },account.address, 300)
+        },account.address, userInput)
 
         console.log("### result of dry run ###" );
         console.log("### output:", output?.toHuman());
@@ -39,11 +42,12 @@ async function staking () {
             {
               gasLimit: gasLimit,
               storageDepositLimit,
-            }, account.address, 300).signAndSend(account.address, { signer: injector.signer }, async ({ status }) => {
+            }, account.address, userInput).signAndSend(account.address, { signer: injector.signer }, async ({ status }) => {
     
               if (status.isInBlock) {
                   console.log(`Completed at block hash #${status.asInBlock.toString()}`);
                   await getYourMoney2(contract, account.address, gasLimit, setMoneyNumber);
+                  await getYourStakedMoney2(contract, account.address, gasLimit, setStakedMoney);
 
               } else {
                   console.log(`Current status: ${status.type}`);

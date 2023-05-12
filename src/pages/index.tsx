@@ -33,6 +33,7 @@ import Astar from '@/components/Astar';
 import Claim from '@/components/Claim';
 import GetInfo from '@/components/GetInfo';
 import Staking from '@/components/Staking';
+import Withdraw from '@/components/Withdraw';
 import GetYourStakedMoney from '@/components/GetYourStakedMoney';
 
 
@@ -186,6 +187,16 @@ export default function Home() {
               address={address} 
               gasLimit={gasLimit}
               stakedMoney={stakedMoney}
+              setStakedMoney={setStakedMoney}
+            />
+            </div>  
+
+            <div className={styles.item}>
+            <Withdraw 
+              contract={mainContract} 
+              account={account} 
+              gasLimit={gasLimit}
+              setMoneyNumber={setMoneyNumber}
               setStakedMoney={setStakedMoney}
             />
             </div>  

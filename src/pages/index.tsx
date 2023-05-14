@@ -22,6 +22,7 @@ import TokenUri from '@/components/TokenUri';
 import tokenInfo from '@/components/TokenInfo';
 
 import mainMetadata from "./metadata.json";
+import myPsp22Metadata from "./my_psp22_mintable.json";
 import myPsp37Metadata from "./my_psp37_enumerable.json";
 import SetDeathStatus from '@/components/SetDeathStatus';
 import Psp37BaseUri from '@/components/Psp37BaseUri';
@@ -35,12 +36,14 @@ import GetInfo from '@/components/GetInfo';
 import Staking from '@/components/Staking';
 import Withdraw from '@/components/Withdraw';
 import GetYourStakedMoney from '@/components/GetYourStakedMoney';
+import GetYourBalance from '@/components/GetYourBalance';
 
 
 import { Abi } from '@polkadot/api-contract';
 
 // metadataの設定
 const metadata = new Abi(mainMetadata);
+const psp22metadata = new Abi(myPsp22Metadata);
 const psp37metadata = new Abi(myPsp37Metadata);
 
 
@@ -59,6 +62,7 @@ const override = css`
 
 
 const mainContractAddress = "Xd3cnDe9HHkMf9AhjVbUPiMYipUcyozJ2iDD1rq5f31AY8Y"
+const psp22ContractAddress = "Xbx8TMHCsuttDD8dN1od3cKVQcaxw78xAtneAxipG9R2bFd"
 const psp37ContractAddress = "VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x"
   
 // main().then(() => console.log('completed'))
@@ -88,6 +92,10 @@ export default function Home() {
   const [mainContract, setMainContract] = useState<ContractPromise | null>(null);
   const [getMainContractResult, setGetMainContractResult] = useState("");
 
+  // psp22コントラクトの結果
+  const [psp22Contract, setPsp22Contract] = useState<ContractPromise | null>(null);
+  const [getPsp22ContractResult, setGetPsp22ContractResult] = useState("");
+
   // psp37コントラクトの結果
   const [psp37Contract, setPsp37Contract] = useState<ContractPromise | null>(null);
   const [getPsp37ContractResult, setGetPsp37ContractResult] = useState("");
@@ -104,6 +112,8 @@ export default function Home() {
   const [stakedMoney, setStakedMoney] = useState<number | null>(null);
 
   const [inputValue, setInputValue] = useState<number | null>(null);;
+
+  const [yourBalance, setYourBalance] = useState<number | null>(null);
 
 
   const handleConnected = (account: InjectedAccountWithMeta, address: string, source: string) => {
@@ -281,6 +291,30 @@ export default function Home() {
           </div>
 
 
+          {/* psp22 */}
+            <GetContractButton 
+              contractAddress={psp22ContractAddress} 
+              metadata={psp22metadata} 
+              setApi={setApi} 
+              setContract={setPsp22Contract} 
+              setGetContractResult={setGetPsp22ContractResult}
+            />
+
+            <div >
+              <GetYourBalance 
+                contract={psp22Contract} 
+                address={address} 
+                gasLimit={gasLimit} 
+                yourBalance={yourBalance}
+                setYourBalance={setYourBalance}
+              />
+            </div>
+
+            
+
+
+
+          {/* psp37 */}
             <GetContractButton 
               contractAddress={psp37ContractAddress} 
               metadata={psp37metadata} 

@@ -2,21 +2,22 @@ import React from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 
-type GetYourMoneyProps = {
+
+type GetYourBalanceProps = {
     contract: ContractPromise | null;
     address: string;
     gasLimit: any;
-    moneyNumber: number | null;
-    setMoneyNumber:(value: number | null)=> void;
+    yourBalance: number | null;
+    setYourBalance:(value: number | null)=> void;
   };
 
-const GetYourMoney: React.FC<GetYourMoneyProps> = ({ contract, address, gasLimit,moneyNumber, setMoneyNumber}) => {
+const GetYourBalance: React.FC<GetYourBalanceProps> = ({ contract, address, gasLimit,yourBalance, setYourBalance}) => {
 
   const storageDepositLimit = null;
-  async function getYourMoney () {
+  async function getYourBalance () {
 
     if (contract !== null && address !== "") {
-      const { output }  = await contract.query['multiAsset::getYourMoney'](address,
+      const { output }  = await contract.query['psp22::balanceOf'](address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
@@ -30,7 +31,7 @@ const GetYourMoney: React.FC<GetYourMoneyProps> = ({ contract, address, gasLimit
           'Ok' in humanOutput && humanOutput.Ok && typeof humanOutput.Ok === 'string'
         ) {
           const yourBalance = Number(humanOutput?.Ok.replace(/,/g, ''));
-          setMoneyNumber(yourBalance);
+          setYourBalance(yourBalance);
         }
     } else {
       alert("Connect your wallet and contract first");
@@ -41,11 +42,11 @@ const GetYourMoney: React.FC<GetYourMoneyProps> = ({ contract, address, gasLimit
   return (
     <>
       <div className={styles.container}>
-      <button className={styles.rotatebutton} onClick={getYourMoney}>your Money</button>
-      {moneyNumber && <span className={styles.moneyNumber}>{moneyNumber}</span>}
+      <button className={styles.rotatebutton} onClick={getYourBalance}>your Money</button>
+      {yourBalance && <span>{yourBalance}</span>}
       </div>
     </>
   );
 };
 
-export default GetYourMoney;
+export default GetYourBalance;

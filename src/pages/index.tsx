@@ -289,8 +289,6 @@ export default function Home() {
               setGetContractResult={setGetPsp37ContractResult}
             />
 
-            {getPsp37ContractResult && <p>Get Contract result: {getPsp37ContractResult}</p>}
-
             <Claim0Token 
               contract={psp37Contract} 
               account={account} 
@@ -309,6 +307,17 @@ export default function Home() {
               setNftImageUri={setPsp37NftImageUri}
               flag={1}
               />
+            <div className={styles.container}>
+            {psp37NftImageUri && (
+              <>
+                <img src={psp37NftImageUri} alt="Image"  width="300" height="300" />
+              </>
+            )}
+              <div>
+                {psp37NftName && <p>Name: {psp37NftName}</p>}
+                {psp37NftDescription && <p>Description: {psp37NftDescription}</p>}
+              </div>
+            </div>
           </div>
         </div>
       </main>

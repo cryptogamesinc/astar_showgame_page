@@ -57,6 +57,8 @@ async function claim0Token () {
                 console.log(':( transaction failed', error);
             });
         }
+    } else {
+      alert("Connect your wallet and contract first");
     }
   }
 

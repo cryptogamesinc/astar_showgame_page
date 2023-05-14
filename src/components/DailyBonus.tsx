@@ -51,6 +51,8 @@ async function dailyBonus () {
                 console.log(':( transaction failed', error);
             });
         }
+    } else {
+      alert("Connect your wallet and contract first");
     }
   }
 

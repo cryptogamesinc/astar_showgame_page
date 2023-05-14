@@ -61,6 +61,8 @@ async function buyAnApple () {
             });
         }
       
+    } else {
+      alert("Connect your wallet and contract first");
     }
   }
 

@@ -71,6 +71,8 @@ async function eatAnApple () {
             });
 
         }
+    } else {
+      alert("Connect your wallet and contract first");
     }
   }
 

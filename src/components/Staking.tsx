@@ -70,7 +70,7 @@ async function staking () {
 
 return (
     <>
-    <button className={styles.rotatebutton} style={{marginBottom: "20px"}} onClick={staking}>staking</button>
+    <button className={styles.rotatebutton} style={{marginRight: "30px"}}onClick={staking}>staking</button>
     </>
 );
 };

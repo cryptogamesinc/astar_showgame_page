@@ -8,9 +8,9 @@ const Astar: React.FC = () => {
   };
 
   return (
-    <button className={styles.rotatebutton} style={{marginBottom: "20px"}} onClick={redirectToAstarNetwork}>
-      Astar Networkにアクセス
-    </button>
+    <div  className={styles.header_bottun}  onClick={redirectToAstarNetwork}>
+      Faucet
+    </div>
   );
 };
 

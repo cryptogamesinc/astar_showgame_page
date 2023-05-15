@@ -31,9 +31,9 @@ const GetContractButton: React.FC<GetContractButtonProps> = ({contractAddress, m
   }
 
   return (
-    <button className={styles.rotatebutton} onClick={getContract}>
+    <div  className={styles.header_bottun}  onClick={getContract}>
         {connected ? 'Connected' : 'Get Contract'}
-    </button>
+    </div>
   );
 };
 

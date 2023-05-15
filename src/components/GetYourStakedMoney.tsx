@@ -42,7 +42,7 @@ const GetYourStakedMoney: React.FC<GetYourStakedMoneyProps> = ({ contract, addre
   return (
     <>
       <div className={styles.container}>
-      <button className={styles.rotatebutton} onClick={getYourStakedMoney}>your StakedMoney</button>
+      <button className={styles.rotatebutton} onClick={getYourStakedMoney}>Staked</button>
       {stakedMoney && <span>{stakedMoney}</span>}
       </div>
     </>

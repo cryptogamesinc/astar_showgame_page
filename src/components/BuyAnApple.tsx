@@ -68,7 +68,7 @@ async function buyAnApple () {
 
 return (
     <>
-    <button className={styles.rotatebutton} style={{marginBottom: "20px"}} onClick={buyAnApple}>buyAnApple</button>
+    <button className={styles.rotatebutton} onClick={buyAnApple}>buyAnApple</button>
     </>
 );
 };

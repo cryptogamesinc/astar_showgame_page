@@ -57,7 +57,7 @@ async function claim () {
 
 return (
     <>
-    <button className={styles.rotatebutton} style={{marginBottom: "20px"}} onClick={claim}>claim</button>
+    <div className={styles.header_bottun} onClick={claim}>claim</div>
     </>
 );
 };

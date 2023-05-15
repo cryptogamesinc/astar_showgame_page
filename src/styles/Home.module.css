@@ -3,17 +3,17 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
+  /* padding: 6rem; */
+  /* min-height: 100vh; */
 }
 
 .description {
   display: inherit;
-  justify-content: inherit;
+  justify-content: center;
   align-items: inherit;
   font-size: 0.85rem;
   max-width: var(--max-width);
-  width: 100%;
+  width: 900px;
   z-index: 2;
   font-family: var(--font-mono);
 }
@@ -300,10 +300,51 @@
 .item {
   flex: 1;
 }
+.items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .header {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: white;
+  align-items: center;
+  height: 60px;
+  margin-bottom: 40px;
+
+}
+
+.money {
+  margin-bottom: 90px;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  width: 660px;
+  border: solid 2px black;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  height: 100px; /* viewport height */
+}
+.aa {
+  margin-top: 40px;
+}
+
+.header_bottun {
+  cursor: pointer;
+}
+
+.money_number {
+  margin-left: 10px;
+  font-size: 14px;
+  padding-top: 2px;
+  font-weight: bold;
 }
 
 .headerItem {

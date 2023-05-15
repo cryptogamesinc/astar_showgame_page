@@ -41,8 +41,8 @@ const GetYourMoney: React.FC<GetYourMoneyProps> = ({ contract, address, gasLimit
   return (
     <>
       <div className={styles.container}>
-      <button className={styles.rotatebutton} onClick={getYourMoney}>your Money</button>
-      {moneyNumber && <span className={styles.moneyNumber}>{moneyNumber}</span>}
+      <div  className={styles.header_bottun} onClick={getYourMoney}>Game Money</div>
+      {moneyNumber && <span className={styles.money_number}>{moneyNumber}</span>}
       </div>
     </>
   );

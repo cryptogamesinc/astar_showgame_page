@@ -47,9 +47,9 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected }
 
   return (
     <>
-      <button className={styles.rotatebutton} onClick={connectWallet}>
+      <div  className={styles.header_bottun}  onClick={connectWallet}>
         {connected ? 'Connected' : 'Connect Wallet'}
-      </button>
+      </div>
       {/* {address && <p style={{ marginBottom: '20px' }}>Address: {address}</p>}
       {source && <p style={{ marginBottom: '20px' }}>Source: {source}</p>} */}
     </>

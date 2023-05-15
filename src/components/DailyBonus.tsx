@@ -58,7 +58,7 @@ async function dailyBonus () {
 
 return (
     <>
-    <button className={styles.rotatebutton} style={{marginBottom: "20px"}} onClick={dailyBonus}>dailyBonus</button>
+    <button className={styles.rotatebutton} onClick={dailyBonus}>dailyBonus</button>
     </>
 );
 };

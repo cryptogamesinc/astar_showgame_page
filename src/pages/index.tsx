@@ -142,8 +142,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <h1 style={{marginBottom: "80px"}}>Get Your Contract Information(psp34)</h1>
-
         <header className={styles.header}>
           <div className={styles.headerItem}>
             <Claim 
@@ -180,71 +178,80 @@ export default function Home() {
 
         <div className={styles.description}>
           <div>
-            <div className={styles.item}>
-            <DailyBonus 
-              contract={mainContract} 
-              account={account} 
-              gasLimit={gasLimit}
-              setMoneyNumber={setMoneyNumber}
-            />
-            </div>    
+            {/* money topics */}
+            <div className={styles.money}>
+              
+              <div className={styles.item}>
+                <DailyBonus 
+                  contract={mainContract} 
+                  account={account} 
+                  gasLimit={gasLimit}
+                  setMoneyNumber={setMoneyNumber}
+                />
+              </div>    
 
-            <div className={styles.item}>
-            <input 
-                type="text" 
-                value={inputValue === null ? "" : inputValue.toString()} // nullの場合は空文字列を表示
-                onChange={handleInputChange} 
-            />
-            <Staking 
-              contract={mainContract} 
-              account={account} 
-              gasLimit={gasLimit}
-              setMoneyNumber={setMoneyNumber}
-              setStakedMoney={setStakedMoney}
-              userInput={inputValue}
-            />
-            </div>  
-            
-            <div className={styles.item}>
-            <GetYourStakedMoney 
-              contract={mainContract} 
-              address={address} 
-              gasLimit={gasLimit}
-              stakedMoney={stakedMoney}
-              setStakedMoney={setStakedMoney}
-            />
-            </div>  
+              <div className={styles.items}>
+                <input 
+                    type="text" 
+                    value={inputValue === null ? "" : inputValue.toString()} // nullの場合は空文字列を表示
+                    onChange={handleInputChange} 
+                    style={{width: "100px"}}
+                    placeholder="stake amount"
+                />
+                <Staking 
+                  contract={mainContract} 
+                  account={account} 
+                  gasLimit={gasLimit}
+                  setMoneyNumber={setMoneyNumber}
+                  setStakedMoney={setStakedMoney}
+                  userInput={inputValue}
+                />
+              </div>  
+              
+              <div className={styles.item}>
+                <GetYourStakedMoney 
+                  contract={mainContract} 
+                  address={address} 
+                  gasLimit={gasLimit}
+                  stakedMoney={stakedMoney}
+                  setStakedMoney={setStakedMoney}
+                />
+              </div>  
 
-            <div className={styles.item}>
-            <Withdraw 
-              contract={mainContract} 
-              account={account} 
-              gasLimit={gasLimit}
-              setMoneyNumber={setMoneyNumber}
-              setStakedMoney={setStakedMoney}
-            />
-            </div>  
+              <div className={styles.item}>
+                <Withdraw 
+                  contract={mainContract} 
+                  account={account} 
+                  gasLimit={gasLimit}
+                  setMoneyNumber={setMoneyNumber}
+                  setStakedMoney={setStakedMoney}
+                />
+              </div>  
 
-            <BuyAnApple 
-              contract={mainContract} 
-              account={account} 
-              gasLimit={gasLimit} 
-              setAppleNumber = {setAppleNumber}
-              setMoneyNumber = {setMoneyNumber}
-            />
+              <div className={styles.item}>
+                <BuyAnApple 
+                  contract={mainContract} 
+                  account={account} 
+                  gasLimit={gasLimit} 
+                  setAppleNumber = {setAppleNumber}
+                  setMoneyNumber = {setMoneyNumber}
+                />
+              </div>  
+            </div>
 
-            <GetInfo
-              contract={mainContract} 
-              address={address} 
-              gasLimit={gasLimit} 
-              nftName={mainNftName}
-              nftDescription={mainNftDescription}
-              nftImageUri={mainNftImageUri}
-              setNftName={setMainNftName}
-              setNftDescription={setMainNftDescription}
-              setNftImageUri={setMainNftImageUri}
-              flag={0}
-              />
+            <div className={styles.aa}>
+              <GetInfo
+                contract={mainContract} 
+                address={address} 
+                gasLimit={gasLimit} 
+                nftName={mainNftName}
+                nftDescription={mainNftDescription}
+                nftImageUri={mainNftImageUri}
+                setNftName={setMainNftName}
+                setNftDescription={setMainNftDescription}
+                setNftImageUri={setMainNftImageUri}
+                flag={0}
+                />
               <div className={styles.container}>
               {mainNftImageUri && (
               <>
@@ -288,6 +295,7 @@ export default function Home() {
                     />
                 </div>
               </div>
+          </div>
           </div>
 
 

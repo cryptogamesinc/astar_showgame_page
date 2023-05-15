@@ -64,7 +64,7 @@ async function withdraw () {
 
 return (
     <>
-    <button className={styles.rotatebutton} style={{marginBottom: "20px"}} onClick={withdraw}>withdraw</button>
+    <button className={styles.rotatebutton} onClick={withdraw}>withdraw</button>
     </>
 );
 };

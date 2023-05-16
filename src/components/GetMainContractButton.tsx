@@ -4,7 +4,7 @@ import { ContractPromise } from '@polkadot/api-contract';
 import { Abi } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 
-type GetContractButtonProps = {
+type GetMainContractButtonProps = {
   contractAddress: string;
   metadata: Abi;
   setApi:  (value: ApiPromise | null) => void;
@@ -13,9 +13,9 @@ type GetContractButtonProps = {
 };
 
 
-const GetContractButton: React.FC<GetContractButtonProps> = ({contractAddress, metadata, setApi, setContract, setGetContractResult }) => {
+const GetMainContractButton: React.FC<GetMainContractButtonProps> = ({contractAddress, metadata, setApi, setContract, setGetContractResult }) => {
   const [connected, setConnected] = useState(false);
-  async function getContract() {
+  async function getMainContract() {
     try {
       const provider = new WsProvider('wss://rpc.shibuya.astar.network');
       const api = await ApiPromise.create({ provider });
@@ -31,10 +31,10 @@ const GetContractButton: React.FC<GetContractButtonProps> = ({contractAddress, m
   }
 
   return (
-    <button  className={styles.getContract} onClick={getContract}>
+    <div  className={styles.header_bottun}  onClick={getMainContract}>
         {connected ? 'Connected' : 'Get Contract'}
-    </button>
+    </div>
   );
 };
 
-export default GetContractButton;
+export default GetMainContractButton;

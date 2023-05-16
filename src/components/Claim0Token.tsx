@@ -64,7 +64,7 @@ async function claim0Token () {
 
 return (
     <>
-    <button className={styles.rotatebutton} style={{marginBottom: "20px"}} onClick={claim0Token}>claim0Token</button>
+    <button className={styles.rotatebutton} style={{marginBottom: "20px"}} onClick={claim0Token}>claim</button>
     </>
 );
 };

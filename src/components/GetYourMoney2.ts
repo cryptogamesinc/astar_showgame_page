@@ -21,8 +21,15 @@ export default async function getYourMoney2(
 
     console.log("output", output);
     const humanOutput = output?.toHuman();
-    if (humanOutput && typeof humanOutput === "object" && "Ok" in humanOutput) {
-      setMoneyNumber(Number(humanOutput?.Ok));
+    if (
+      humanOutput &&
+      typeof humanOutput === "object" &&
+      "Ok" in humanOutput &&
+      humanOutput.Ok &&
+      typeof humanOutput.Ok === "string"
+    ) {
+      const yourBalance = Number(humanOutput?.Ok.replace(/,/g, ""));
+      setMoneyNumber(yourBalance);
       console.log("humanOutput?.Ok", humanOutput?.Ok);
     }
   }

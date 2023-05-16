@@ -13,19 +13,16 @@ import { css } from "@emotion/react";
 
 
 import ConnectWalletButton from '@/components/ConnectWalletButton';
+import GetMainContractButton from '@/components/GetMainContractButton';
 import GetContractButton from '@/components/GetContractButton';
 
 import Claim0Token from '@/components/Claim0Token';
 import GetStatus from '@/components/GetStatus';
 import EatAnApple from '@/components/EatAnApple';
-import TokenUri from '@/components/TokenUri';
-import tokenInfo from '@/components/TokenInfo';
 
 import mainMetadata from "./metadata.json";
 import myPsp22Metadata from "./my_psp22_mintable.json";
 import myPsp37Metadata from "./my_psp37_enumerable.json";
-import SetDeathStatus from '@/components/SetDeathStatus';
-import Psp37BaseUri from '@/components/Psp37BaseUri';
 import GetYourApple from '@/components/GetYourApple';
 import BuyAnApple from '@/components/BuyAnApple';
 import GetYourMoney from '@/components/GetYourMoney';
@@ -167,7 +164,7 @@ export default function Home() {
             <ConnectWalletButton onConnected={handleConnected} />
           </div>
           <div className={styles.headerItem}>
-            <GetContractButton 
+            <GetMainContractButton 
               contractAddress={mainContractAddress} 
               metadata={metadata} setApi={setApi} 
               setContract={setMainContract} 
@@ -178,6 +175,7 @@ export default function Home() {
 
         <div className={styles.description}>
           <div>
+          <div  className={styles.subTitle}>Main Contract</div>
             {/* money topics */}
             <div className={styles.money}>
               
@@ -239,7 +237,7 @@ export default function Home() {
               </div>  
             </div>
 
-            <div className={styles.aa}>
+            <div className={styles.mainNFT}>
               <GetInfo
                 contract={mainContract} 
                 address={address} 
@@ -255,12 +253,12 @@ export default function Home() {
               <div className={styles.container}>
               {mainNftImageUri && (
               <>
-                <img src={mainNftImageUri} alt="Image"  width="500" height="500" />
+                <img src={mainNftImageUri} className={styles.nftImage} alt="Image"  width="500" height="500" />
               </>
               )}
               <div>
-                {mainNftName && <p>Name: {mainNftName}</p>}
-                {mainNftDescription && <p>Description: {mainNftDescription}</p>}
+                {mainNftName && <p style={{marginBottom: "20px"}}>Name: {mainNftName}</p>}
+                {mainNftDescription && <p style={{marginBottom: "20px"}}>Description: {mainNftDescription}</p>}
 
                 <GetStatus 
                 contract={mainContract} 
@@ -274,7 +272,7 @@ export default function Home() {
                 setHappyStatus={setHappyStatus} 
                 />
 
-                <div >
+                <div>
                   <GetYourApple 
                     contract={mainContract} 
                     address={address} 
@@ -300,14 +298,16 @@ export default function Home() {
 
 
           {/* psp22 */}
-            <GetContractButton 
-              contractAddress={psp22ContractAddress} 
-              metadata={psp22metadata} 
-              setApi={setApi} 
-              setContract={setPsp22Contract} 
-              setGetContractResult={setGetPsp22ContractResult}
-            />
-
+            <div className={styles.subTitle}>
+              psp22
+              <GetContractButton 
+                contractAddress={psp22ContractAddress} 
+                metadata={psp22metadata} 
+                setApi={setApi} 
+                setContract={setPsp22Contract} 
+                setGetContractResult={setGetPsp22ContractResult}
+              />
+              </div>
             <div >
               <GetYourBalance 
                 contract={psp22Contract} 
@@ -323,6 +323,8 @@ export default function Home() {
 
 
           {/* psp37 */}
+          <div  className={styles.subTitle}>
+            psp37
             <GetContractButton 
               contractAddress={psp37ContractAddress} 
               metadata={psp37metadata} 
@@ -330,6 +332,7 @@ export default function Home() {
               setContract={setPsp37Contract} 
               setGetContractResult={setGetPsp37ContractResult}
             />
+          </div>
 
             <Claim0Token 
               contract={psp37Contract} 
@@ -352,12 +355,12 @@ export default function Home() {
             <div className={styles.container}>
             {psp37NftImageUri && (
               <>
-                <img src={psp37NftImageUri} alt="Image"  width="300" height="300" />
+                <img src={psp37NftImageUri} className={styles.nftImage} alt="Image"  width="300" height="300" />
               </>
             )}
               <div>
-                {psp37NftName && <p>Name: {psp37NftName}</p>}
-                {psp37NftDescription && <p>Description: {psp37NftDescription}</p>}
+                {psp37NftName && <p style={{marginBottom: "20px"}}>Name: {psp37NftName}</p>}
+                {psp37NftDescription && <p style={{marginBottom: "20px"}}>Description: {psp37NftDescription}</p>}
               </div>
             </div>
           </div>

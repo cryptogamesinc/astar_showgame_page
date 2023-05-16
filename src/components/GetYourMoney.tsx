@@ -40,7 +40,7 @@ const GetYourMoney: React.FC<GetYourMoneyProps> = ({ contract, address, gasLimit
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.container_number}>
       <div  className={styles.header_bottun} onClick={getYourMoney}>Game Money</div>
       {moneyNumber && <span className={styles.money_number}>{moneyNumber}</span>}
       </div>

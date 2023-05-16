@@ -41,9 +41,9 @@ const GetYourBalance: React.FC<GetYourBalanceProps> = ({ contract, address, gasL
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.container_number}>
       <button className={styles.rotatebutton} onClick={getYourBalance}>your Money</button>
-      {yourBalance && <span>{yourBalance}</span>}
+      {yourBalance && <span className={styles.number}>{yourBalance}</span>}
       </div>
     </>
   );

@@ -41,9 +41,9 @@ const GetYourApple: React.FC<GetYourAppleProps> = ({ contract, address, gasLimit
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.container_number}>
       <button className={styles.rotatebutton} onClick={getYourApple}>your Apple</button>
-      {appleNumber && <span className={styles.appleNumber}>{appleNumber}</span>}
+      {appleNumber && <span className={styles.number}>{appleNumber}</span>}
       </div>
     </>
   );

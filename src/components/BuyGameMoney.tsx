@@ -37,11 +37,7 @@ async function buyGameMoney () {
         const humanOutput = output?.toHuman();
         if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok && typeof humanOutput.Ok.Err === 'object' && humanOutput.Ok.Err !== null && 'Rmrk' in humanOutput.Ok.Err) {
           const message = humanOutput.Ok?.Err?.Rmrk;
-          if (message == "NotEnoughApple") {
-            alert("Not Enough Apple");
-          } else {
-            alert("Time(5min) has not passed");
-          }
+          alert("Not Enought Money");
 
         } else {
 

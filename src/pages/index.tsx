@@ -34,6 +34,7 @@ import Staking from '@/components/Staking';
 import Withdraw from '@/components/Withdraw';
 import GetYourStakedMoney from '@/components/GetYourStakedMoney';
 import GetYourBalance from '@/components/GetYourBalance';
+import BuyGameMoney from '@/components/BuyGameMoney';
 
 
 import { Abi } from '@polkadot/api-contract';
@@ -58,9 +59,12 @@ const override = css`
   `;
 
 
-const mainContractAddress = "Xd3cnDe9HHkMf9AhjVbUPiMYipUcyozJ2iDD1rq5f31AY8Y"
-const psp22ContractAddress = "Xbx8TMHCsuttDD8dN1od3cKVQcaxw78xAtneAxipG9R2bFd"
+const mainContractAddress = "YBr7KKSTfJC8RVNWJiXjBvGUwcWNTezGpboX32SRtJqaZGu"
+const psp22ContractAddress = "YcH39QJG5c7BGAi134N7Ar8jQaiUFZfwPRaX1eeZAg7TD1H"
 const psp37ContractAddress = "VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x"
+
+const ownerAddress = "5Fxgf74m64UyxWChkkCw2nxqgbNUMuCV64mcy7LETwRvmyuW"
+
   
 // main().then(() => console.log('completed'))
 
@@ -317,6 +321,14 @@ export default function Home() {
                 setYourBalance={setYourBalance}
               />
             </div>
+
+            <BuyGameMoney
+              contract={mainContract} 
+              psp22Address={psp22ContractAddress}
+              ownerAddress={ownerAddress}
+              account={account} 
+              gasLimit={gasLimit} 
+              />
 
             
 

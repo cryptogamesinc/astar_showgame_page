@@ -4,7 +4,7 @@ import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 import ownersTokenByIndex from '@/components/OwnersTokenByIndex';
 import getYourAppleFunction from "@/components/GetYourAppleFunction";
-import getStatus2 from "@/components/GetStatus2";
+import getStatusFunction from "@/components/GetStatusFunction";
 
 type EatAnAppleProps = {
     contract: ContractPromise | null;
@@ -60,7 +60,7 @@ async function eatAnApple () {
               if (status.isInBlock) {
                   console.log(`Completed at block hash #${status.asInBlock.toString()}`);
                   await getYourAppleFunction(contract, account.address, gasLimit, setAppleNumber);
-                  await getStatus2(contract, account.address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus);
+                  await getStatusFunction(contract, account.address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus);
 
               } else {
                   console.log(`Current status: ${status.type}`);

@@ -4,7 +4,7 @@ import styles from "@/styles/Home.module.css";
 import ownersTokenByIndex from "@/components/OwnersTokenByIndex";
 
 const storageDepositLimit = null;
-export default async function getStatus2(
+export default async function getStatusFunction(
   contract: ContractPromise | null,
   address: string,
   gasLimit: any,

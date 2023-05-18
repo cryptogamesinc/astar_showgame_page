@@ -3,7 +3,7 @@ import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 import getYourMoney2 from "@/components/GetYourMoney2";
-import getYourBalance2 from "@/components/GetYourBalance2";
+import getYourBalanceFunction from "@/components/GetYourBalanceFunction";
 
 type BuyGameMoneyProps = {
     contract: ContractPromise | null;
@@ -52,7 +52,7 @@ async function buyGameMoney () {
               if (status.isInBlock) {
                   console.log(`Completed at block hash #${status.asInBlock.toString()}`);
                   await getYourMoney2(contract, account.address, gasLimit, setMoneyNumber);
-                  await getYourBalance2(psp22Contract, account.address, gasLimit, setYourBalance);
+                  await getYourBalanceFunction(psp22Contract, account.address, gasLimit, setYourBalance);
 
               } else {
                   console.log(`Current status: ${status.type}`);

@@ -3,7 +3,7 @@ import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 import getYourMoneyFunction from "@/components/GetYourMoneyFunction";
-import getYourStakedMoney2 from "@/components/GetYourStakedMoney2";
+import getYourStakedMoneyFunction from "@/components/GetYourStakedMoneyFunction";
 
 type StakingProps = {
     contract: ContractPromise | null;
@@ -50,7 +50,7 @@ async function staking () {
                 if (status.isInBlock) {
                     console.log(`Completed at block hash #${status.asInBlock.toString()}`);
                     await getYourMoneyFunction(contract, account.address, gasLimit, setMoneyNumber);
-                    await getYourStakedMoney2(contract, account.address, gasLimit, setStakedMoney);
+                    await getYourStakedMoneyFunction(contract, account.address, gasLimit, setStakedMoney);
 
                 } else {
                     console.log(`Current status: ${status.type}`);

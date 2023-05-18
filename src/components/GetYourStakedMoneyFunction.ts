@@ -2,7 +2,7 @@ import React from "react";
 import { ContractPromise } from "@polkadot/api-contract";
 
 const storageDepositLimit = null;
-export default async function getYourStakedMoney2(
+export default async function getYourStakedMoneyFunction(
   contract: ContractPromise | null,
   address: string,
   gasLimit: any,

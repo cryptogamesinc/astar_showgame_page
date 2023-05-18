@@ -140,4 +140,4 @@ Polkadot.js, Talismanなどの対応しています。
 ![](src/images/9_getYourApple1.png)
 
 取得できない場合に備え、「unwrap_or_default」関数を使用する。  　　
-![](src/images/10_getYourApple2.png)
+![](src/images/10_getYourAppleFunction.png)

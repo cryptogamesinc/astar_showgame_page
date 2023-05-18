@@ -3,7 +3,7 @@ import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 import ownersTokenByIndex from '@/components/OwnersTokenByIndex';
-import getYourApple2 from "@/components/GetYourApple2";
+import getYourAppleFunction from "@/components/GetYourAppleFunction";
 import getStatus2 from "@/components/GetStatus2";
 
 type EatAnAppleProps = {
@@ -59,7 +59,7 @@ async function eatAnApple () {
     
               if (status.isInBlock) {
                   console.log(`Completed at block hash #${status.asInBlock.toString()}`);
-                  await getYourApple2(contract, account.address, gasLimit, setAppleNumber);
+                  await getYourAppleFunction(contract, account.address, gasLimit, setAppleNumber);
                   await getStatus2(contract, account.address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus);
 
               } else {

@@ -2,7 +2,7 @@ import React from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
-import getYourApple2 from "@/components/GetYourApple2";
+import getYourAppleFunction from "@/components/GetYourAppleFunction";
 import getYourMoneyFunction from "@/components/GetYourMoneyFunction";
 
 type BuyAnAppleProps = {
@@ -49,7 +49,7 @@ async function buyAnApple () {
     
               if (status.isInBlock) {
                   console.log(`Completed at block hash #${status.asInBlock.toString()}`);
-                  await getYourApple2(contract, account.address, gasLimit, setAppleNumber);
+                  await getYourAppleFunction(contract, account.address, gasLimit, setAppleNumber);
                   await getYourMoneyFunction(contract, account.address, gasLimit, setMoneyNumber);
                   
               } else {

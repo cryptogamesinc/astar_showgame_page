@@ -50,6 +50,26 @@ ipfs://QmUcbBRAhaEMxqf2LCcXGZnVBSoUkfvkNJw3XHVEMRHbSD/
 bad
 ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/
 
+## 数値についての説明
+
+このdappsにおいては、いくつかの数値を設定しています。
+
+### １ Daily Bonus
+- 取得ポイント：100
+- クールダウン期間：５分
+
+### １ Con
+
+### １ Con
+
+### １ Con
+
+### １ Con
+
+### １ Con
+
+
+
 ## 機能についての説明
 
 

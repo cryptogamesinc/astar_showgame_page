@@ -2,14 +2,14 @@ import React from "react";
 import { ContractPromise } from "@polkadot/api-contract";
 
 const storageDepositLimit = null;
-export default async function getYourStakedMoney2(
+export default async function getYourBalance2(
   contract: ContractPromise | null,
   address: string,
   gasLimit: any,
-  setStakedMoney: (value: number | null) => void
+  setYourBalance: (value: number | null) => void
 ) {
   if (contract !== null && address !== "") {
-    const { output } = await contract.query["multiAsset::getYourStakedMoney"](
+    const { output } = await contract.query["psp22::balanceOf"](
       address,
       {
         gasLimit: gasLimit,
@@ -28,8 +28,7 @@ export default async function getYourStakedMoney2(
       typeof humanOutput.Ok === "string"
     ) {
       const yourBalance = Number(humanOutput?.Ok.replace(/,/g, ""));
-      setStakedMoney(yourBalance);
-      console.log("humanOutput?.Ok", humanOutput?.Ok);
+      setYourBalance(yourBalance);
     }
   } else {
     alert("Connect your wallet and contract first");

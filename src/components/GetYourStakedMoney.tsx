@@ -28,9 +28,10 @@ const GetYourStakedMoney: React.FC<GetYourStakedMoneyProps> = ({ contract, addre
         if (
           humanOutput &&
           typeof humanOutput === 'object' &&
-          'Ok' in humanOutput 
+          'Ok' in humanOutput && humanOutput.Ok && typeof humanOutput.Ok === 'string'
         ) {
-          setStakedMoney(Number(humanOutput?.Ok));
+          const yourBalance = Number(humanOutput?.Ok.replace(/,/g, ''));
+          setStakedMoney(yourBalance);
           console.log("humanOutput?.Ok",humanOutput?.Ok)
         }
     } else {

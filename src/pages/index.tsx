@@ -324,15 +324,14 @@ export default function Home() {
 
             <BuyGameMoney
               contract={mainContract} 
+              psp22Contract={psp22Contract}
               psp22Address={psp22ContractAddress}
               ownerAddress={ownerAddress}
               account={account} 
               gasLimit={gasLimit} 
+              setMoneyNumber={setMoneyNumber}
+              setYourBalance={setYourBalance}
               />
-
-            
-
-
 
           {/* psp37 */}
           <div  className={styles.subTitle}>

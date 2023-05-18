@@ -2,7 +2,7 @@ import React from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
-import getYourMoney2 from "@/components/GetYourMoney2";
+import getYourMoneyFunction from "@/components/GetYourMoneyFunction";
 import getYourBalanceFunction from "@/components/GetYourBalanceFunction";
 
 type BuyGameMoneyProps = {
@@ -51,7 +51,7 @@ async function buyGameMoney () {
     
               if (status.isInBlock) {
                   console.log(`Completed at block hash #${status.asInBlock.toString()}`);
-                  await getYourMoney2(contract, account.address, gasLimit, setMoneyNumber);
+                  await getYourMoneyFunction(contract, account.address, gasLimit, setMoneyNumber);
                   await getYourBalanceFunction(psp22Contract, account.address, gasLimit, setYourBalance);
 
               } else {

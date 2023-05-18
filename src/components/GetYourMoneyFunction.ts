@@ -3,7 +3,7 @@ import { ContractPromise } from "@polkadot/api-contract";
 import styles from "@/styles/Home.module.css";
 
 const storageDepositLimit = null;
-export default async function getYourMoney2(
+export default async function getYourMoneyFunction(
   contract: ContractPromise | null,
   address: string,
   gasLimit: any,

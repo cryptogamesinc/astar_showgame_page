@@ -92,7 +92,8 @@ ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/
 
 Polkadot.js, Talismanなどの対応しています。  
 
-接続を行うと、ウォレットアドレスとソース（どのウォレットで接続しているか）が表示されます。
+接続を行うと、ウォレットアドレスとソース（どのウォレットで接続しているか）が表示されます。  
+(当初はフロントに設定していましたが、console画面に表示させるようにしています。)
 
 ![](src/images/1_wallet.png)
 
@@ -165,7 +166,7 @@ Polkadot.js, Talismanなどの対応しています。
 
 ![](src/images/8_getCurrentStatus3.png)
 
-### 5 「Your Apple」, 「Your Money」機能について
+### 5 「Your Apple」, 「Your Money」, 「Staked」 機能について
 
 コントラクトが保持しているデータを取得する。  
 
@@ -174,3 +175,29 @@ Polkadot.js, Talismanなどの対応しています。
 
 取得できない場合に備え、「unwrap_or_default」関数を使用する。  　　
 ![](src/images/10_getYourAppleFunction.png)
+
+### ６ Staking機能について
+
+stakeの量が0もしくは金額不足について確認を行う。
+
+該当すればエラー表示
+
+![](src/images/11_stakeYourMoney.png)
+
+ステーキング後のステーキング量、手持ちのお金の計算を行う。
+
+![](src/images/12_stakeYourMoney2.png)
+
+ステーキング量、手持ちのお金、現在時刻の設定を行う
+
+![](src/images/13_stakeYourMoney3.png)
+
+### 7 Withdraw機能について
+
+ステーキング量を確認し、0の場合はエラーを表示する
+
+![](src/images/14_withdrawYourMoney.png)
+
+エラーでない場合は、引き出し後の合計額を求め、設定を行う
+
+![](src/images/15_withdrawYourMoney2.png)

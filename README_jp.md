@@ -309,7 +309,7 @@ buy_game_money関数の中で、call_psp22_transfer関数を呼び出してい�
 
 ![](src/images/32_buyGameMoney.png)
 
-### 12 psp２２,psp３７について
+### 12 psp22,psp37について
 
 OpenBrushを元に作成している。
 

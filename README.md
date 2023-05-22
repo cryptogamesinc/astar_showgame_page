@@ -36,50 +36,48 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# Specific description of this project below
 
+## Explanation of the values
 
-# 以下、このプロジェクトについての具体的な説明
+In this dapps, several values are set.
+Since this is a showcase project, all the values are short so that you can easily check the effect of the project.
 
-## 数値についての説明
+### 1 Daily Bonus
+- Acquisition point: 100
+- Cooldown period: 5 minutes
 
-このdappsにおいては、いくつかの数値を設定しています。
-なお、ショーケース用であるため、効果の確認がしやすいよう、すべて短めに設定しています。
-
-### １ Daily Bonus
-- 取得ポイント：100
-- クールダウン期間：５分
-
-### 2 ステーキング
-- 10秒ごとに１％増加
+### 2 Staking
+- 1% increase every 10 seconds
 
 ### 3 Buy an Apple
-- 20ゲームポイントで１個取得
+- Get 1 for 20 game points
 
 ### 4 Get Status
-- 1分ごとにステータスが変更
-- hungryは+5, health, happyは-5
+- Status changes every minute
+- +5 for hungry, -5 for healthy and happy
 
 ### 5 Eat an Apple
-- 等確率（確認簡易化のため）で、次のステータスが発生(hungry, health, happyの順で記載)
-- 1 通常変化（-30, +30, +30）
-- 2 フルステータス (0, 100, 100)
-- 3 ラッキーステータス (-50, +50, +50)
-- 4 デスステータス (80, 0, 0)
+- The following statuses occur with equal probability (for simplicity) (listed in the order of hungry, health, happy)
+- 1 Normal change (-30, +30, +30)
+- 2 Full status (0, 100, 100)
+- 3 Lucky status (-50, +50, +50)
+- 4 Death Status (80, 0, 0)
 
--  クールダウン期間：５分
+- Cooldown period: 5 minutes
 
 ### 6 Buy Game Money
-- psp22を500消費し、ゲームポイントを300取得する
+- Spend 500 psp22 and get 300 game points
 
-### 7 NFT（psp34, psp37）の取得枚数
-- NFTの取得枚数は１枚まで。それ以上取得しようとするとエラーを発生させる。
+### 7 Number of NFTs (psp34, psp37) acquired
+- The number of NFTs acquired is limited to 1. If you try to get more than that, an error will occur.
 
 
-## URLについての説明
+## Explanation of URLs
 
-ステータスの変化を起こすURLは下のURLを使用している。
+The following URL is used for the URL that causes the status change.
 
-こちらは、Pinataにて作成。
+This one was created by Pinata.
 https://www.pinata.cloud/
 
 - normal url
@@ -94,237 +92,237 @@ ipfs://QmUcbBRAhaEMxqf2LCcXGZnVBSoUkfvkNJw3XHVEMRHbSD/
 
 ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/
 
-## 機能についての説明
+## Description of features
 
-### １ Connect Walletボタンについて
+### 1 About Connect Wallet button
 
-ウォレット接続を行います。  
+Connect Wallet connection.  
 
-Polkadot.js, Talismanなどの対応しています。  
+Polkadot.js, Talisman, etc. are supported.  
 
-接続を行うと、ウォレットアドレスとソース（どのウォレットで接続しているか）が表示されます。  
-(当初はフロントに設定していましたが、console画面に表示させるようにしています。)
+Once connected, the wallet address and source (which wallet you are connecting with) will be displayed.  
+(Initially it was set up on the front, but now it is displayed on the CONSOLE screen.)
 
-![](src/images/1_wallet.png)
+! [](src/images/1_wallet.png)
 
-### 2 Get Contractボタンについて
+### 2 About the Get Contract button
 
-コントラクトを取得するためには、下のように、provider, apiからContractPromiseでコントラクトを取得することになります。  
+To get contract, you have to get contract by ContractPromise from provider, api as shown below.  
 
-![](src/images/2_getContract.png)
+! [](src/images/2_getContract.png)
 
-また、コントラクト作成時にできる、jsonファイルを設定することが必要です。  
+It is also necessary to set up a json file, which can be done when creating the contract.  
 
-これがないと、関数の実行などを行うことができません。  
+Without it, you will not be able to execute functions, etc.  
 
-![](src/images/3_metadata.png)
+! [](src/images/3_metadata.png)
 
-### 3 Daily Bonus機能について
+### 3 About the Daily Bonus function
 
-#### １）待機期間の設定について
+#### 1) Setting the waiting period
 
-下のように、待機期間を設定しています。 
+The waiting period is set as shown below. 
 
-設定後、現在時刻をコントラクトに書き込み、次回のDailyBonus実行時の判定に使います。
+After setting, the current time is written to the contract and used to determine the next time the DailyBonus is executed.
 
-今回はモデルケースのため、5分で設定しています。
-![](src/images/4_dailyBonus1.png)
+In this case, for the model case, it is set to 5 minutes.
+! [](src/images/4_dailyBonus1.png)
 
-#### 2）ゲーム内通貨の設定について
+#### 2) Setting up the in-game currency
 
-ゲーム内通貨はコントラクトでMappingとして設定しています。  
+The in-game currency is set as Mapping in the contract.  
 
-今回はべたうちで100としていますが、ここを関数化して、任意の数値を設定できるようにすることで汎用性が増します。
+This time, the value is set to 100 as a solid value, but it can be made more versatile by making it a function so that it can be set to any value.
 
-![](src/images/5_dailyBonus2.png)
+! [](src/images/5_dailyBonus2.png)
 
-### ４ Get Status機能について
+### 4 About the Get Status function
 
-ステータスの取得を行う。  
+Get Status.  
 
-ステータスは「Hungry」「Happy」「Health」の３つがあり、時間と共に減少していく(Hungryは増える)  
+There are three statuses: "Hungry", "Happy", and "Health", and they decrease with time (Hungry increases).  
 
-ステータスの減少は前回りんごを食べた時からスタートする。  
+The decrease in status starts from the last time you ate an apple.  
 
-まだ１度もりんごを食べたことがない場合は、ステータスは全て初期値の0とする
+If an apple has never been eaten before, all statuses are initially set to 0
 
-#### 1）前回りんごを食べた時間を取得
+#### 1) Obtain the time of the last time an apple was eaten
 
-「last_eaten」で前回りんごを食べた時間を取得する。  
+The time when the apple was last eaten is acquired by "last_eaten".  
 
-食べたことがない場合はステータスを0に設定する  
+If the apple has never been eaten, the status is set to 0.  
 
-![](src/images/6_getCurrentStatus1.png)
+! [](src/images/6_getCurrentStatus1.png)
 
-#### ２）ステータスの減り具合を決定する
+#### 2) Determine the status decrement
 
-現在時刻から「last_eaten」を引き、経過時刻を求める。  
+Subtract "last_eaten" from the current time to obtain the elapsed time.  
 
-この際、単位はm秒となる。  
+In this case, the unit is m seconds.  
 
-今回は図のように、１分単位で、5変化するように設定する。  
+In this case, as shown in the figure, the time is set to change by 5 in increments of 1 minute.  
 
-また、現在のステータスも取得する。取得できない場合は、0を取得する
+The current status is also obtained. If the current status cannot be obtained, 0 is obtained.
 
-![](src/images/7_getCurrentStatus2.png)
+! [](src/images/7_getCurrentStatus2.png)
 
-#### 3）変化後のステータスを取得する
+#### 3) Obtain the status after the change
 
-変化するステータスを元に、変化後のステータスを取得する。  
+Based on the changing status, obtain the status after the change.  
 
-ここでは、「saturating_sub」関数を使い、0以下になる場合は0を返すようにしている。  
+Here, the "saturating_sub" function is used to return 0 if it is less than 0.  
 
-![](src/images/8_getCurrentStatus3.png)
+! [](src/images/8_getCurrentStatus3.png)
 
-### 5 「Your Apple」, 「Your Money」, 「Staked」 機能について
+### 5 "Your Apple", "Your Money" and "Staked" functions
 
-コントラクトが保持しているデータを取得する。  
+Retrieve the data held by the contract.  
 
-データは下のように、Mapping構造になっている。　　
-![](src/images/9_getYourApple1.png)
+The data is in a Mapping structure as shown below.　　
+! [](src/images/9_getYourApple1.png)
 
-取得できない場合に備え、「unwrap_or_default」関数を使用する。  　　
-![](src/images/10_getYourAppleFunction.png)
+Use the "unwrap_or_default" function in case the data cannot be obtained.  　　
+! [](src/images/10_getYourAppleFunction.png)
 
-### ６ Staking機能について
+### 6 Staking function
 
-stakeの量が0もしくは金額不足について確認を行う。
+Check the amount of staking for 0 or insufficient amount.
 
-該当すればエラー表示
+If applicable, an error is displayed.
 
-![](src/images/11_stakeYourMoney.png)
+! [](src/images/11_stakeYourMoney.png)
 
-ステーキング後のステーキング量、手持ちのお金の計算を行う。
+Calculate the amount of staking and money on hand after staking.
 
-![](src/images/12_stakeYourMoney2.png)
+! [](src/images/12_stakeYourMoney2.png)
 
-ステーキング量、手持ちのお金、現在時刻の設定を行う
+Set the amount of staking, money on hand, and current time.
 
-![](src/images/13_stakeYourMoney3.png)
+! [](src/images/13_stakeYourMoney3.png)
 
-### 7 Withdraw機能について
+### 7 Withdraw function
 
-ステーキング量を確認し、0の場合はエラーを表示する
+Check the staking amount and display an error if it is 0.
 
-![](src/images/14_withdrawYourMoney.png)
+! [](src/images/14_withdrawYourMoney.png)
 
-エラーでない場合は、引き出し後の合計額を求め、設定を行う
+If not an error, find the total amount after withdrawal and set
 
-![](src/images/15_withdrawYourMoney2.png)
+! [](src/images/15_withdrawYourMoney2.png)
 
-### 8 Buy an Apple機能について
+### 8 About Buy an Apple feature
 
-ゲーム内マネー20でリンゴ１つを購入する  
+Buy one apple with 20 in-game money  
 
-まずは、お金が20以上あるかチェックを行い、なければ、エラーを表示させる。  
+First, check if you have more than 20 money, if not, display an error.  
 
-問題なければ、変更後のお金で上書きする
-![](src/images/16_buyAnApple.png)
+If no problem, overwrite with the changed money.
+! [](src/images/16_buyAnApple.png)
 
-次に、リンゴの個数を１つ増やし、上書きする
-![](src/images/17_buyAnApple2.png)
+Next, increase the number of apples by one and overwrite with !
+! [](src/images/17_buyAnApple2.png)
 
-### 9 Get Info機能について
+### 9 About the Get Info function
 
-情報を取得するために、「tokenUri」関数を使用している。
+The "tokenUri" function is used to get information.
 
-まずは、ID型のtoken_idを取得し、to_string()でString型にする。
+First, the token_id of ID type is obtained and converted to String type by to_string().
 
-その際、matchを用い、型による分岐を行う
+At that time, match is used to branch by type.
 
-![](src/images/18_tokenUri.png)
+! [](src/images/18_tokenUri.png)
 
-次に、get_condition_url関数を用い、urlを取得する
+Next, use get_condition_url function to obtain the url
 
-ただし、これがvec型であるため、String型に変換を行う。
+However, since this is a vec type, it must be converted to a String type.
 
-これを行わないと、数値との組み合わせができない。
+If this is not done, it cannot be combined with a numeric value.
 
-![](src/images/19_tokenUri2.png)
+! [](src/images/19_tokenUri2.png)
 
-なお、get_condition_url関数は、下のように、conditionによって、返す文字列を変えている
+The get_condition_url function returns a different string depending on the condition, as shown below.
 
-![](src/images/20_getConditinUrl.png)
+! [](src/images/20_getConditinUrl.png)
 
-取得したURLとトークンIDを接続し、byteに変換したものを返す
+Connect the obtained URL and token ID, and return the converted string in bytes.
 
-![](src/images/21_tokenUri3.png)
+! [](src/images/21_tokenUri3.png)
 
-### 10 Eat an Apple機能について
+### 10 About the Eat an Apple function
 
-まずは、経過時間を確認し、設定時間が経過していない場合はエラーを返す。
+First, check the elapsed time and return an error if the set time has not elapsed.
 
-経過している場合は、現在の時刻を設定する。
+If it has elapsed, the current time is set.
 
-![](src/images/22_eatAnApple.png)
+! [](src/images/22_eatAnApple.png)
 
-次に、リンゴの数を減らす。
+Next, reduce the number of apples.
 
-![](src/images/23_eatAnApple2.png)
+! [](src/images/23_eatAnApple2.png)
 
-最後に、擬似乱数を生成し、分岐させる。
+Finally, generate pseudo-random numbers and branch.
 
-なお、確認を行うために、等確率としているものの、一般的にはノーマルのステータス変更：80％、
-レアのステータス変更が1％など、確率を変えるものと想定。
+Note that although equal probabilities are used to provide confirmation, in general, the status change for normal: 80%,
+However, it is generally assumed that the probability will be changed as follows: normal status change: 80%, rare status change: 1%, and so on.
 
-![](src/images/24_eatAnApple3.png)
+! [](src/images/24_eatAnApple3.png)
 
-また、擬似乱数を求めるコードがこちら
+Also, here is the code to obtain pseudo-random numbers
 
-![](src/images/25_getPseudoRandom.png)
+! [](src/images/25_getPseudoRandom.png)
 
-これは、下記のAstarの公式ページから引用している。
+This is taken from Astar's official page below.
 
 https://docs.astar.network/docs/build/builder-guides/xvm_wasm/pseudo_random/
 
-### 11 Buy Game Money機能について
+### 11 About the Buy Game Money feature
 
-メインコントラクトから、psp22コントラクトの「transfer_from_contract」関数を実行します。
+From the main contract, execute the "transfer_from_contract" function of the psp22 contract.
 
-![](src/images/26_callPsp22Transfer.png)
+! [](src/images/26_callPsp22Transfer.png)
 
-そのために、「Cargo.toml」にて、依存関係を記載します。
+To do this, describe the dependencies in "Cargo.toml".
 
-![](src/images/27_callPsp22Transfer2.png)
+! [](src/images/27_callPsp22Transfer2.png)
 
-一方、lib.rsにて、my_psp22_mintableの使用について記載します。
+On the other hand, describe the use of my_psp22_mintable in lib.rs.
 
-![](src/images/28_callPsp22Transfer3.png)
+! [](src/images/28_callPsp22Transfer3.png)
 
-次は、参照先（ここではpsp22）についてです。
+The next step is about the reference (in this case, psp22).
 
-下のようにして、外から使用できるように設定します。
+Set it up so that it can be used from the outside, as shown below.
 
-![](src/images/29_callPsp22Transfer4.png)
+! [](src/images/29_callPsp22Transfer4.png)
 
-Cargo.tomlにおいても、外からRustで参照できるように、rlibを加えます。
+In Cargo.toml, also add rlib so that it can be referenced by Rust from the outside.
 
-![](src/images/30_callPsp22Transfer5.png)
+! [](src/images/30_callPsp22Transfer5.png)
 
-設定が終わると、あとはinterfaceに設定して、呼び出したい関数を実行します。
+Once set up, all that is left is to set the interface and execute the function you want to call.
 
-![](src/images/31_callPsp22Transfer6.png)
+! [](src/images/31_callPsp22Transfer6.png)
 
-buy_game_money関数の中で、call_psp22_transfer関数を呼び出しています。
+In the buy_game_money function, the call_psp22_transfer function is called.
 
-![](src/images/32_buyGameMoney.png)
+! [](src/images/32_buyGameMoney.png)
 
-### 12 psp２２,psp３７について
+### 12 About psp22,psp37
 
-OpenBrushを元に作成している。
+It is based on OpenBrush.
 
 https://github.com/Supercolony-net/openbrush-contracts
 
-- psp22
+- psp22.
 
-ゲーム内トークンを購入するために使用
+Used to buy in-game tokens
 
 https://contracts-ui.substrate.io/contract/WG7GLbCQLnuCyiURRaFsCsmg2E87mwbjoNvT675rxs5tgXe
 
 - psp37 
 
-記念品として使用。１人１NFTまで。
+Used as a souvenir; limited to 1 NFT per person.
 
-２枚以上取得しようとすると、エラーが発生。
+Error occurs if you try to get more than 2.
 
 https://contracts-ui.substrate.io/contract/VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x

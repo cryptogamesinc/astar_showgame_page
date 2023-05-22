@@ -103,38 +103,38 @@ Polkadot.js, Talisman, etc. are supported.
 Once connected, the wallet address and source (which wallet you are connecting with) will be displayed.  
 (Initially it was set up on the front, but now it is displayed on the CONSOLE screen.)
 
-! [](src/images/1_wallet.png)
+![](src/images/1_wallet.png)
 
 ### 2 About the Get Contract button
 
 To get contract, you have to get contract by ContractPromise from provider, api as shown below.  
 
-! [](src/images/2_getContract.png)
+![](src/images/2_getContract.png)
 
 It is also necessary to set up a json file, which can be done when creating the contract.  
 
 Without it, you will not be able to execute functions, etc.  
 
-! [](src/images/3_metadata.png)
+![](src/images/3_metadata.png)
 
 ### 3 About the Daily Bonus function
 
-#### 1) Setting the waiting period
+#### 1） Setting the waiting period
 
 The waiting period is set as shown below. 
 
 After setting, the current time is written to the contract and used to determine the next time the DailyBonus is executed.
 
 In this case, for the model case, it is set to 5 minutes.
-! [](src/images/4_dailyBonus1.png)
+![](src/images/4_dailyBonus1.png)
 
-#### 2) Setting up the in-game currency
+#### 2） Setting up the in-game currency
 
 The in-game currency is set as Mapping in the contract.  
 
 This time, the value is set to 100 as a solid value, but it can be made more versatile by making it a function so that it can be set to any value.
 
-! [](src/images/5_dailyBonus2.png)
+![](src/images/5_dailyBonus2.png)
 
 ### 4 About the Get Status function
 
@@ -146,15 +146,15 @@ The decrease in status starts from the last time you ate an apple.
 
 If an apple has never been eaten before, all statuses are initially set to 0
 
-#### 1) Obtain the time of the last time an apple was eaten
+#### 1） Obtain the time of the last time an apple was eaten
 
 The time when the apple was last eaten is acquired by "last_eaten".  
 
 If the apple has never been eaten, the status is set to 0.  
 
-! [](src/images/6_getCurrentStatus1.png)
+![](src/images/6_getCurrentStatus1.png)
 
-#### 2) Determine the status decrement
+#### 2） Determine the status decrement
 
 Subtract "last_eaten" from the current time to obtain the elapsed time.  
 
@@ -164,25 +164,25 @@ In this case, as shown in the figure, the time is set to change by 5 in incremen
 
 The current status is also obtained. If the current status cannot be obtained, 0 is obtained.
 
-! [](src/images/7_getCurrentStatus2.png)
+![](src/images/7_getCurrentStatus2.png)
 
-#### 3) Obtain the status after the change
+#### 3） Obtain the status after the change
 
 Based on the changing status, obtain the status after the change.  
 
 Here, the "saturating_sub" function is used to return 0 if it is less than 0.  
 
-! [](src/images/8_getCurrentStatus3.png)
+![](src/images/8_getCurrentStatus3.png)
 
 ### 5 "Your Apple", "Your Money" and "Staked" functions
 
 Retrieve the data held by the contract.  
 
 The data is in a Mapping structure as shown below.　　
-! [](src/images/9_getYourApple1.png)
+![](src/images/9_getYourApple1.png)
 
 Use the "unwrap_or_default" function in case the data cannot be obtained.  　　
-! [](src/images/10_getYourAppleFunction.png)
+![](src/images/10_getYourAppleFunction.png)
 
 ### 6 Staking function
 
@@ -190,25 +190,25 @@ Check the amount of staking for 0 or insufficient amount.
 
 If applicable, an error is displayed.
 
-! [](src/images/11_stakeYourMoney.png)
+![](src/images/11_stakeYourMoney.png)
 
 Calculate the amount of staking and money on hand after staking.
 
-! [](src/images/12_stakeYourMoney2.png)
+![](src/images/12_stakeYourMoney2.png)
 
 Set the amount of staking, money on hand, and current time.
 
-! [](src/images/13_stakeYourMoney3.png)
+![](src/images/13_stakeYourMoney3.png)
 
 ### 7 Withdraw function
 
 Check the staking amount and display an error if it is 0.
 
-! [](src/images/14_withdrawYourMoney.png)
+![](src/images/14_withdrawYourMoney.png)
 
 If not an error, find the total amount after withdrawal and set
 
-! [](src/images/15_withdrawYourMoney2.png)
+![](src/images/15_withdrawYourMoney2.png)
 
 ### 8 About Buy an Apple feature
 
@@ -217,10 +217,10 @@ Buy one apple with 20 in-game money
 First, check if you have more than 20 money, if not, display an error.  
 
 If no problem, overwrite with the changed money.
-! [](src/images/16_buyAnApple.png)
+![](src/images/16_buyAnApple.png)
 
 Next, increase the number of apples by one and overwrite with !
-! [](src/images/17_buyAnApple2.png)
+![](src/images/17_buyAnApple2.png)
 
 ### 9 About the Get Info function
 
@@ -230,7 +230,7 @@ First, the token_id of ID type is obtained and converted to String type by to_st
 
 At that time, match is used to branch by type.
 
-! [](src/images/18_tokenUri.png)
+![](src/images/18_tokenUri.png)
 
 Next, use get_condition_url function to obtain the url
 
@@ -238,15 +238,15 @@ However, since this is a vec type, it must be converted to a String type.
 
 If this is not done, it cannot be combined with a numeric value.
 
-! [](src/images/19_tokenUri2.png)
+![](src/images/19_tokenUri2.png)
 
 The get_condition_url function returns a different string depending on the condition, as shown below.
 
-! [](src/images/20_getConditinUrl.png)
+![](src/images/20_getConditinUrl.png)
 
 Connect the obtained URL and token ID, and return the converted string in bytes.
 
-! [](src/images/21_tokenUri3.png)
+![](src/images/21_tokenUri3.png)
 
 ### 10 About the Eat an Apple function
 
@@ -254,22 +254,22 @@ First, check the elapsed time and return an error if the set time has not elapse
 
 If it has elapsed, the current time is set.
 
-! [](src/images/22_eatAnApple.png)
+![](src/images/22_eatAnApple.png)
 
 Next, reduce the number of apples.
 
-! [](src/images/23_eatAnApple2.png)
+![](src/images/23_eatAnApple2.png)
 
 Finally, generate pseudo-random numbers and branch.
 
 Note that although equal probabilities are used to provide confirmation, in general, the status change for normal: 80%,
 However, it is generally assumed that the probability will be changed as follows: normal status change: 80%, rare status change: 1%, and so on.
 
-! [](src/images/24_eatAnApple3.png)
+![](src/images/24_eatAnApple3.png)
 
 Also, here is the code to obtain pseudo-random numbers
 
-! [](src/images/25_getPseudoRandom.png)
+![](src/images/25_getPseudoRandom.png)
 
 This is taken from Astar's official page below.
 
@@ -279,33 +279,33 @@ https://docs.astar.network/docs/build/builder-guides/xvm_wasm/pseudo_random/
 
 From the main contract, execute the "transfer_from_contract" function of the psp22 contract.
 
-! [](src/images/26_callPsp22Transfer.png)
+![](src/images/26_callPsp22Transfer.png)
 
 To do this, describe the dependencies in "Cargo.toml".
 
-! [](src/images/27_callPsp22Transfer2.png)
+![](src/images/27_callPsp22Transfer2.png)
 
 On the other hand, describe the use of my_psp22_mintable in lib.rs.
 
-! [](src/images/28_callPsp22Transfer3.png)
+![](src/images/28_callPsp22Transfer3.png)
 
 The next step is about the reference (in this case, psp22).
 
 Set it up so that it can be used from the outside, as shown below.
 
-! [](src/images/29_callPsp22Transfer4.png)
+![](src/images/29_callPsp22Transfer4.png)
 
 In Cargo.toml, also add rlib so that it can be referenced by Rust from the outside.
 
-! [](src/images/30_callPsp22Transfer5.png)
+![](src/images/30_callPsp22Transfer5.png)
 
 Once set up, all that is left is to set the interface and execute the function you want to call.
 
-! [](src/images/31_callPsp22Transfer6.png)
+![](src/images/31_callPsp22Transfer6.png)
 
 In the buy_game_money function, the call_psp22_transfer function is called.
 
-! [](src/images/32_buyGameMoney.png)
+![](src/images/32_buyGameMoney.png)
 
 ### 12 About psp22,psp37
 

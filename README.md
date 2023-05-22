@@ -37,18 +37,8 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-test contract ver.1(shibuya)
-aAvEKZ4fyddW8fKLTkyFkYsyPGFdTy1GoYi1PVjFgVSBaww
 
-ex1. set ipfs://QmYJhYes1kzp2soWYEYKzvA84V8YivL8BCpsnN773xyufr/
-ex2. set ipfs://QmXtnr9aEJVywiLs1keZdyiKbQwignZT3FhwKYivF15oZp/
-
-normal
-ipfs://Qmce1gmS3s73gASHTbaNnzJNHE7mbbtq5R8pxtkaUWD1KX/
-good 
-ipfs://QmUcbBRAhaEMxqf2LCcXGZnVBSoUkfvkNJw3XHVEMRHbSD/
-bad
-ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/
+# 以下、このプロジェクトについての具体的な説明
 
 ## 数値についての説明
 
@@ -82,9 +72,26 @@ ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/
 - psp22を500消費し、ゲームポイントを300取得する
 
 
+## URLについての説明
+
+ステータスの変化を起こすURLは下のURLを使用している。
+
+こちらは、Pinataにて作成。
+https://www.pinata.cloud/
+
+normal
+
+ipfs://Qmce1gmS3s73gASHTbaNnzJNHE7mbbtq5R8pxtkaUWD1KX/
+
+good 
+
+ipfs://QmUcbBRAhaEMxqf2LCcXGZnVBSoUkfvkNJw3XHVEMRHbSD/
+
+bad
+
+ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/
 
 ## 機能についての説明
-
 
 ### １ Connect Walletボタンについて
 
@@ -253,13 +260,21 @@ stakeの量が0もしくは金額不足について確認を行う。
 ![](src/images/23_eatAnApple2.png)
 
 最後に、擬似乱数を生成し、分岐させる。
+
 なお、確認を行うために、等確率としているものの、一般的にはノーマルのステータス変更：80％、
 レアのステータス変更が1％など、確率を変えるものと想定。
 
 ![](src/images/24_eatAnApple3.png)
 
 また、擬似乱数を求めるコードがこちら
+
 ![](src/images/25_getPseudoRandom.png)
 
 これは、下記のAstarの公式ページから引用している。
+
 https://docs.astar.network/docs/build/builder-guides/xvm_wasm/pseudo_random/
+
+### 11 psp２２,psp３７について
+
+OpenBrushを元に作成している。
+

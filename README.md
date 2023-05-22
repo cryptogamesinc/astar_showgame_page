@@ -71,6 +71,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ### 6 Buy Game Money
 - psp22を500消費し、ゲームポイントを300取得する
 
+### 7 NFT（psp34, psp37）の取得枚数
+- NFTの取得枚数は１枚まで。それ以上取得しようとするとエラーを発生させる。
+
 
 ## URLについての説明
 
@@ -79,15 +82,15 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 こちらは、Pinataにて作成。
 https://www.pinata.cloud/
 
-normal
+- normal url
 
 ipfs://Qmce1gmS3s73gASHTbaNnzJNHE7mbbtq5R8pxtkaUWD1KX/
 
-good 
+- good url
 
 ipfs://QmUcbBRAhaEMxqf2LCcXGZnVBSoUkfvkNJw3XHVEMRHbSD/
 
-bad
+- bad url
 
 ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/
 
@@ -274,7 +277,54 @@ stakeの量が0もしくは金額不足について確認を行う。
 
 https://docs.astar.network/docs/build/builder-guides/xvm_wasm/pseudo_random/
 
-### 11 psp２２,psp３７について
+### 11 Buy Game Money機能について
+
+メインコントラクトから、psp22コントラクトの「transfer_from_contract」関数を実行します。
+
+![](src/images/26_callPsp22Transfer.png)
+
+そのために、「Cargo.toml」にて、依存関係を記載します。
+
+![](src/images/27_callPsp22Transfer2.png)
+
+一方、lib.rsにて、my_psp22_mintableの使用について記載します。
+
+![](src/images/28_callPsp22Transfer3.png)
+
+次は、参照先（ここではpsp22）についてです。
+
+下のようにして、外から使用できるように設定します。
+
+![](src/images/29_callPsp22Transfer4.png)
+
+Cargo.tomlにおいても、外からRustで参照できるように、rlibを加えます。
+
+![](src/images/30_callPsp22Transfer5.png)
+
+設定が終わると、あとはinterfaceに設定して、呼び出したい関数を実行します。
+
+![](src/images/31_callPsp22Transfer6.png)
+
+buy_game_money関数の中で、call_psp22_transfer関数を呼び出しています。
+
+![](src/images/32_buyGameMoney.png)
+
+### 12 psp２２,psp３７について
 
 OpenBrushを元に作成している。
 
+https://github.com/Supercolony-net/openbrush-contracts
+
+- psp22
+
+ゲーム内トークンを購入するために使用
+
+https://contracts-ui.substrate.io/contract/WG7GLbCQLnuCyiURRaFsCsmg2E87mwbjoNvT675rxs5tgXe
+
+- psp37 
+
+記念品として使用。１人１NFTまで。
+
+２枚以上取得しようとすると、エラーが発生。
+
+https://contracts-ui.substrate.io/contract/VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x

@@ -231,3 +231,35 @@ stakeの量が0もしくは金額不足について確認を行う。
 これを行わないと、数値との組み合わせができない。
 
 ![](src/images/19_tokenUri2.png)
+
+なお、get_condition_url関数は、下のように、conditionによって、返す文字列を変えている
+
+![](src/images/20_getConditinUrl.png)
+
+取得したURLとトークンIDを接続し、byteに変換したものを返す
+
+![](src/images/21_tokenUri3.png)
+
+### 10 Eat an Apple機能について
+
+まずは、経過時間を確認し、設定時間が経過していない場合はエラーを返す。
+
+経過している場合は、現在の時刻を設定する。
+
+![](src/images/22_eatAnApple.png)
+
+次に、リンゴの数を減らす。
+
+![](src/images/23_eatAnApple2.png)
+
+最後に、擬似乱数を生成し、分岐させる。
+なお、確認を行うために、等確率としているものの、一般的にはノーマルのステータス変更：80％、
+レアのステータス変更が1％など、確率を変えるものと想定。
+
+![](src/images/24_eatAnApple3.png)
+
+また、擬似乱数を求めるコードがこちら
+![](src/images/25_getPseudoRandom.png)
+
+これは、下記のAstarの公式ページから引用している。
+https://docs.astar.network/docs/build/builder-guides/xvm_wasm/pseudo_random/

@@ -201,3 +201,31 @@ stakeの量が0もしくは金額不足について確認を行う。
 エラーでない場合は、引き出し後の合計額を求め、設定を行う
 
 ![](src/images/15_withdrawYourMoney2.png)
+
+### 8 Buy an Apple機能について
+
+ゲーム内マネー20でリンゴ１つを購入する  
+
+まずは、お金が20以上あるかチェックを行い、なければ、エラーを表示させる。  
+
+問題なければ、変更後のお金で上書きする
+![](src/images/16_buyAnApple.png)
+
+次に、リンゴの個数を１つ増やし、上書きする
+![](src/images/17_buyAnApple2.png)
+
+### 9 Get Info機能について
+
+情報を取得するために、「tokenUri」関数を使用している。
+
+まずは、ID型のtoken_idを取得し、to_string()でString型にする。
+
+その際、matchを用い、型による分岐を行う
+
+![](src/images/18_tokenUri.png)
+
+次に、get_condition_url関数を用い、urlを取得する
+
+ただし、これがvec型であるため、String型に変換を行う。
+
+これを行わないと、数値との組み合わせができない。

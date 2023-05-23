@@ -92,6 +92,10 @@ ipfs://QmUcbBRAhaEMxqf2LCcXGZnVBSoUkfvkNJw3XHVEMRHbSD/
 
 ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/
 
+The multiAsset::setDefault function can also be used to facilitate initialization.
+
+![](src/images/33_setDefault.png)
+
 ## Description of features
 
 ### 1 About Connect Wallet button

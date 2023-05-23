@@ -94,6 +94,10 @@ ipfs://QmUcbBRAhaEMxqf2LCcXGZnVBSoUkfvkNJw3XHVEMRHbSD/
 
 ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/
 
+また、初期設定を円滑に行うために、multiAsset::setDefault関数が使用できます。
+
+![](src/images/33_setDefault.png)
+
 ## 機能についての説明
 
 ### １ Connect Walletボタンについて

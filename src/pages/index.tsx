@@ -59,7 +59,7 @@ const override = css`
   `;
 
 
-const mainContractAddress = "XHf8TYxVERU4MZMPQj8fTVTZi9bgTzectGEVydEDzhAVvDF"
+const mainContractAddress = "Y1jiLuxgGSsxFWtEj5vSqnW6L4sayaHxYzBVzKhv2kAsGHY"
 const psp22ContractAddress = "WG7GLbCQLnuCyiURRaFsCsmg2E87mwbjoNvT675rxs5tgXe"
 const psp37ContractAddress = "VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x"
 

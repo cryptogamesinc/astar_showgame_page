@@ -38,6 +38,7 @@ import BuyGameMoney from '@/components/BuyGameMoney';
 
 
 import { Abi } from '@polkadot/api-contract';
+import { Contract } from '@polkadot/api-contract/base';
 
 // metadataの設定
 const metadata = new Abi(mainMetadata);
@@ -165,7 +166,19 @@ export default function Home() {
             <Astar />
           </div>
           <div className={styles.headerItem}>
-            <ConnectWalletButton onConnected={handleConnected} />
+            <ConnectWalletButton 
+              onConnected={handleConnected}
+              contract={mainContract} 
+              gasLimit={gasLimit} 
+              nftName={mainNftName}
+              nftDescription={mainNftDescription}
+              nftImageUri={mainNftImageUri}
+              setNftName={setMainNftName}
+              setNftDescription={setMainNftDescription}
+              setNftImageUri={setMainNftImageUri}
+              flag={0}
+            />
+
           </div>
           <div className={styles.headerItem}>
             <GetMainContractButton 

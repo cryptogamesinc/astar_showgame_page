@@ -1,19 +1,34 @@
 import { useState } from 'react';
 import styles from '@/styles/Home.module.css';
+import { ContractPromise } from '@polkadot/api-contract';
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
+import getInfoFunction from "@/components/GetInfoFunction";
 
 
 interface ConnectWalletButtonProps {
   onConnected: (account: InjectedAccountWithMeta, address: string, source: string) => void;
+  contract: ContractPromise | null;
+  gasLimit: any;
+  nftName: string;
+  nftDescription: string;
+  nftImageUri: string;
+  setNftName: (value: string) => void;
+  setNftDescription: (value: string) => void;
+  setNftImageUri: (value: string) => void;
+  flag: number;
 }
 
-const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected }) => {
+const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected, contract, gasLimit, nftName, nftDescription, nftImageUri, setNftName, setNftDescription, setNftImageUri, flag }) => {
   const [address, setAddress] = useState('');
   const [source, setSource] = useState('');
   const [account, setAccount] = useState<InjectedAccountWithMeta | null>(null);;
   const [connected, setConnected] = useState(false);
 
   async function connectWallet() {
+    if (contract === null) {
+      alert("you should connect contract first");
+    } else {
+
     // ... (connectWallet 関数のコードをここに貼り付け)
     const { web3Accounts, web3Enable} = await import(
         "@polkadot/extension-dapp"
@@ -43,6 +58,11 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected }
 
     // アカウント情報が変更されたことを親コンポーネントに通知
     onConnected(account, address, source);
+
+    if (contract !== null) {
+      await getInfoFunction(contract,address, gasLimit,nftName, nftDescription, nftImageUri, setNftName, setNftDescription, setNftImageUri, flag );
+    }
+  }
   }
 
   return (

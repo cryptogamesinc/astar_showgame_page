@@ -35,7 +35,7 @@ import Withdraw from '@/components/Withdraw';
 import GetYourStakedMoney from '@/components/GetYourStakedMoney';
 import GetYourBalance from '@/components/GetYourBalance';
 import BuyGameMoney from '@/components/BuyGameMoney';
-
+import getContractButton from '@/components/GetContractButtonFunction';
 
 import { Abi } from '@polkadot/api-contract';
 import { Contract } from '@polkadot/api-contract/base';
@@ -133,6 +133,12 @@ export default function Home() {
     refTime: new BN(100_000_000_000),
     proofSize: new BN(1_000_000),
   });
+
+  useEffect(() => {
+    getContractButton(mainContractAddress, metadata, setApi, setMainContract);
+    getContractButton(psp22ContractAddress, psp22metadata, setApi, setPsp22Contract);
+    getContractButton(psp37ContractAddress, psp37metadata, setApi, setPsp37Contract);
+  }, []);
 
 
   return (

@@ -186,14 +186,6 @@ export default function Home() {
             />
 
           </div>
-          <div className={styles.headerItem}>
-            <GetMainContractButton 
-              contractAddress={mainContractAddress} 
-              metadata={metadata} setApi={setApi} 
-              setContract={setMainContract} 
-              setGetContractResult={setGetMainContractResult}
-            />
-            </div>
         </header>
 
         <div className={styles.description}>
@@ -323,14 +315,7 @@ export default function Home() {
           {/* psp22 */}
             <div className={styles.subTitle}>
               psp22
-              <GetContractButton 
-                contractAddress={psp22ContractAddress} 
-                metadata={psp22metadata} 
-                setApi={setApi} 
-                setContract={setPsp22Contract} 
-                setGetContractResult={setGetPsp22ContractResult}
-              />
-              </div>
+            </div>
             <div >
               <GetYourBalance 
                 contract={psp22Contract} 
@@ -355,13 +340,6 @@ export default function Home() {
           {/* psp37 */}
           <div  className={styles.subTitle}>
             psp37
-            <GetContractButton 
-              contractAddress={psp37ContractAddress} 
-              metadata={psp37metadata} 
-              setApi={setApi} 
-              setContract={setPsp37Contract} 
-              setGetContractResult={setGetPsp37ContractResult}
-            />
           </div>
 
             <Claim0Token 

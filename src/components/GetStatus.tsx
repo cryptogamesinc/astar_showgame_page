@@ -63,7 +63,7 @@ const GetStatus: React.FC<GetStatusProps> = ({ contract, address, gasLimit, hung
         }
       }
     } else {
-      alert("Connect your wallet and contract first");
+      alert("Connect your wallet first");
     }
   }
   

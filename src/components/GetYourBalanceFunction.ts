@@ -31,6 +31,6 @@ export default async function getYourBalanceFunction(
       setYourBalance(yourBalance);
     }
   } else {
-    alert("Connect your wallet and contract first");
+    alert("Connect your wallet first");
   }
 }

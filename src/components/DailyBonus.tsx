@@ -52,7 +52,7 @@ async function dailyBonus () {
             });
         }
     } else {
-      alert("Connect your wallet and contract first");
+      alert("Connect your wallet first");
     }
   }
 

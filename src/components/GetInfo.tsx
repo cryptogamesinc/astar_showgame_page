@@ -25,7 +25,7 @@ const GetInfo: React.FC<GetInfoProps> = ({ contract, address, gasLimit,nftName,n
 
       tokenInfo(contract, address, gasLimit, setNftName, setNftDescription, setNftImageUri, flag)
     } else {
-      alert("Connect your wallet and contract first");
+      alert("Connect your wallet first");
     }
 
   }

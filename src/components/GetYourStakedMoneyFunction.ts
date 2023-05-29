@@ -32,6 +32,6 @@ export default async function getYourStakedMoneyFunction(
       console.log("humanOutput?.Ok", humanOutput?.Ok);
     }
   } else {
-    alert("Connect your wallet and contract first");
+    alert("Connect your wallet first");
   }
 }

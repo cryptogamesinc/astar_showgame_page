@@ -35,7 +35,7 @@ const GetYourStakedMoney: React.FC<GetYourStakedMoneyProps> = ({ contract, addre
           console.log("humanOutput?.Ok",humanOutput?.Ok)
         }
     } else {
-      alert("Connect your wallet and contract first");
+      alert("Connect your wallet first");
     }
   }
   

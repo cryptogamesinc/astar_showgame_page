@@ -34,7 +34,7 @@ const GetYourBalance: React.FC<GetYourBalanceProps> = ({ contract, address, gasL
           setYourBalance(yourBalance);
         }
     } else {
-      alert("Connect your wallet and contract first");
+      alert("Connect your wallet first");
     }
   }
   

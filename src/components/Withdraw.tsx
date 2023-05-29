@@ -57,7 +57,7 @@ async function withdraw () {
 
         }
     } else {
-      alert("Connect your wallet and contract first");
+      alert("Connect your wallet first");
     }
   }
 

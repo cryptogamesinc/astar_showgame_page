@@ -33,7 +33,7 @@ const GetYourMoney: React.FC<GetYourMoneyProps> = ({ contract, address, gasLimit
           setMoneyNumber(yourBalance);
         }
     } else {
-      alert("Connect your wallet and contract first");
+      alert("Connect your wallet first");
     }
   }
   

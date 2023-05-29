@@ -26,7 +26,7 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected, 
 
   async function connectWallet() {
     if (contract === null) {
-      alert("you should connect contract first");
+      alert("Now connecting contract. Please wait for a minutes");
     } else {
 
     // ... (connectWallet 関数のコードをここに貼り付け)

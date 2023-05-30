@@ -1,4 +1,11 @@
 import Head from 'next/head'
+import Image from 'next/image'
+import image from '../images/items/background.png'
+import image_apple from '../images/items/apple.png'
+import image_treasure from '../images/items/treasure.png'
+import image_factory from '../images/items/factory.png'
+import image_store from '../images/items/store.png'
+import image_house from '../images/items/house.png'
 
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
@@ -187,6 +194,27 @@ export default function Home() {
 
           </div>
         </header>
+
+        <div className={styles.test}>
+          <Image src={image} alt="Description" width={1000} height={600} />
+          <Image src={image_apple} className={styles.apple_position} alt="Description" width={100} height={100} />
+          <Image src={image_treasure} className={styles.treasure_position} alt="Description" width={100} height={100} />
+          <Image src={image_factory} className={styles.factory_position} alt="Description" width={100} height={100} />
+          <Image src={image_store} className={styles.store_position} alt="Description" width={100} height={100} />
+          <Image src={image_house} className={styles.house_position} alt="Description" width={100} height={100} />
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
         <div className={styles.description}>
           <div>

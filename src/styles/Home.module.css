@@ -379,3 +379,58 @@
 .headerItem {
   margin-right: 10px; /* 各要素の間隔を調整する場合は適宜調整してください */
 }
+
+.test{
+  position: relative;
+  height: 700;
+  color: blue;
+}
+
+.test2 {
+  position: absolute;
+  top: 10%;
+  left: 40px;
+  color: red;
+}
+
+.test3 {
+  position: absolute;
+  top: 10%;
+  left: 70px;
+  color: pink;
+}
+
+.apple_position {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  color: pink;
+}
+
+.treasure_position {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  color: pink;
+}
+
+.factory_position {
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  color: pink;
+}
+
+.store_position {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  color: pink;
+}
+
+.house_position {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: pink;
+}

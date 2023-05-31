@@ -1,3 +1,163 @@
+# WasmShowCase
+
+WasmShowCaseはフルオンチェーンのキャラクターの育成ゲームです。
+
+リンゴを食べさせることにより、３つのステータス（空腹、健康、幸福）がランダムに変化します。
+時間の経過とともに、これらのステータスは下がってしまいますので（空腹は上がります。）注意して育成してください。
+
+また、スタータスの合計値によって、彼らの画像や名前も変化します。リンゴを買うにはゲーム内通貨を使用する必要があります。
+
+ゲーム内通貨を取得するには、購入、デイリーボーナス、ステーキングなどさまざまなオプションがあります。あなただけのキャラクターを育ててください。
+
+![](https://storage.googleapis.com/zenn-user-upload/17d5f5c3d1eb-20230531.png)
+
+-----
+
+# Starting the Game
+
+ゲームを始めるために、２つの選択肢があります。
+
+1. 直接ゲームを始める場合
+2. Githubからローカルに落として遊ぶ場合
+
+## 直接ゲームを始める場合
+始める前に、Polkadot系のウォレットを取得してください。
+
+推奨：`タリスマン`、もしくは`Polkadot.js`を使用してください。メタマスクなどのEVM系のウォレットでは動作しません。
+
+次に、ガス代である、`Shibuya`を取得します。持っていない場合には、`Faucet`から`Shibuya`を取得してください。ウォレットの準備ができ、`Shibuya`の取得ができれば、準備完了です。
+
+まずは種のボタンを押して、あなただけのキャラクターNFT（`psp34`）を取得しましょう。なお、キャラクターNFTはアカウントにつき、１体しかミントすることができません。
+
+## Githubからローカルに落として遊ぶ場合
+
+次のように、Githubを使用し、ローカルで立ち上げを行います。
+
+### メインコントラクト
+まずは、`メインコントラクト`をデプロイします。
+
+:::message
+ここに該当のGithub
+:::
+まずはgit cloneを行います。
+```sh
+git clone <後で>
+```
+その後コントラクトのbuildを行います。
+
+```sh
+cd examples/equippable
+cargo +cnightly-2023-02-07 contract build
+```
+最後に、`substrate`でコントラクトのデプロイを行います。
+https://contracts-ui.substrate.io/
+
+その際に`target > ink > rmrk_example_equippable`内にある`rmrk_example_equippable.contract`ファイルを使用します。
+
+### psp22コントラクト, psp３７コントラクト
+
+次に、`psp22`,`psp３７`用コントラクトをデプロイします。
+
+:::message
+ここに該当のGithub
+:::
+まずはgit cloneを行います。
+```sh
+git clone <後で>
+```
+その後コントラクトのbuildを行います。
+
+`psp22`
+```sh
+cd examples/psp22_extensions/mintable
+cargo +cnightly-2023-02-07 contract build
+```
+
+`psp37`
+```sh
+cd examples/psp37_extensions/mintable 
+cargo +cnightly-2023-02-07 contract build
+```
+
+最後に、`substrate`でコントラクトのデプロイを行います。
+https://contracts-ui.substrate.io/
+
+`psp22`
+その際に`psp22_extensions > mintable > target > ink`内にある`my_psp22_mintable.contractt`ファイルを使用します。
+
+`psp37`
+その際に`psp37_extensions > mintable > target > ink`内にある`my_psp37_mintable.contract`ファイルを使用します。
+
+
+### フロントエンド
+
+最後に、フロントエンドを立ち上げます。
+
+:::message
+ここに該当のGithub
+:::
+git cloneを行った後、`yarn`を実行します。
+```sh
+git clone <後で>
+cd astar-showgame-page
+yarn
+```
+
+`src > pages`内の`index.tsx`について、コントラクトアドレスを上で取得したものに変更します。
+
+```js
+const mainContractAddress = <Main Contract Address> 
+const psp22ContractAddress = <psp22 Contract Address> 
+const psp37ContractAddress = <psp37 Contract Address> 
+```
+
+ゲーム内通貨を購入した際の売上が入るアドレスを設定します。
+```js
+const ownerAddress = <Wallet Address>
+```
+最後に、`yarn dev`で立ち上げ、`http://localhost:3000/`で確認を行います。
+
+後は「直接ゲームを始める場合」のやり方に沿って進めていきます。
+
+# 現在ここまでです！
+
+# Structure of a dApp
+
+## Contract
+
+
+# Frontend
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

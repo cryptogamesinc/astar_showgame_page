@@ -36,9 +36,9 @@ WasmShowCaseはフルオンチェーンのキャラクターの育成ゲーム�
 ### メインコントラクト
 まずは、`メインコントラクト`をデプロイします。
 
-:::message
+
 ここに該当のGithub
-:::
+
 まずはgit cloneを行います。
 ```sh
 git clone <後で>
@@ -52,15 +52,15 @@ cargo +cnightly-2023-02-07 contract build
 最後に、`substrate`でコントラクトのデプロイを行います。
 https://contracts-ui.substrate.io/
 
-その際に`target > ink > rmrk_example_equippable`内にある`rmrk_example_equippable.contract`ファイルを使用します。
+その際に`target > ink > rmrk_example_equippable`内にある`rmrk_example_equippable.contract`を使用します。
 
 ### psp22コントラクト, psp３７コントラクト
 
 次に、`psp22`,`psp３７`用コントラクトをデプロイします。
 
-:::message
+
 ここに該当のGithub
-:::
+
 まずはgit cloneを行います。
 ```sh
 git clone <後で>
@@ -83,19 +83,19 @@ cargo +cnightly-2023-02-07 contract build
 https://contracts-ui.substrate.io/
 
 `psp22`
-その際に`psp22_extensions > mintable > target > ink`内にある`my_psp22_mintable.contractt`ファイルを使用します。
+その際に`psp22_extensions > mintable > target > ink`内にある`my_psp22_mintable.contractt`を使用します。
 
 `psp37`
-その際に`psp37_extensions > mintable > target > ink`内にある`my_psp37_mintable.contract`ファイルを使用します。
+その際に`psp37_extensions > mintable > target > ink`内にある`my_psp37_mintable.contract`を使用します。
 
 
 ### フロントエンド
 
 最後に、フロントエンドを立ち上げます。
 
-:::message
+
 ここに該当のGithub
-:::
+
 git cloneを行った後、`yarn`を実行します。
 ```sh
 git clone <後で>

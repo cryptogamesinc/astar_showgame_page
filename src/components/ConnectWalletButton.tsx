@@ -53,7 +53,6 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected, 
       setSource(source);
       setConnected(true);
 
-    // アカウント情報が変更されたことを親コンポーネントに通知
     onConnected(account, address, source);
 
     if (contract !== null) {

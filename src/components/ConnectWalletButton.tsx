@@ -29,7 +29,6 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected, 
       alert("Now connecting contract. Please wait for a minutes");
     } else {
 
-    // ... (connectWallet 関数のコードをここに貼り付け)
     const { web3Accounts, web3Enable} = await import(
         "@polkadot/extension-dapp"
       );
@@ -40,11 +39,9 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected, 
         return;
       }
       const accounts = await web3Accounts();
-      console.log("accounts",accounts)
   
       const account = accounts[0];
       setAccount(account);
-      console.log("account",account)
   
       const address = account?.address
       const source = account?.meta?.source
@@ -70,8 +67,6 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({ onConnected, 
       <div  className={styles.header_bottun}  onClick={connectWallet}>
         {connected ? 'Connected' : 'Connect Wallet'}
       </div>
-      {/* {address && <p style={{ marginBottom: '20px' }}>Address: {address}</p>}
-      {source && <p style={{ marginBottom: '20px' }}>Source: {source}</p>} */}
     </>
   );
 };

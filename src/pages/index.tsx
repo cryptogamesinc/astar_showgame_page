@@ -161,6 +161,10 @@ export default function Home() {
     },
   };
   const [treasureModalIsOpen, setTreasureModalIsOpen] = useState(false);
+  const [appleModalIsOpen, setAppleModalIsOpen] = useState(false);
+  const [factoryModalIsOpen, setFactoryModalIsOpen] = useState(false);
+  // const [treasureModalIsOpen, setTreasureModalIsOpen] = useState(false);
+  // const [treasureModalIsOpen, setTreasureModalIsOpen] = useState(false);
   return (
     <>
       <Head>
@@ -211,8 +215,38 @@ export default function Home() {
         <div className={styles.test}>
           <Image src={image} alt="Description" width={1000} height={600} />
           
-          <Image src={image_apple} className={styles.apple_position} alt="Description" width={100} height={100} />
+          {/* apple */}
+          <Container maxWidth="sm">
+            <Image src={image_apple} className={styles.apple_position} alt="Description" width={100} height={100} onClick={() => {
+                  setAppleModalIsOpen(true);
+                }}/>
+            <Modal isOpen={appleModalIsOpen} style={customStyles}>
+              <div className={styles.item}>
 
+                <GetYourApple 
+                  contract={mainContract} 
+                  address={address} 
+                  gasLimit={gasLimit} 
+                  appleNumber={appleNumber}
+                  setAppleNumber={setAppleNumber}
+                />
+
+                <EatAnApple 
+                    contract={mainContract} 
+                    account={account} 
+                    gasLimit={gasLimit} 
+                    setAppleNumber={setAppleNumber}
+                    setHungryStatus={setHungryStatus}
+                    setHealthStatus={setHealthStatus}
+                    setHappyStatus={setHappyStatus}
+                  />
+
+                <button onClick={() => { setAppleModalIsOpen(false);}}>閉じる</button>
+              </div>    
+            </Modal>
+          </Container>
+
+          {/* treasure */}
           <Container maxWidth="sm">
             <Image src={image_treasure} className={styles.treasure_position} alt="Description" width={100} height={100} onClick={() => {
                   setTreasureModalIsOpen(true);
@@ -246,8 +280,49 @@ export default function Home() {
               </div>    
             </Modal>
           </Container>
+
+          {/* factory */}
+          <Container maxWidth="sm">
+            <Image src={image_factory} className={styles.factory_position} alt="Description" width={100} height={100} onClick={() => {
+                  setFactoryModalIsOpen(true);
+                }}/>
+            <Modal isOpen={factoryModalIsOpen} style={customStyles}>
+              <div className={styles.item}>
+                <input 
+                    type="text" 
+                    value={inputValue === null ? "" : inputValue.toString()} // nullの場合は空文字列を表示
+                    onChange={handleInputChange} 
+                    style={{width: "100px"}}
+                    placeholder="stake amount"
+                />
+                <Staking 
+                  contract={mainContract} 
+                  account={account} 
+                  gasLimit={gasLimit}
+                  setMoneyNumber={setMoneyNumber}
+                  setStakedMoney={setStakedMoney}
+                  userInput={inputValue}
+                />
+                <GetYourStakedMoney 
+                  contract={mainContract} 
+                  address={address} 
+                  gasLimit={gasLimit}
+                  stakedMoney={stakedMoney}
+                  setStakedMoney={setStakedMoney}
+                />
+                <Withdraw 
+                  contract={mainContract} 
+                  account={account} 
+                  gasLimit={gasLimit}
+                  setMoneyNumber={setMoneyNumber}
+                  setStakedMoney={setStakedMoney}
+                />
+                <button onClick={() => { setFactoryModalIsOpen(false);}}>閉じる</button>
+              </div>    
+            </Modal>
+          </Container>
           
-          <Image src={image_factory} className={styles.factory_position} alt="Description" width={100} height={100} />
+
           <Image src={image_store} className={styles.store_position} alt="Description" width={100} height={100} />
           <Image src={image_house} className={styles.house_position} alt="Description" width={100} height={100} />
         </div>

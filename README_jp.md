@@ -84,15 +84,15 @@ https://www.pinata.cloud/
 
 - normal url
 
-ipfs://Qmce1gmS3s73gASHTbaNnzJNHE7mbbtq5R8pxtkaUWD1KX/
+ipfs://QmTBf9GJLiw97v84Q7aEPPFHUXdyqXWC6AUp97VnLFZtWr/
 
 - good url
 
-ipfs://QmUcbBRAhaEMxqf2LCcXGZnVBSoUkfvkNJw3XHVEMRHbSD/
+ipfs://QmQUxL1RSWbZAWhQfWnJJrMVZsPm4Stc5C64kRuSnXe56Q/
 
 - bad url
 
-ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/
+ipfs://QmV1VxGsrM4MLNn1qwR9Hmu5DGFfWjzHmhHFXpTT2fevMQ/
 
 また、初期設定を円滑に行うために、multiAsset::setDefault関数が使用できます。
 

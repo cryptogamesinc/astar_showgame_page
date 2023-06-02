@@ -135,9 +135,9 @@ The contract presents many methods
 
 ```rust:crates/multiasset/src/lib.rs set_default function
 fn set_default(&mut self, account_id: AccountId) -> Result<()> {
-        self.set_bad_uri(String::from("ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/"))?;
-        self.set_normal_uri(String::from("ipfs://Qmce1gmS3s73gASHTbaNnzJNHE7mbbtq5R8pxtkaUWD1KX/"))?;
-        self.set_good_uri(String::from("ipfs://QmUcbBRAhaEMxqf2LCcXGZnVBSoUkfvkNJw3XHVEMRHbSD/"))?;
+        self.set_bad_uri(String::from("ipfs://QmV1VxGsrM4MLNn1qwR9Hmu5DGFfWjzHmhHFXpTT2fevMQ/"))?;
+        self.set_normal_uri(String::from("ipfs://QmTBf9GJLiw97v84Q7aEPPFHUXdyqXWC6AUp97VnLFZtWr/"))?;
+        self.set_good_uri(String::from("ipfs://QmQUxL1RSWbZAWhQfWnJJrMVZsPm4Stc5C64kRuSnXe56Q/"))?;
         self.set_your_apple(account_id, 10)?;
         self.set_your_money(account_id, 500)?;
         Ok(())
@@ -933,9 +933,9 @@ cargo +nightly-2023-02-07 test
             set_sender(accounts.alice);
             assert!(rmrk.set_default(accounts.alice.clone()).is_ok());
 
-            assert_eq!(rmrk.get_bad_uri(), String::from("ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/"));
-            assert_eq!(rmrk.get_normal_uri(), String::from("ipfs://Qmce1gmS3s73gASHTbaNnzJNHE7mbbtq5R8pxtkaUWD1KX/"));
-            assert_eq!(rmrk.get_good_uri(), String::from("ipfs://QmUcbBRAhaEMxqf2LCcXGZnVBSoUkfvkNJw3XHVEMRHbSD/"));
+            assert_eq!(rmrk.get_bad_uri(), String::from("ipfs://QmV1VxGsrM4MLNn1qwR9Hmu5DGFfWjzHmhHFXpTT2fevMQ/"));
+            assert_eq!(rmrk.get_normal_uri(), String::from("ipfs://QmTBf9GJLiw97v84Q7aEPPFHUXdyqXWC6AUp97VnLFZtWr/"));
+            assert_eq!(rmrk.get_good_uri(), String::from("ipfs://QmQUxL1RSWbZAWhQfWnJJrMVZsPm4Stc5C64kRuSnXe56Q/"));
             assert_eq!(rmrk.get_your_apple(accounts.alice.clone()), 10);
             assert_eq!(rmrk.get_your_money(accounts.alice.clone()), 500);
         }
@@ -1074,15 +1074,15 @@ https://www.pinata.cloud/
 
 - normal url
 
-ipfs://Qmce1gmS3s73gASHTbaNnzJNHE7mbbtq5R8pxtkaUWD1KX/
+ipfs://QmTBf9GJLiw97v84Q7aEPPFHUXdyqXWC6AUp97VnLFZtWr/
 
 - good url
 
-ipfs://QmUcbBRAhaEMxqf2LCcXGZnVBSoUkfvkNJw3XHVEMRHbSD/
+ipfs://QmQUxL1RSWbZAWhQfWnJJrMVZsPm4Stc5C64kRuSnXe56Q/
 
 - bad url
 
-ipfs://QmPaBDnTLN972GZda7oQ7EiEe4L6GAHSR2LzLuqd221785/
+ipfs://QmV1VxGsrM4MLNn1qwR9Hmu5DGFfWjzHmhHFXpTT2fevMQ/
 
 The multiAsset::setDefault function can also be used to facilitate initialization.
 

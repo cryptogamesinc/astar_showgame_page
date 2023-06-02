@@ -434,3 +434,19 @@
   left: 50%;
   color: pink;
 }
+
+.test222 {
+  /* top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  marginRight: -50%;
+  transform: translate(-50%, -50%); */
+  margin-left: 10%;
+  margin-top: 10%;
+
+  width: 400px;
+  height: 400px;
+  border-radius: 4px;
+  border: 2px solid black;
+}

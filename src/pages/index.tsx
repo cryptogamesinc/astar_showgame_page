@@ -6,6 +6,8 @@ import image_treasure from '../images/items/treasure.png'
 import image_factory from '../images/items/factory.png'
 import image_store from '../images/items/store.png'
 import image_house from '../images/items/house.png'
+import Modal from 'react-modal';
+import { Button, Container } from "@mui/material";
 
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
@@ -147,7 +149,18 @@ export default function Home() {
     getContractButton(psp37ContractAddress, psp37metadata, setApi, setPsp37Contract);
   }, []);
 
-
+  const customStyles = {
+    content: {
+      top: "20%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      minWidth: "40%",
+    },
+  };
+  const [treasureModalIsOpen, setTreasureModalIsOpen] = useState(false);
   return (
     <>
       <Head>
@@ -197,8 +210,43 @@ export default function Home() {
 
         <div className={styles.test}>
           <Image src={image} alt="Description" width={1000} height={600} />
+          
           <Image src={image_apple} className={styles.apple_position} alt="Description" width={100} height={100} />
-          <Image src={image_treasure} className={styles.treasure_position} alt="Description" width={100} height={100} />
+
+          <Container maxWidth="sm">
+            <Image src={image_treasure} className={styles.treasure_position} alt="Description" width={100} height={100} onClick={() => {
+                  setTreasureModalIsOpen(true);
+                }}/>
+            <Modal isOpen={treasureModalIsOpen} style={customStyles}>
+              <div className={styles.item}>
+                <DailyBonus 
+                  contract={mainContract} 
+                  account={account} 
+                  gasLimit={gasLimit}
+                  setMoneyNumber={setMoneyNumber}
+                />
+                <GetYourBalance 
+                  contract={psp22Contract} 
+                  address={address} 
+                  gasLimit={gasLimit} 
+                  yourBalance={yourBalance}
+                  setYourBalance={setYourBalance}
+                />
+                <BuyGameMoney
+                  contract={mainContract} 
+                  psp22Contract={psp22Contract}
+                  psp22Address={psp22ContractAddress}
+                  ownerAddress={ownerAddress}
+                  account={account} 
+                  gasLimit={gasLimit} 
+                  setMoneyNumber={setMoneyNumber}
+                  setYourBalance={setYourBalance}
+                  />
+                <button onClick={() => { setTreasureModalIsOpen(false);}}>閉じる</button>
+              </div>    
+            </Modal>
+          </Container>
+          
           <Image src={image_factory} className={styles.factory_position} alt="Description" width={100} height={100} />
           <Image src={image_store} className={styles.store_position} alt="Description" width={100} height={100} />
           <Image src={image_house} className={styles.house_position} alt="Description" width={100} height={100} />

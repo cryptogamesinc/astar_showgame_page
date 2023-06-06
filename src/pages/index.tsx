@@ -46,6 +46,8 @@ import GetYourBalance from '@/components/GetYourBalance';
 import BuyGameMoney from '@/components/BuyGameMoney';
 import getContractButton from '@/components/GetContractButtonFunction';
 import buyAnAppleFunction from '@/components/BuyAnAppleFunction';
+import getInfoFunction from '@/components/GetInfoFunction';
+import getStatusFunction2 from '@/components/GetStatusFunction2';
 
 import { Abi } from '@polkadot/api-contract';
 import { Contract } from '@polkadot/api-contract/base';
@@ -214,7 +216,7 @@ export default function Home() {
         </header>
 
         <div className={styles.test}>
-          <Image src={image} alt="Description" width={1000} height={600} />
+          <Image src={image} className={styles.background} alt="Description" width={1000} height={600} />
           
           {/* apple */}
           <Container maxWidth="sm">
@@ -328,7 +330,24 @@ export default function Home() {
                 onClick={() => {
                   buyAnAppleFunction(mainContract ,account, gasLimit, setAppleNumber, setMoneyNumber);
                 }}/>
-          <Image src={image_house} className={styles.house_position} alt="Description" width={100} height={100} />
+          <Image src={image_house} className={styles.house_position} alt="Description" width={100} height={100}
+                onClick={() => {
+                  getStatusFunction2(mainContract ,address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus, mainNftName, mainNftDescription, mainNftImageUri,setMainNftName,setMainNftDescription,setMainNftImageUri,0);
+                }}
+           />
+
+
+
+
+
+
+          <div className={styles.vege_position} >
+              {mainNftImageUri && (
+              <>
+                <img src={mainNftImageUri} className={styles.nftImage} alt="Image"  width="400" height="400" />
+              </>
+              )}
+              </div>
         </div>
 
 

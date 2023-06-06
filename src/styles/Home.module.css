@@ -397,42 +397,57 @@
   position: absolute;
   top: 10%;
   left: 70px;
-  color: pink;
 }
 
 .apple_position {
   position: absolute;
-  top: 10%;
-  left: 10%;
-  color: pink;
+  top: 68%;
+  left: 50%;
+  z-index: 1;
 }
 
 .treasure_position {
   position: absolute;
   top: 20%;
-  left: 20%;
-  color: pink;
+  left: 26%;
+  z-index: 1;
 }
 
 .factory_position {
   position: absolute;
-  top: 30%;
-  left: 30%;
-  color: pink;
+  top: 23%;
+  left: 4%;
+  z-index: 1;
+  width: 165px;
+  height: 165px;
 }
 
 .store_position {
   position: absolute;
-  top: 40%;
-  left: 40%;
-  color: pink;
+  top: 30%;
+  left: 76%;
+  z-index: 1;
+  width: 180px;
+  height: 180px;
 }
 
 .house_position {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  color: pink;
+  top: 20%;
+  left: 60%;
+  z-index: 1;
+}
+
+.vege_position {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  display: flex;
+  z-index: 0;
+}
+
+.background {
+  z-index: -10;
 }
 
 .test222 {

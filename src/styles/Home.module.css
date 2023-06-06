@@ -404,6 +404,7 @@
   top: 68%;
   left: 50%;
   z-index: 1;
+  cursor: pointer;
 }
 
 .treasure_position {
@@ -411,6 +412,7 @@
   top: 20%;
   left: 26%;
   z-index: 1;
+  cursor: pointer;
 }
 
 .factory_position {
@@ -420,6 +422,7 @@
   z-index: 1;
   width: 165px;
   height: 165px;
+  cursor: pointer;
 }
 
 .store_position {
@@ -429,6 +432,7 @@
   z-index: 1;
   width: 180px;
   height: 180px;
+  cursor: pointer;
 }
 
 .house_position {
@@ -436,6 +440,7 @@
   top: 20%;
   left: 60%;
   z-index: 1;
+  cursor: pointer;
 }
 
 .vege_position {
@@ -444,10 +449,33 @@
   left: 20%;
   display: flex;
   z-index: 0;
+  cursor: pointer;
 }
 
 .background {
   z-index: -10;
+}
+
+.headerrr {
+  position: absolute;
+  top: 0%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.connect_wallet {
+  border-radius: 25px;
+  color: white;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: black;
+}
+.header_right {
+  display: flex;
+  align-items: center;
 }
 
 .test222 {

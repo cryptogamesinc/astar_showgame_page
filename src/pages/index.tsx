@@ -6,6 +6,8 @@ import image_treasure from '../images/items/treasure.png'
 import image_factory from '../images/items/factory.png'
 import image_store from '../images/items/store.png'
 import image_house from '../images/items/house.png'
+import image_logo from '../images/items/logo.png'
+
 import Modal from 'react-modal';
 import { Button, Container } from "@mui/material";
 
@@ -166,6 +168,7 @@ export default function Home() {
   const [treasureModalIsOpen, setTreasureModalIsOpen] = useState(false);
   const [appleModalIsOpen, setAppleModalIsOpen] = useState(false);
   const [factoryModalIsOpen, setFactoryModalIsOpen] = useState(false);
+  const [vegeModalIsOpen, setVegeModalIsOpen] = useState(false);
   // const [treasureModalIsOpen, setTreasureModalIsOpen] = useState(false);
   // const [treasureModalIsOpen, setTreasureModalIsOpen] = useState(false);
   return (
@@ -215,8 +218,40 @@ export default function Home() {
           </div>
         </header>
 
+
+
         <div className={styles.test}>
+          
           <Image src={image} className={styles.background} alt="Description" width={1000} height={600} />
+          <div className={styles.headerrr} >
+            <div><Image src={image_logo} alt="Description" width={200}/></div>
+            <div className={styles.header_right}>
+              <div>
+              <GetYourMoney 
+                contract={mainContract} 
+                address={address} 
+                gasLimit={gasLimit} 
+                moneyNumber={moneyNumber}
+                setMoneyNumber={setMoneyNumber}
+              />
+              </div>
+              <div className={styles.connect_wallet}>
+                <ConnectWalletButton 
+                  onConnected={handleConnected}
+                  contract={mainContract} 
+                  gasLimit={gasLimit} 
+                  nftName={mainNftName}
+                  nftDescription={mainNftDescription}
+                  nftImageUri={mainNftImageUri}
+                  setNftName={setMainNftName}
+                  setNftDescription={setMainNftDescription}
+                  setNftImageUri={setMainNftImageUri}
+                  flag={0}
+                />
+              </div>
+            </div>
+            
+          </div>
           
           {/* apple */}
           <Container maxWidth="sm">
@@ -324,30 +359,35 @@ export default function Home() {
               </div>    
             </Modal>
           </Container>
-          
 
+          {/* store */}
           <Image src={image_store} className={styles.store_position} alt="Description" width={100} height={100}
                 onClick={() => {
                   buyAnAppleFunction(mainContract ,account, gasLimit, setAppleNumber, setMoneyNumber);
                 }}/>
+
+          {/* house */}
           <Image src={image_house} className={styles.house_position} alt="Description" width={100} height={100}
                 onClick={() => {
                   getStatusFunction2(mainContract ,address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus, mainNftName, mainNftDescription, mainNftImageUri,setMainNftName,setMainNftDescription,setMainNftImageUri,0);
                 }}
            />
 
-
-
-
-
-
-          <div className={styles.vege_position} >
-              {mainNftImageUri && (
-              <>
-                <img src={mainNftImageUri} className={styles.nftImage} alt="Image"  width="400" height="400" />
-              </>
-              )}
-              </div>
+          <Container maxWidth="sm">
+            <div className={styles.vege_position} >
+                {mainNftImageUri && (
+                <>
+                  <img src={mainNftImageUri} className={styles.nftImage} alt="Image"  width="400" height="400" onClick={() => {
+                  setVegeModalIsOpen(true);
+                }}/>
+                </>
+                )}
+            </div>
+            <Modal isOpen={vegeModalIsOpen} style={customStyles}>
+              aa
+              <button onClick={() => { setVegeModalIsOpen(false);}}>閉じる</button>
+            </Modal>
+          </Container>
         </div>
 
 

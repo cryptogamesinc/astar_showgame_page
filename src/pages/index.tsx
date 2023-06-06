@@ -45,6 +45,7 @@ import GetYourStakedMoney from '@/components/GetYourStakedMoney';
 import GetYourBalance from '@/components/GetYourBalance';
 import BuyGameMoney from '@/components/BuyGameMoney';
 import getContractButton from '@/components/GetContractButtonFunction';
+import buyAnAppleFunction from '@/components/BuyAnAppleFunction';
 
 import { Abi } from '@polkadot/api-contract';
 import { Contract } from '@polkadot/api-contract/base';
@@ -323,7 +324,10 @@ export default function Home() {
           </Container>
           
 
-          <Image src={image_store} className={styles.store_position} alt="Description" width={100} height={100} />
+          <Image src={image_store} className={styles.store_position} alt="Description" width={100} height={100}
+                onClick={() => {
+                  buyAnAppleFunction(mainContract ,account, gasLimit, setAppleNumber, setMoneyNumber);
+                }}/>
           <Image src={image_house} className={styles.house_position} alt="Description" width={100} height={100} />
         </div>
 

@@ -6,6 +6,7 @@ import image_treasure from '../images/items/treasure.png'
 import image_factory from '../images/items/factory.png'
 import image_store from '../images/items/store.png'
 import image_house from '../images/items/house.png'
+import image_seed from '../images/items/seed.png'
 import image_logo from '../images/items/logo.png'
 
 import Modal from 'react-modal';
@@ -49,6 +50,7 @@ import BuyGameMoney from '@/components/BuyGameMoney';
 import getContractButton from '@/components/GetContractButtonFunction';
 import buyAnAppleFunction from '@/components/BuyAnAppleFunction';
 import getInfoFunction from '@/components/GetInfoFunction';
+import claimFunction from '@/components/ClaimFunction';
 import getStatusFunction2 from '@/components/GetStatusFunction2';
 
 import { Abi } from '@polkadot/api-contract';
@@ -168,7 +170,7 @@ export default function Home() {
   const [treasureModalIsOpen, setTreasureModalIsOpen] = useState(false);
   const [appleModalIsOpen, setAppleModalIsOpen] = useState(false);
   const [factoryModalIsOpen, setFactoryModalIsOpen] = useState(false);
-  const [vegeModalIsOpen, setVegeModalIsOpen] = useState(false);
+  const [houseModalIsOpen, setHouseModalIsOpen] = useState(false);
   // const [treasureModalIsOpen, setTreasureModalIsOpen] = useState(false);
   // const [treasureModalIsOpen, setTreasureModalIsOpen] = useState(false);
   return (
@@ -278,8 +280,9 @@ export default function Home() {
                     setHealthStatus={setHealthStatus}
                     setHappyStatus={setHappyStatus}
                   />
-
-                <button onClick={() => { setAppleModalIsOpen(false);}}>閉じる</button>
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                  <button onClick={() => { setAppleModalIsOpen(false);}}>閉じる</button>
+                </div>
               </div>    
             </Modal>
           </Container>
@@ -314,7 +317,9 @@ export default function Home() {
                   setMoneyNumber={setMoneyNumber}
                   setYourBalance={setYourBalance}
                   />
-                <button onClick={() => { setTreasureModalIsOpen(false);}}>閉じる</button>
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                  <button onClick={() => { setTreasureModalIsOpen(false);}}>閉じる</button>
+                </div>
               </div>    
             </Modal>
           </Container>
@@ -355,7 +360,9 @@ export default function Home() {
                   setMoneyNumber={setMoneyNumber}
                   setStakedMoney={setStakedMoney}
                 />
-                <button onClick={() => { setFactoryModalIsOpen(false);}}>閉じる</button>
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                  <button onClick={() => { setFactoryModalIsOpen(false);}}>閉じる</button>
+                </div>
               </div>    
             </Modal>
           </Container>
@@ -367,26 +374,61 @@ export default function Home() {
                 }}/>
 
           {/* house */}
-          <Image src={image_house} className={styles.house_position} alt="Description" width={100} height={100}
-                onClick={() => {
-                  getStatusFunction2(mainContract ,address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus, mainNftName, mainNftDescription, mainNftImageUri,setMainNftName,setMainNftDescription,setMainNftImageUri,0);
-                }}
-           />
-
           <Container maxWidth="sm">
-            <div className={styles.vege_position} >
+            <Image src={image_house} className={styles.house_position} alt="Description" width={100} height={100}
+                  onClick={() => {
+                    setHouseModalIsOpen(true)
+                  }}
+            />
+            <Modal isOpen={houseModalIsOpen} style={customStyles}  >
+              <div className={styles.nft_popup}>
+                <div>
                 {mainNftImageUri && (
                 <>
-                  <img src={mainNftImageUri} className={styles.nftImage} alt="Image"  width="400" height="400" onClick={() => {
-                  setVegeModalIsOpen(true);
-                }}/>
+                  <img src={mainNftImageUri} className={styles.nftImage} alt="Image"  width="200" height="200" />
                 </>
                 )}
-            </div>
-            <Modal isOpen={vegeModalIsOpen} style={customStyles}>
-              aa
-              <button onClick={() => { setVegeModalIsOpen(false);}}>閉じる</button>
+                </div>
+                <div>
+                  {mainNftName && <p style={{marginBottom: "20px"}}>Name: {mainNftName}</p>}
+                  {mainNftDescription && <p style={{marginBottom: "20px"}}>Description: {mainNftDescription}</p>}
+                  <GetStatus 
+                  contract={mainContract} 
+                  address={address} 
+                  gasLimit={gasLimit} 
+                  hungryStatus={hungryStatus} 
+                  healthStatus={healthStatus} 
+                  happyStatus={happyStatus} 
+                  setHungryStatus={setHungryStatus} 
+                  setHealthStatus={setHealthStatus} 
+                  setHappyStatus={setHappyStatus} 
+                  />
+                </div>
+              </div>
+              <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                <button style={{marginLeft: 'auto'}} onClick={() => { setHouseModalIsOpen(false);}}>閉じる</button>
+              </div>
             </Modal>
+           </Container>
+
+          <Container maxWidth="sm">
+            <div  >
+                {mainNftImageUri && (
+                <>
+                  <img src={mainNftImageUri} className={styles.vege_position} alt="Image"  width="400" height="400" onClick={() => {
+                  getStatusFunction2(mainContract ,address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus, mainNftName, mainNftDescription, mainNftImageUri,setMainNftName,setMainNftDescription,setMainNftImageUri,0);
+                }}/>
+                
+                </>
+                )}
+
+                {!mainNftImageUri && (
+                <Image src={image_seed}  className={styles.seed_position}  alt="Description" width={100} height={100}  onClick={() => {
+                  claimFunction(mainContract ,account, gasLimit);
+                }}/>
+                )}
+            </div>
+            
           </Container>
         </div>
 

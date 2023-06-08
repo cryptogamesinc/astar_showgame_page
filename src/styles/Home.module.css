@@ -452,6 +452,15 @@
   cursor: pointer;
 }
 
+.seed_position {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  display: flex;
+  z-index: 0;
+  cursor: pointer;
+}
+
 .background {
   z-index: -10;
 }
@@ -476,6 +485,10 @@
 .header_right {
   display: flex;
   align-items: center;
+}
+
+.nft_popup {
+  display: flex;
 }
 
 .test222 {

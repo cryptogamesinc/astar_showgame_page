@@ -76,7 +76,7 @@ const override = css`
   `;
 
 
-const mainContractAddress = "anwJWxiQtEQAP3wwXhpPbVhALz35hGvJa78dJh8SVL876K2"
+const mainContractAddress = "YizfkJKFM4hxekKYEgyiAQCkF1q6MX8vpp9YFsJAPU9GjeC"
 const psp22ContractAddress = "WG7GLbCQLnuCyiURRaFsCsmg2E87mwbjoNvT675rxs5tgXe"
 const psp37ContractAddress = "VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x"
 
@@ -165,6 +165,7 @@ export default function Home() {
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
       minWidth: "40%",
+      zIndex: "100"
     },
   };
   const [treasureModalIsOpen, setTreasureModalIsOpen] = useState(false);

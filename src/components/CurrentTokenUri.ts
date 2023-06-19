@@ -9,7 +9,7 @@ export default async function currentTokenUri(
 ) {
   if (contract !== null) {
     const token_number = await ownersTokenByIndex(contract, address, gasLimit);
-    const { output } = await contract.query["multiAsset::tokenUri"](
+    const { output } = await contract.query["tokenUri"](
       address,
       {
         gasLimit: gasLimit,

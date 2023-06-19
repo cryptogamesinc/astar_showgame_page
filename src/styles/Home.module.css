@@ -506,3 +506,7 @@
   border-radius: 4px;
   border: 2px solid black;
 }
+
+.test3 {
+  z-index: 500;
+}

@@ -22,7 +22,7 @@ async function dailyBonus () {
     if (contract !== null && account !== null) {
       const injector = await web3FromSource(account.meta.source);
 
-      const { gasRequired, gasConsumed ,result, output }  = await contract.query["multiAsset::dailyBonus"](account.address,
+      const { gasRequired, gasConsumed ,result, output }  = await contract.query["dailyBonus"](account.address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
@@ -31,10 +31,11 @@ async function dailyBonus () {
         console.log("### result of dry run ###" );
         console.log("### output:", output?.toHuman());
         const humanOutput = output?.toHuman();
-        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok && typeof humanOutput.Ok.Err === 'object' && humanOutput.Ok.Err !== null && 'Rmrk' in humanOutput.Ok.Err) {
+        console.log("### humanOutput:", humanOutput);
+        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok) {
           alert("Time(5min) has not passed");
         } else {
-          await contract.tx['multiAsset::dailyBonus'](
+          await contract.tx['dailyBonus'](
             {
               gasLimit: gasLimit,
               storageDepositLimit,

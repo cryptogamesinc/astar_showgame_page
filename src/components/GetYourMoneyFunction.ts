@@ -10,7 +10,7 @@ export default async function getYourMoneyFunction(
   setMoneyNumber: (value: number | null) => void
 ) {
   if (contract !== null) {
-    const { output } = await contract.query["multiAsset::getYourMoney"](
+    const { output } = await contract.query["getYourMoney"](
       address,
       {
         gasLimit: gasLimit,

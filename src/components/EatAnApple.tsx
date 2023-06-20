@@ -32,7 +32,7 @@ async function eatAnApple () {
       console.log("token_number",token_number)
 
 
-      const { gasRequired, gasConsumed ,result, output }  = await contract.query["multiAsset::eatAnApple"](account.address,
+      const { gasRequired, gasConsumed ,result, output }  = await contract.query["eatAnApple"](account.address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
@@ -41,8 +41,9 @@ async function eatAnApple () {
         console.log("### result of dry run ###" );
         console.log("### output:", output?.toHuman());
         const humanOutput = output?.toHuman();
-        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok && typeof humanOutput.Ok.Err === 'object' && humanOutput.Ok.Err !== null && 'Rmrk' in humanOutput.Ok.Err) {
-          const message = humanOutput.Ok?.Err?.Rmrk;
+        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && 
+            typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok) {
+          const message = humanOutput.Ok?.Err;
           if (message == "NotEnoughApple") {
             alert("Not Enough Apple");
           } else {
@@ -51,7 +52,7 @@ async function eatAnApple () {
 
         } else {
 
-          await contract.tx["multiAsset::eatAnApple"](
+          await contract.tx["eatAnApple"](
             {
               gasLimit: gasLimit,
               storageDepositLimit,

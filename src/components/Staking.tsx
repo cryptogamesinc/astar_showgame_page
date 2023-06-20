@@ -28,7 +28,7 @@ async function staking () {
       } else {
         const injector = await web3FromSource(account.meta.source);
 
-        const { gasRequired, gasConsumed ,result, output }  = await contract.query["multiAsset::stakeYourMoney"](account.address,
+        const { gasRequired, gasConsumed ,result, output }  = await contract.query["stakeYourMoney"](account.address,
           {
             gasLimit: gasLimit,
             storageDepositLimit,
@@ -37,11 +37,12 @@ async function staking () {
           console.log("### result of dry run ###" );
           console.log("### output:", output?.toHuman());
           const humanOutput = output?.toHuman();
-          if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok && typeof humanOutput.Ok.Err === 'object' && humanOutput.Ok.Err !== null && 'Rmrk' in humanOutput.Ok.Err) {
+          if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && 
+              typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok) {
             alert("Not Enough Money")
           } else {
 
-            await contract.tx["multiAsset::stakeYourMoney"](
+            await contract.tx["stakeYourMoney"](
               {
                 gasLimit: gasLimit,
                 storageDepositLimit,

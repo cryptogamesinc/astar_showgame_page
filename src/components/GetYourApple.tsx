@@ -17,7 +17,7 @@ const GetYourApple: React.FC<GetYourAppleProps> = ({ contract, address, gasLimit
 
     if (contract !== null && address !== "") {
 
-      const { output }  = await contract.query['multiAsset::getYourApple'](address,
+      const { output }  = await contract.query['getYourApple'](address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,

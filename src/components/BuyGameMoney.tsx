@@ -28,7 +28,7 @@ async function buyGameMoney () {
       const injector = await web3FromSource(account.meta.source);
       console.log("contract",contract)
 
-      const { gasRequired, gasConsumed ,result, output }  = await contract.query["multiAsset::buyGameMoney"](account.address,
+      const { gasRequired, gasConsumed ,result, output }  = await contract.query["buyGameMoney"](account.address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
@@ -37,13 +37,13 @@ async function buyGameMoney () {
         console.log("### result of dry run ###" );
         console.log("### output:", output?.toHuman());
         const humanOutput = output?.toHuman();
-        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok && typeof humanOutput.Ok.Err === 'object' && humanOutput.Ok.Err !== null && 'Rmrk' in humanOutput.Ok.Err) {
-          const message = humanOutput.Ok?.Err?.Rmrk;
+        if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && 
+            typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok) {
           alert("Not Enought Money");
 
         } else {
 
-          await contract.tx["multiAsset::buyGameMoney"](
+          await contract.tx["buyGameMoney"](
             {
               gasLimit: gasLimit,
               storageDepositLimit,

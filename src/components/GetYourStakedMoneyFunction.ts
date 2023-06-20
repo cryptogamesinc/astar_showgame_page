@@ -9,7 +9,7 @@ export default async function getYourStakedMoneyFunction(
   setStakedMoney: (value: number | null) => void
 ) {
   if (contract !== null && address !== "") {
-    const { output } = await contract.query["multiAsset::getYourStakedMoney"](
+    const { output } = await contract.query["getYourStakedMoney"](
       address,
       {
         gasLimit: gasLimit,

@@ -17,7 +17,7 @@ const GetYourStakedMoney: React.FC<GetYourStakedMoneyProps> = ({ contract, addre
 
     if (contract !== null && address !== "") {
 
-      const { output }  = await contract.query['multiAsset::getYourStakedMoney'](address,
+      const { output }  = await contract.query['getYourStakedMoney'](address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,

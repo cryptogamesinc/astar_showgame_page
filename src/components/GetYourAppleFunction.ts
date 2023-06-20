@@ -10,7 +10,7 @@ export default async function getYourAppleFunction(
   setAppleNumber: (value: number | null) => void
 ) {
   if (contract !== null) {
-    const { output } = await contract.query["multiAsset::getYourApple"](
+    const { output } = await contract.query["getYourApple"](
       address,
       {
         gasLimit: gasLimit,

@@ -13,7 +13,7 @@ export default async function claimFunction(
     const injector = await web3FromSource(account.meta.source);
 
     const { gasRequired, gasConsumed, result, output } = await contract.query[
-      "minting::claimANft"
+      "claimANft"
     ](account.address, {
       gasLimit: gasLimit,
       storageDepositLimit,
@@ -28,16 +28,13 @@ export default async function claimFunction(
       "Ok" in humanOutput &&
       typeof humanOutput.Ok === "object" &&
       humanOutput.Ok !== null &&
-      "Err" in humanOutput.Ok &&
-      typeof humanOutput.Ok.Err === "object" &&
-      humanOutput.Ok.Err !== null &&
-      "Rmrk" in humanOutput.Ok.Err
+      "Err" in humanOutput.Ok
     ) {
-      const message = humanOutput.Ok?.Err?.Rmrk;
+      const message = humanOutput.Ok?.Err;
       console.log(message);
       alert("Already had an NFT");
     } else {
-      await contract.tx["minting::claimANft"]({
+      await contract.tx["claimANft"]({
         gasLimit: gasLimit,
         storageDepositLimit,
       })

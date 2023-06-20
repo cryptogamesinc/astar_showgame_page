@@ -24,7 +24,7 @@ const GetStatus: React.FC<GetStatusProps> = ({ contract, address, gasLimit, hung
 
       const token_number = await ownersTokenByIndex(contract, address, gasLimit);
 
-      const { output , result}  = await contract.query['multiAsset::getCurrentStatus'](address,
+      const { output , result}  = await contract.query['getCurrentStatus'](address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,

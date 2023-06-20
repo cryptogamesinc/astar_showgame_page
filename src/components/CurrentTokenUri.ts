@@ -15,7 +15,7 @@ export default async function currentTokenUri(
         gasLimit: gasLimit,
         storageDepositLimit,
       },
-      { u64: token_number }
+      { u32: token_number }
     );
 
     console.log("output", output);

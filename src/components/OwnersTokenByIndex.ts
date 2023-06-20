@@ -21,6 +21,7 @@ export default async function ownersTokenByIndex(
 
     console.log("output", output);
     const humanOutput = output?.toHuman();
+    console.log("humanOutput", humanOutput);
     if (
       humanOutput &&
       typeof humanOutput === "object" &&
@@ -30,10 +31,10 @@ export default async function ownersTokenByIndex(
       "Ok" in humanOutput.Ok &&
       humanOutput.Ok.Ok &&
       typeof humanOutput.Ok.Ok === "object" &&
-      "U64" in humanOutput.Ok.Ok
+      "U32" in humanOutput.Ok.Ok
     ) {
-      console.log("output", humanOutput?.Ok?.Ok?.U64);
-      return String(humanOutput?.Ok?.Ok?.U64);
+      console.log("output", humanOutput?.Ok?.Ok?.U32);
+      return String(humanOutput?.Ok?.Ok.U32);
     }
   }
 }

@@ -15,9 +15,7 @@ export default async function getStatusFunction(
   if (contract !== null) {
     const token_number = await ownersTokenByIndex(contract, address, gasLimit);
 
-    const { output, result } = await contract.query[
-      "multiAsset::getCurrentStatus"
-    ](
+    const { output, result } = await contract.query["getCurrentStatus"](
       address,
       {
         gasLimit: gasLimit,

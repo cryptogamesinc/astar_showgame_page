@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
-import tokenInfo from '@/components/TokenInfo';
+import tokenInfo from '@/lib/TokenInfo';
 
 type GetInfoProps = {
     contract: ContractPromise | null;

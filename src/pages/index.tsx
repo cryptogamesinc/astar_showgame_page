@@ -77,10 +77,10 @@ const override = css`
 
 
 const mainContractAddress = "WeFbUsLbRddLow31zNbqChjzfh71ngkkMoZdrvmzUyT9GTS"
-const psp22ContractAddress = "WG7GLbCQLnuCyiURRaFsCsmg2E87mwbjoNvT675rxs5tgXe"
+const psp22ContractAddress = "W9eVr6WmpwGdGQPCHYmjRdKxfZL7bA9Hyb3bkESH3nSkQrW"
 const psp37ContractAddress = "VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x"
 
-const ownerAddress = "5Fxgf74m64UyxWChkkCw2nxqgbNUMuCV64mcy7LETwRvmyuW"
+const ownerAddress = "5D2MwJP4v1TeauSooBvJ8ueUyxtmrqpq6FpJTXbENwWSzn8M"
 
   
 // main().then(() => console.log('completed'))
@@ -228,6 +228,25 @@ export default function Home() {
           <Image src={image} className={styles.background} alt="Description" width={1000} height={600} />
           <div className={styles.headerrr} >
             <div><Image src={image_logo} alt="Description" width={200}/></div>
+            <Container maxWidth="sm">
+            <div  >
+                {mainNftImageUri && (
+                <>
+                  <img src={mainNftImageUri} className={styles.vege_position} alt="Image"  width="400" height="400" onClick={() => {
+                  getStatusFunction2(mainContract ,address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus, mainNftName, mainNftDescription, mainNftImageUri,setMainNftName,setMainNftDescription,setMainNftImageUri,0);
+                }}/>
+                
+                </>
+                )}
+
+                {!mainNftImageUri && (
+                <Image src={image_seed}  className={styles.seed_position}  alt="Description" width={100} height={100}  onClick={() => {
+                  claimFunction(mainContract ,account, gasLimit);
+                }}/>
+                )}
+            </div>
+            
+          </Container>
             <div className={styles.header_right}>
               <div>
               <GetYourMoney 
@@ -412,25 +431,7 @@ export default function Home() {
             </Modal>
            </Container>
 
-          <Container maxWidth="sm">
-            <div  >
-                {mainNftImageUri && (
-                <>
-                  <img src={mainNftImageUri} className={styles.vege_position} alt="Image"  width="400" height="400" onClick={() => {
-                  getStatusFunction2(mainContract ,address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus, mainNftName, mainNftDescription, mainNftImageUri,setMainNftName,setMainNftDescription,setMainNftImageUri,0);
-                }}/>
-                
-                </>
-                )}
-
-                {!mainNftImageUri && (
-                <Image src={image_seed}  className={styles.seed_position}  alt="Description" width={100} height={100}  onClick={() => {
-                  claimFunction(mainContract ,account, gasLimit);
-                }}/>
-                )}
-            </div>
-            
-          </Container>
+          
         </div>
 
 

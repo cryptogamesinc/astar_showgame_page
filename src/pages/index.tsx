@@ -168,6 +168,7 @@ export default function Home() {
       zIndex: "100"
     },
   };
+
   const [treasureModalIsOpen, setTreasureModalIsOpen] = useState(false);
   const [appleModalIsOpen, setAppleModalIsOpen] = useState(false);
   const [factoryModalIsOpen, setFactoryModalIsOpen] = useState(false);
@@ -187,12 +188,24 @@ export default function Home() {
         <div className={styles.headerrr} >
           <div><Image src={image_logo} alt="Description" width={200}/></div>
           <Container maxWidth="sm">
-          <div  >
+          <div>
               {mainNftImageUri && (
               <>
                 <img src={mainNftImageUri} className={styles.vege_position} alt="Image"  width="400" height="400" onClick={() => {
-                getStatusFunction2(mainContract ,address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus, mainNftName, mainNftDescription, mainNftImageUri,setMainNftName,setMainNftDescription,setMainNftImageUri,0);
-              }}/>
+                  getStatusFunction2(mainContract ,
+                    address,
+                    gasLimit, 
+                    setHungryStatus, 
+                    setHealthStatus,
+                    setHappyStatus, 
+                    mainNftName, 
+                    mainNftDescription, 
+                    mainNftImageUri,
+                    setMainNftName,
+                    setMainNftDescription,
+                    setMainNftImageUri,
+                  0);
+                }}/>
               
               </>
               )}
@@ -230,7 +243,6 @@ export default function Home() {
               />
             </div>
           </div>
-          
         </div>
         
         {/* apple */}

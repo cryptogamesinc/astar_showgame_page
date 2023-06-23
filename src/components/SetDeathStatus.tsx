@@ -4,7 +4,7 @@ import type { WeightV2 } from '@polkadot/types/interfaces'
 import { BN, BN_ONE } from "@polkadot/util";
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
-import ownersTokenByIndex from '@/components/OwnersTokenByIndex';
+import ownersTokenByIndex from '@/lib/OwnersTokenByIndex';
 
 type SetDeathStatusProps = {
     contract: ContractPromise | null;

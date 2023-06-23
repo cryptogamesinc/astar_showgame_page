@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from '@/styles/Home.module.css';
 import { ContractPromise } from '@polkadot/api-contract';
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
-import getInfoFunction from "@/components/GetInfoFunction";
+import getInfoFunction from "@/lib/GetInfoFunction";
 
 
 interface ConnectWalletButtonProps {

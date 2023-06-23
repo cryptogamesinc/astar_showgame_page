@@ -2,8 +2,8 @@ import React from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
-import getYourAppleFunction from "@/components/GetYourAppleFunction";
-import getYourMoneyFunction from "@/components/GetYourMoneyFunction";
+import getYourAppleFunction from "@/lib/GetYourAppleFunction";
+import getYourMoneyFunction from "@/lib/GetYourMoneyFunction";
 
 type BuyAnAppleProps = {
     contract: ContractPromise | null;

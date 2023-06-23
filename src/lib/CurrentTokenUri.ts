@@ -1,5 +1,5 @@
 import { ContractPromise } from "@polkadot/api-contract";
-import ownersTokenByIndex from "@/components/OwnersTokenByIndex";
+import ownersTokenByIndex from "@/lib/OwnersTokenByIndex";
 
 const storageDepositLimit = null;
 export default async function currentTokenUri(

@@ -2,7 +2,7 @@ import React from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
-import getYourMoneyFunction from "@/components/GetYourMoneyFunction";
+import getYourMoneyFunction from "@/lib/GetYourMoneyFunction";
 
 type DailyBonusProps = {
     contract: ContractPromise | null;

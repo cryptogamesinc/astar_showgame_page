@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
-import ownersTokenByIndex from '@/components/OwnersTokenByIndex';
+import ownersTokenByIndex from '@/lib/OwnersTokenByIndex';
 
 type GetStatusProps = {
     contract: ContractPromise | null;

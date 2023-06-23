@@ -1,5 +1,5 @@
 import { ContractPromise } from "@polkadot/api-contract";
-import balanceOf from "@/components/BalanceOf";
+import balanceOf from "@/lib/BalanceOf";
 
 const storageDepositLimit = null;
 export default async function currentPsp37TokenUri(

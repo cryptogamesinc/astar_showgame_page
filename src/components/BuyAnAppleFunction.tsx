@@ -1,7 +1,7 @@
 import { ContractPromise } from '@polkadot/api-contract';
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
-import getYourAppleFunction from "@/components/GetYourAppleFunction";
-import getYourMoneyFunction from "@/components/GetYourMoneyFunction";
+import getYourAppleFunction from "@/lib/GetYourAppleFunction";
+import getYourMoneyFunction from "@/lib/GetYourMoneyFunction";
 
 const storageDepositLimit = null;
 

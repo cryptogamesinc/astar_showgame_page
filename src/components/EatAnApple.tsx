@@ -2,9 +2,9 @@ import React from 'react';
 import { ContractPromise } from '@polkadot/api-contract';
 import styles from '@/styles/Home.module.css'
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
-import ownersTokenByIndex from '@/components/OwnersTokenByIndex';
-import getYourAppleFunction from "@/components/GetYourAppleFunction";
-import getStatusFunction from "@/components/GetStatusFunction";
+import ownersTokenByIndex from '@/lib/OwnersTokenByIndex';
+import getYourAppleFunction from "@/lib/GetYourAppleFunction";
+import getStatusFunction from "@/lib/GetStatusFunction";
 
 type EatAnAppleProps = {
     contract: ContractPromise | null;

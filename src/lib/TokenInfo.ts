@@ -1,6 +1,6 @@
 import { ContractPromise } from "@polkadot/api-contract";
-import currentTokenUri from "@/components/CurrentTokenUri";
-import currentPsp37TokenUri from "@/components/CurrentPsp37TokenUri";
+import currentTokenUri from "@/lib/CurrentTokenUri";
+import currentPsp37TokenUri from "@/lib/CurrentPsp37TokenUri";
 
 export default async function tokenInfo(
   contract: ContractPromise | null,

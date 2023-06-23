@@ -455,6 +455,12 @@
   display: flex;
   z-index: 0;
   cursor: pointer;
+  animation: sway 1s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(7deg); }
 }
 
 .background {

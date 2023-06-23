@@ -183,216 +183,211 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.test}>
-          
-          <Image src={image} className={styles.background} alt="Description" width={1000} height={600} />
-          <div className={styles.headerrr} >
-            <div><Image src={image_logo} alt="Description" width={200}/></div>
-            <Container maxWidth="sm">
-            <div  >
-                {mainNftImageUri && (
-                <>
-                  <img src={mainNftImageUri} className={styles.vege_position} alt="Image"  width="400" height="400" onClick={() => {
-                  getStatusFunction2(mainContract ,address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus, mainNftName, mainNftDescription, mainNftImageUri,setMainNftName,setMainNftDescription,setMainNftImageUri,0);
-                }}/>
-                
-                </>
-                )}
+        <Image src={image} className={styles.background} alt="Description"/>
+        <div className={styles.headerrr} >
+          <div><Image src={image_logo} alt="Description" width={200}/></div>
+          <Container maxWidth="sm">
+          <div  >
+              {mainNftImageUri && (
+              <>
+                <img src={mainNftImageUri} className={styles.vege_position} alt="Image"  width="400" height="400" onClick={() => {
+                getStatusFunction2(mainContract ,address, gasLimit, setHungryStatus, setHealthStatus, setHappyStatus, mainNftName, mainNftDescription, mainNftImageUri,setMainNftName,setMainNftDescription,setMainNftImageUri,0);
+              }}/>
+              
+              </>
+              )}
 
-                {!mainNftImageUri && (
-                <Image src={image_seed}  className={styles.seed_position}  alt="Description" width={100} height={100}  onClick={() => {
-                  claimFunction(mainContract ,account, gasLimit);
-                }}/>
-                )}
+              {!mainNftImageUri && (
+              <Image src={image_seed}  className={styles.seed_position}  alt="Description" width={100} height={100}  onClick={() => {
+                claimFunction(mainContract ,account, gasLimit);
+              }}/>
+              )}
+          </div>
+          
+        </Container>
+          <div className={styles.header_right}>
+            <div>
+            <GetYourMoney 
+              contract={mainContract} 
+              address={address} 
+              gasLimit={gasLimit} 
+              moneyNumber={moneyNumber}
+              setMoneyNumber={setMoneyNumber}
+            />
             </div>
-            
-          </Container>
-            <div className={styles.header_right}>
-              <div>
-              <GetYourMoney 
+            <div className={styles.connect_wallet}>
+              <ConnectWalletButton 
+                onConnected={handleConnected}
+                contract={mainContract} 
+                gasLimit={gasLimit} 
+                nftName={mainNftName}
+                nftDescription={mainNftDescription}
+                nftImageUri={mainNftImageUri}
+                setNftName={setMainNftName}
+                setNftDescription={setMainNftDescription}
+                setNftImageUri={setMainNftImageUri}
+                flag={0}
+              />
+            </div>
+          </div>
+          
+        </div>
+        
+        {/* apple */}
+        <Container maxWidth="sm">
+          <Image src={image_apple} className={styles.apple_position} alt="Description" width={100} height={100} onClick={() => {
+                setAppleModalIsOpen(true);
+              }}/>
+          <Modal isOpen={appleModalIsOpen} style={customStyles}>
+            <div className={styles.item}>
+
+              <GetYourApple 
                 contract={mainContract} 
                 address={address} 
                 gasLimit={gasLimit} 
-                moneyNumber={moneyNumber}
+                appleNumber={appleNumber}
+                setAppleNumber={setAppleNumber}
+              />
+
+              <EatAnApple 
+                  contract={mainContract} 
+                  account={account} 
+                  gasLimit={gasLimit} 
+                  setAppleNumber={setAppleNumber}
+                  setHungryStatus={setHungryStatus}
+                  setHealthStatus={setHealthStatus}
+                  setHappyStatus={setHappyStatus}
+                />
+              <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                <button onClick={() => { setAppleModalIsOpen(false);}}>閉じる</button>
+              </div>
+            </div>    
+          </Modal>
+        </Container>
+
+        {/* treasure */}
+        <Container maxWidth="sm">
+          <Image src={image_treasure} className={styles.treasure_position} alt="Description" width={100} height={100} onClick={() => {
+                setTreasureModalIsOpen(true);
+              }}/>
+          <Modal isOpen={treasureModalIsOpen} style={customStyles}>
+            <div className={styles.item}>
+              <DailyBonus 
+                contract={mainContract} 
+                account={account} 
+                gasLimit={gasLimit}
                 setMoneyNumber={setMoneyNumber}
               />
+              <GetYourBalance 
+                contract={psp22Contract} 
+                address={address} 
+                gasLimit={gasLimit} 
+                yourBalance={yourBalance}
+                setYourBalance={setYourBalance}
+              />
+              <BuyGameMoney
+                contract={mainContract} 
+                psp22Contract={psp22Contract}
+                psp22Address={psp22ContractAddress}
+                ownerAddress={ownerAddress}
+                account={account} 
+                gasLimit={gasLimit} 
+                setMoneyNumber={setMoneyNumber}
+                setYourBalance={setYourBalance}
+                />
+              <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                <button onClick={() => { setTreasureModalIsOpen(false);}}>閉じる</button>
               </div>
-              <div className={styles.connect_wallet}>
-                <ConnectWalletButton 
-                  onConnected={handleConnected}
-                  contract={mainContract} 
-                  gasLimit={gasLimit} 
-                  nftName={mainNftName}
-                  nftDescription={mainNftDescription}
-                  nftImageUri={mainNftImageUri}
-                  setNftName={setMainNftName}
-                  setNftDescription={setMainNftDescription}
-                  setNftImageUri={setMainNftImageUri}
-                  flag={0}
+            </div>    
+          </Modal>
+        </Container>
+
+        {/* factory */}
+        <Container maxWidth="sm">
+          <Image src={image_factory} className={styles.factory_position} alt="Description" width={100} height={100} onClick={() => {
+                setFactoryModalIsOpen(true);
+              }}/>
+          <Modal isOpen={factoryModalIsOpen} style={customStyles}>
+            <div className={styles.item}>
+              <input 
+                  type="text" 
+                  value={inputValue === null ? "" : inputValue.toString()} // nullの場合は空文字列を表示
+                  onChange={handleInputChange} 
+                  style={{width: "100px"}}
+                  placeholder="stake amount"
+              />
+              <Staking 
+                contract={mainContract} 
+                account={account} 
+                gasLimit={gasLimit}
+                setMoneyNumber={setMoneyNumber}
+                setStakedMoney={setStakedMoney}
+                userInput={inputValue}
+              />
+              <GetYourStakedMoney 
+                contract={mainContract} 
+                address={address} 
+                gasLimit={gasLimit}
+                stakedMoney={stakedMoney}
+                setStakedMoney={setStakedMoney}
+              />
+              <Withdraw 
+                contract={mainContract} 
+                account={account} 
+                gasLimit={gasLimit}
+                setMoneyNumber={setMoneyNumber}
+                setStakedMoney={setStakedMoney}
+              />
+              <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                <button onClick={() => { setFactoryModalIsOpen(false);}}>閉じる</button>
+              </div>
+            </div>    
+          </Modal>
+        </Container>
+
+        {/* store */}
+        <Image src={image_store} className={styles.store_position} alt="Description" width={100} height={100}
+              onClick={() => {
+                buyAnAppleFunction(mainContract ,account, gasLimit, setAppleNumber, setMoneyNumber);
+              }}/>
+
+        {/* house */}
+        <Container maxWidth="sm">
+          <Image src={image_house} className={styles.house_position} alt="Description" width={100} height={100}
+                onClick={() => {
+                  setHouseModalIsOpen(true)
+                }}
+          />
+          <Modal isOpen={houseModalIsOpen} style={customStyles}  >
+            <div className={styles.nft_popup}>
+              <div>
+              {mainNftImageUri && (
+              <>
+                <img src={mainNftImageUri} className={styles.nftImage} alt="Image"  width="200" height="200" />
+              </>
+              )}
+              </div>
+              <div>
+                {mainNftName && <p style={{marginBottom: "20px"}}>Name: {mainNftName}</p>}
+                {mainNftDescription && <p style={{marginBottom: "20px"}}>Description: {mainNftDescription}</p>}
+                <GetStatus 
+                contract={mainContract} 
+                address={address} 
+                gasLimit={gasLimit} 
+                hungryStatus={hungryStatus} 
+                healthStatus={healthStatus} 
+                happyStatus={happyStatus} 
+                setHungryStatus={setHungryStatus} 
+                setHealthStatus={setHealthStatus} 
+                setHappyStatus={setHappyStatus} 
                 />
               </div>
             </div>
-            
-          </div>
-          
-          {/* apple */}
-          <Container maxWidth="sm">
-            <Image src={image_apple} className={styles.apple_position} alt="Description" width={100} height={100} onClick={() => {
-                  setAppleModalIsOpen(true);
-                }}/>
-            <Modal isOpen={appleModalIsOpen} style={customStyles}>
-              <div className={styles.item}>
-
-                <GetYourApple 
-                  contract={mainContract} 
-                  address={address} 
-                  gasLimit={gasLimit} 
-                  appleNumber={appleNumber}
-                  setAppleNumber={setAppleNumber}
-                />
-
-                <EatAnApple 
-                    contract={mainContract} 
-                    account={account} 
-                    gasLimit={gasLimit} 
-                    setAppleNumber={setAppleNumber}
-                    setHungryStatus={setHungryStatus}
-                    setHealthStatus={setHealthStatus}
-                    setHappyStatus={setHappyStatus}
-                  />
-                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                  <button onClick={() => { setAppleModalIsOpen(false);}}>閉じる</button>
-                </div>
-              </div>    
-            </Modal>
+            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+              <button style={{marginLeft: 'auto'}} onClick={() => { setHouseModalIsOpen(false);}}>閉じる</button>
+            </div>
+          </Modal>
           </Container>
-
-          {/* treasure */}
-          <Container maxWidth="sm">
-            <Image src={image_treasure} className={styles.treasure_position} alt="Description" width={100} height={100} onClick={() => {
-                  setTreasureModalIsOpen(true);
-                }}/>
-            <Modal isOpen={treasureModalIsOpen} style={customStyles}>
-              <div className={styles.item}>
-                <DailyBonus 
-                  contract={mainContract} 
-                  account={account} 
-                  gasLimit={gasLimit}
-                  setMoneyNumber={setMoneyNumber}
-                />
-                <GetYourBalance 
-                  contract={psp22Contract} 
-                  address={address} 
-                  gasLimit={gasLimit} 
-                  yourBalance={yourBalance}
-                  setYourBalance={setYourBalance}
-                />
-                <BuyGameMoney
-                  contract={mainContract} 
-                  psp22Contract={psp22Contract}
-                  psp22Address={psp22ContractAddress}
-                  ownerAddress={ownerAddress}
-                  account={account} 
-                  gasLimit={gasLimit} 
-                  setMoneyNumber={setMoneyNumber}
-                  setYourBalance={setYourBalance}
-                  />
-                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                  <button onClick={() => { setTreasureModalIsOpen(false);}}>閉じる</button>
-                </div>
-              </div>    
-            </Modal>
-          </Container>
-
-          {/* factory */}
-          <Container maxWidth="sm">
-            <Image src={image_factory} className={styles.factory_position} alt="Description" width={100} height={100} onClick={() => {
-                  setFactoryModalIsOpen(true);
-                }}/>
-            <Modal isOpen={factoryModalIsOpen} style={customStyles}>
-              <div className={styles.item}>
-                <input 
-                    type="text" 
-                    value={inputValue === null ? "" : inputValue.toString()} // nullの場合は空文字列を表示
-                    onChange={handleInputChange} 
-                    style={{width: "100px"}}
-                    placeholder="stake amount"
-                />
-                <Staking 
-                  contract={mainContract} 
-                  account={account} 
-                  gasLimit={gasLimit}
-                  setMoneyNumber={setMoneyNumber}
-                  setStakedMoney={setStakedMoney}
-                  userInput={inputValue}
-                />
-                <GetYourStakedMoney 
-                  contract={mainContract} 
-                  address={address} 
-                  gasLimit={gasLimit}
-                  stakedMoney={stakedMoney}
-                  setStakedMoney={setStakedMoney}
-                />
-                <Withdraw 
-                  contract={mainContract} 
-                  account={account} 
-                  gasLimit={gasLimit}
-                  setMoneyNumber={setMoneyNumber}
-                  setStakedMoney={setStakedMoney}
-                />
-                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                  <button onClick={() => { setFactoryModalIsOpen(false);}}>閉じる</button>
-                </div>
-              </div>    
-            </Modal>
-          </Container>
-
-          {/* store */}
-          <Image src={image_store} className={styles.store_position} alt="Description" width={100} height={100}
-                onClick={() => {
-                  buyAnAppleFunction(mainContract ,account, gasLimit, setAppleNumber, setMoneyNumber);
-                }}/>
-
-          {/* house */}
-          <Container maxWidth="sm">
-            <Image src={image_house} className={styles.house_position} alt="Description" width={100} height={100}
-                  onClick={() => {
-                    setHouseModalIsOpen(true)
-                  }}
-            />
-            <Modal isOpen={houseModalIsOpen} style={customStyles}  >
-              <div className={styles.nft_popup}>
-                <div>
-                {mainNftImageUri && (
-                <>
-                  <img src={mainNftImageUri} className={styles.nftImage} alt="Image"  width="200" height="200" />
-                </>
-                )}
-                </div>
-                <div>
-                  {mainNftName && <p style={{marginBottom: "20px"}}>Name: {mainNftName}</p>}
-                  {mainNftDescription && <p style={{marginBottom: "20px"}}>Description: {mainNftDescription}</p>}
-                  <GetStatus 
-                  contract={mainContract} 
-                  address={address} 
-                  gasLimit={gasLimit} 
-                  hungryStatus={hungryStatus} 
-                  healthStatus={healthStatus} 
-                  happyStatus={happyStatus} 
-                  setHungryStatus={setHungryStatus} 
-                  setHealthStatus={setHealthStatus} 
-                  setHappyStatus={setHappyStatus} 
-                  />
-                </div>
-              </div>
-              <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                <button style={{marginLeft: 'auto'}} onClick={() => { setHouseModalIsOpen(false);}}>閉じる</button>
-              </div>
-            </Modal>
-           </Container>
-
-          
-        </div>
       </main>
     </>
   )

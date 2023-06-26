@@ -205,7 +205,34 @@ export default function Home() {
           <div>
             <Image src={image_logo} alt="Description" width={200} />
           </div>
-          <Container maxWidth="sm">
+          
+          <div className={styles.header_right}>
+            <div>
+              <GetYourMoney
+                contract={mainContract}
+                address={address}
+                gasLimit={gasLimit}
+                moneyNumber={moneyNumber}
+                setMoneyNumber={setMoneyNumber}
+              />
+            </div>
+            <div className={styles.connect_wallet}>
+              <ConnectWalletButton
+                onConnected={handleConnected}
+                contract={mainContract}
+                gasLimit={gasLimit}
+                nftName={mainNftName}
+                nftDescription={mainNftDescription}
+                nftImageUri={mainNftImageUri}
+                setNftName={setMainNftName}
+                setNftDescription={setMainNftDescription}
+                setNftImageUri={setMainNftImageUri}
+                flag={0}
+              />
+            </div>
+          </div>
+        </div>
+        <Container maxWidth="sm">
             <div>
               {mainNftImageUri && (
                 <>
@@ -250,32 +277,6 @@ export default function Home() {
               )}
             </div>
           </Container>
-          <div className={styles.header_right}>
-            <div>
-              <GetYourMoney
-                contract={mainContract}
-                address={address}
-                gasLimit={gasLimit}
-                moneyNumber={moneyNumber}
-                setMoneyNumber={setMoneyNumber}
-              />
-            </div>
-            <div className={styles.connect_wallet}>
-              <ConnectWalletButton
-                onConnected={handleConnected}
-                contract={mainContract}
-                gasLimit={gasLimit}
-                nftName={mainNftName}
-                nftDescription={mainNftDescription}
-                nftImageUri={mainNftImageUri}
-                setNftName={setMainNftName}
-                setNftDescription={setMainNftDescription}
-                setNftImageUri={setMainNftImageUri}
-                flag={0}
-              />
-            </div>
-          </div>
-        </div>
 
         {/* apple */}
         <Container maxWidth="sm">

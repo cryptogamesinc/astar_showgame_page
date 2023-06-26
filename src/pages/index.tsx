@@ -25,7 +25,7 @@ import { css } from "@emotion/react";
 
 import ConnectWalletButton from "@/components/ConnectWalletButton";
 import GetMainContractButton from "@/components/GetMainContractButton";
-import GetContractButton from "@/components/GetContractButton";
+// import GetContractButton from "@/components/GetContractButton";
 
 import Claim0Token from "@/components/Claim0Token";
 import GetStatus from "@/components/GetStatus";

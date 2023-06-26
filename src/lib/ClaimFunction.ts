@@ -31,7 +31,7 @@ export default async function claimFunction(
       "Err" in humanOutput.Ok
     ) {
       const message = humanOutput.Ok?.Err;
-      console.log(message);
+      console.log("message, ", message);
       alert("Already had an NFT");
     } else {
       await contract.tx["claimANft"]({

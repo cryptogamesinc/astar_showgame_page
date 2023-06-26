@@ -73,7 +73,7 @@ const override = css`
   border-color: red;
 `;
 
-const mainContractAddress = "WeFbUsLbRddLow31zNbqChjzfh71ngkkMoZdrvmzUyT9GTS";
+const mainContractAddress = "Y8VnxmjoE8BHpFMLCChxGWyx5YdpmFPhRvpurTasCscQt7L";
 const psp22ContractAddress = "W9eVr6WmpwGdGQPCHYmjRdKxfZL7bA9Hyb3bkESH3nSkQrW";
 const psp37ContractAddress = "VwRKvqjLhK4NBBwmq3QkLVcdycfqghwe8iMcs95PFQj3A3x";
 

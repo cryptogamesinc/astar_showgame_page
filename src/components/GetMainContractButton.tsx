@@ -17,7 +17,7 @@ const GetMainContractButton: React.FC<GetMainContractButtonProps> = ({contractAd
   const [connected, setConnected] = useState(false);
   async function getMainContract() {
     try {
-      const provider = new WsProvider('wss://rpc.shibuya.astar.network');
+      const provider = new WsProvider('wss://shibuya.public.blastapi.io');
       const api = await ApiPromise.create({ provider });
       const contract = new ContractPromise(api, metadata, contractAddress);
       setApi(api);

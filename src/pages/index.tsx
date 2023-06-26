@@ -179,6 +179,7 @@ export default function Home() {
       right: "auto",
       bottom: "auto",
       marginRight: "-50%",
+      marginTop: "150px",
       transform: "translate(-50%, -50%)",
       minWidth: "40%",
       zIndex: "100",
@@ -203,7 +204,7 @@ export default function Home() {
         <Image src={image} className={styles.background} alt="Description" />
         <div className={styles.header_menu}>
           <div>
-            <Image src={image_logo} alt="Description" width={200} />
+            <Image src={image_logo} className={styles.image_logo} alt="Description" width={200} />
           </div>
           
           <div className={styles.header_right}>
@@ -495,7 +496,28 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div>
+              <div>psp37</div>
+
+              <div className={styles.container}>
+              {psp37NftImageUri && (
+                <>
+                  <img src={psp37NftImageUri} className={styles.nftImage} alt="Image"  width="80" height="80" />
+                </>
+              )}
+                <div>
+                {!psp37NftName && 
+                  <Claim0Token 
+                    contract={psp37Contract} 
+                    account={account} 
+                    gasLimit={gasLimit}
+                  />}
+                  {psp37NftName && <p style={{marginBottom: "20px"}}>Name: {psp37NftName}</p>}
+                  {psp37NftDescription && <p style={{marginBottom: "20px"}}>Description: {psp37NftDescription}</p>}
+                </div>
+              </div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <button
                 style={{ marginLeft: "auto" }}
                 onClick={() => {

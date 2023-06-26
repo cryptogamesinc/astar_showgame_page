@@ -506,12 +506,25 @@ export default function Home() {
                 </>
               )}
                 <div>
-                {!psp37NftName && 
-                  <Claim0Token 
-                    contract={psp37Contract} 
-                    account={account} 
-                    gasLimit={gasLimit}
-                  />}
+                  {!psp37NftName && 
+                    <Claim0Token 
+                      contract={psp37Contract} 
+                      account={account} 
+                      gasLimit={gasLimit}
+                    />}
+                  {!psp37NftName && 
+                    <GetInfo
+                      contract={psp37Contract} 
+                      address={address} 
+                      gasLimit={gasLimit} 
+                      nftName={psp37NftName}
+                      nftDescription={psp37NftDescription}
+                      nftImageUri={psp37NftImageUri}
+                      setNftName={setPsp37NftName}
+                      setNftDescription={setPsp37NftDescription}
+                      setNftImageUri={setPsp37NftImageUri}
+                      flag={1}
+                    />}
                   {psp37NftName && <p style={{marginBottom: "20px"}}>Name: {psp37NftName}</p>}
                   {psp37NftDescription && <p style={{marginBottom: "20px"}}>Description: {psp37NftDescription}</p>}
                 </div>

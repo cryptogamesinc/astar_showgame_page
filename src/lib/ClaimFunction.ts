@@ -46,6 +46,9 @@ export default async function claimFunction(
               console.log(
                 `Completed at block hash #${status.asInBlock.toString()}`
               );
+              alert(
+                "You claimed an NFT successfully!!\nPlease push the connected button"
+              );
             } else {
               console.log(`Current status: ${status.type}`);
               console.log(`Current status: ${status.hash.toString()}`);

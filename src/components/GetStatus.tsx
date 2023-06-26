@@ -28,7 +28,7 @@ const GetStatus: React.FC<GetStatusProps> = ({ contract, address, gasLimit, hung
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        },{u32:token_number})
+        },{u64: token_number})
   
       console.log("output",output);
       console.log("result",result);

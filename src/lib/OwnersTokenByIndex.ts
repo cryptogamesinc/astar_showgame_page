@@ -31,10 +31,10 @@ export default async function ownersTokenByIndex(
       "Ok" in humanOutput.Ok &&
       humanOutput.Ok.Ok &&
       typeof humanOutput.Ok.Ok === "object" &&
-      "U32" in humanOutput.Ok.Ok
+      "U64" in humanOutput.Ok.Ok
     ) {
-      console.log("output", humanOutput?.Ok?.Ok?.U32);
-      return String(humanOutput?.Ok?.Ok.U32);
+      console.log("output", humanOutput?.Ok?.Ok?.U64);
+      return String(humanOutput?.Ok?.Ok.U64);
     }
   }
 }

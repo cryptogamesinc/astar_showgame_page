@@ -316,7 +316,7 @@ export default function Home() {
                     setAppleModalIsOpen(false);
                   }}
                 >
-                  閉じる
+                  Close
                 </button>
               </div>
             </div>
@@ -366,7 +366,7 @@ export default function Home() {
                     setTreasureModalIsOpen(false);
                   }}
                 >
-                  閉じる
+                  Close
                 </button>
               </div>
             </div>
@@ -422,7 +422,7 @@ export default function Home() {
                     setFactoryModalIsOpen(false);
                   }}
                 >
-                  閉じる
+                  Close
                 </button>
               </div>
             </div>
@@ -537,7 +537,7 @@ export default function Home() {
                   setHouseModalIsOpen(false);
                 }}
               >
-                閉じる
+                Close
               </button>
             </div>
           </Modal>

@@ -617,7 +617,7 @@ pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
 
 18. plus or subtract function
 
-```rust:crates/multiasset/src/lib.rs plus or subtract function
+```rs:crates/multiasset/src/lib.rs plus or subtract function
 pub fn subtract_your_apple(&mut self, account_id: AccountId) -> Result<(), ContractError> {
 
             // get apple number
@@ -913,16 +913,20 @@ cd examples/equippable
 cargo +nightly-2023-02-07 test
 ```
 
+1. default_apple_value test
+
 ```rust:examples/equippable/lib.rs/
- // default_apple_value test
 #[ink::test]
 fn default_apple_value() {
     let contract = Contract::new();
     let account = AccountId::from([0x0; 32]);
     assert_eq!(contract.get_your_apple(account), 0);
 }
+```
 
- // set_and_get_apple test
+2. set_and_get_apple test
+
+```rust:examples/equippable/lib.rs/
 #[ink::test]
 fn set_and_get_apple() {
     let mut contract = Contract::new();
@@ -930,8 +934,11 @@ fn set_and_get_apple() {
     contract.set_your_apple(account, 10);
     assert_eq!(contract.get_your_apple(account), 10);
 }
+```
 
-// set_and_get_apple test
+3. set_default_works test
+
+```rust:examples/equippable/lib.rs/
 #[ink::test]
 fn set_default_works() {
     let accounts = default_accounts();
@@ -946,8 +953,11 @@ fn set_default_works() {
     assert_eq!(contract.get_your_apple(accounts.alice.clone()), 10);
     assert_eq!(contract.get_your_money(accounts.alice.clone()), 500);
 }
+```
 
-// set_and_get_apple test
+4. get_current_status_works test
+
+```rust:examples/equippable/lib.rs/
 #[ink::test]
 fn get_current_status_works() {
     let accounts = default_accounts();
@@ -999,8 +1009,12 @@ fn get_current_status_works() {
     assert_eq!(total_status_many_time_passed, 0); // 0 + 0 - 595, but not less than 0
 
 }
+```
 
-// set_and_get_apple test
+5. buy_an_apple_works test
+
+```rust:examples/equippable/lib.rs/
+
 #[ink::test]
 fn buy_an_apple_works() {
     let mut contract = Contract::default();
@@ -1012,8 +1026,11 @@ fn buy_an_apple_works() {
 
     assert_eq!(contract.get_your_apple(accounts.alice), 1);
 }
+```
 
-// set_and_get_apple test
+6. buy_an_apple_fails_without_enough_money test
+
+```rust:examples/equippable/lib.rs/
 #[ink::test]
 fn buy_an_apple_fails_without_enough_money() {
     let mut contract = Contract::default();
@@ -1021,8 +1038,11 @@ fn buy_an_apple_fails_without_enough_money() {
 
     assert!(contract.buy_an_apple(accounts.alice).is_err());
 }
+```
 
-// set_and_get_apple test
+7. get_your_apple_works test
+
+```rust:examples/equippable/lib.rs/
 #[ink::test]
 fn get_your_apple_works() {
     let contract = Contract::default();
@@ -1030,8 +1050,11 @@ fn get_your_apple_works() {
 
     assert_eq!(contract.get_your_apple(accounts.alice), 0);
 }
+```
 
-// set_and_get_apple test
+8. eat_an_apple_works test
+
+```rust:examples/equippable/lib.rs/
 #[ink::test]
 fn eat_an_apple_works() {
     let mut contract = Contract::default();
@@ -1052,8 +1075,11 @@ fn eat_an_apple_works() {
 
     assert_eq!(contract.get_your_apple(accounts.alice), 0);
 }
+```
 
-// set_and_get_apple test
+9. eat_an_apple_works_without_enough_time test
+
+```rust:examples/equippable/lib.rs/
 #[ink::test]
 fn eat_an_apple_works_without_enough_time() {
     let mut contract = Contract::default();

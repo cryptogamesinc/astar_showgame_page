@@ -1,7 +1,6 @@
-
 # WasmShowCase
 
-WasmShowCaseはフルオンチェーンのキャラクターの育成ゲームです。
+WasmShowCase はフルオンチェーンのキャラクターの育成ゲームです。
 
 リンゴを食べさせることにより、３つのステータス（空腹、健康、幸福）がランダムに変化します。
 時間の経過とともに、これらのステータスは下がってしまいますので（空腹は上がります。）注意して育成してください。
@@ -12,71 +11,80 @@ WasmShowCaseはフルオンチェーンのキャラクターの育成ゲーム�
 
 ![](https://storage.googleapis.com/zenn-user-upload/17d5f5c3d1eb-20230531.png)
 
------
+---
 
 # Starting the Game
 
 ゲームを始めるために、２つの選択肢があります。
 
 1. 直接ゲームを始める場合
-2. Githubからローカルに落として遊ぶ場合
+2. Github からローカルに落として遊ぶ場合
 
 ## 直接ゲームを始める場合
-始める前に、Polkadot系のウォレットを取得してください。
 
-推奨：`タリスマン`、もしくは`Polkadot.js`を使用してください。メタマスクなどのEVM系のウォレットでは動作しません。
+始める前に、Polkadot 系のウォレットを取得してください。
+
+推奨：`タリスマン`、もしくは`Polkadot.js`を使用してください。メタマスクなどの EVM 系のウォレットでは動作しません。
 
 次に、ガス代である、`Shibuya`を取得します。持っていない場合には、`Faucet`から`Shibuya`を取得してください。ウォレットの準備ができ、`Shibuya`の取得ができれば、準備完了です。
 
-まずは種のボタンを押して、あなただけのキャラクターNFT（`psp34`）を取得しましょう。なお、キャラクターNFTはアカウントにつき、１体しかミントすることができません。
+まずは種のボタンを押して、あなただけのキャラクター NFT（`psp34`）を取得しましょう。なお、キャラクター NFT はアカウントにつき、１体しかミントすることができません。
 
-## Githubからローカルに落として遊ぶ場合
+## Github からローカルに落として遊ぶ場合
 
-次のように、Githubを使用し、ローカルで立ち上げを行います。
+次のように、Github を使用し、ローカルで立ち上げを行います。
 
 ### メインコントラクト
+
 まずは、`メインコントラクト`をデプロイします。
 
 :::message
-ここに該当のGithub
+ここに該当の Github
 :::
-まずはgit cloneを行います。
+まずは git clone を行います。
+
 ```sh
 git clone <後で>
 ```
-その後コントラクトのbuildを行います。
+
+その後コントラクトの build を行います。
 
 ```sh
 cd examples/equippable
 cargo +cnightly-2023-02-07 contract build
 ```
+
 最後に、`substrate`でコントラクトのデプロイを行います。
 https://contracts-ui.substrate.io/
 
 その際に`target > ink > rmrk_example_equippable`内にある`rmrk_example_equippable.contract`ファイルを使用します。
 
-### psp22コントラクト, psp３７コントラクト
+### psp22 コントラクト, psp ３７コントラクト
 
 次に、`psp22`,`psp３７`用コントラクトをデプロイします。
 
 :::message
-ここに該当のGithub
+ここに該当の Github
 :::
-まずはgit cloneを行います。
+まずは git clone を行います。
+
 ```sh
 git clone <後で>
 ```
-その後コントラクトのbuildを行います。
+
+その後コントラクトの build を行います。
 
 `psp22`
+
 ```sh
 cd examples/psp22_extensions/mintable
 cargo +cnightly-2023-02-07 contract build
 ```
 
 `psp37`
+
 ```sh
-cd examples/psp37_extensions/mintable 
+cd examples/psp37_extensions/mintable
 cargo +cnightly-2023-02-07 contract build
 ```
 
@@ -89,15 +97,15 @@ https://contracts-ui.substrate.io/
 `psp37`
 その際に`psp37_extensions > mintable > target > ink`内にある`my_psp37_mintable.contract`ファイルを使用します。
 
-
 ### フロントエンド
 
 最後に、フロントエンドを立ち上げます。
 
 :::message
-ここに該当のGithub
+ここに該当の Github
 :::
-git cloneを行った後、`yarn`を実行します。
+git clone を行った後、`yarn`を実行します。
+
 ```sh
 git clone <後で>
 cd astar-showgame-page
@@ -107,20 +115,22 @@ yarn
 `src > pages`内の`index.tsx`について、コントラクトアドレスを上で取得したものに変更します。
 
 ```js
-const mainContractAddress = <Main Contract Address> 
-const psp22ContractAddress = <psp22 Contract Address> 
-const psp37ContractAddress = <psp37 Contract Address> 
+const mainContractAddress = <Main Contract Address>
+const psp22ContractAddress = <psp22 Contract Address>
+const psp37ContractAddress = <psp37 Contract Address>
 ```
 
 ゲーム内通貨を購入した際の売上が入るアドレスを設定します。
+
 ```js
 const ownerAddress = <Wallet Address>
 ```
+
 最後に、`yarn dev`で立ち上げ、`http://localhost:3000/`で確認を行います。
 
 後は「直接ゲームを始める場合」のやり方に沿って進めていきます。
 
------
+---
 
 # Structure of a dApp
 
@@ -134,6 +144,7 @@ Now that you understand what the dApp does, let us take a closer look to its str
 The contract presents many methods
 
 1. set_default
+
 ```rust:crates/multiasset/src/lib.rs set_default function
 #[ink(message)]
         #[modifiers(only_owner)]
@@ -148,15 +159,16 @@ The contract presents many methods
 ```
 
 2. set_status function
+
 ```rust:crates/multiasset/src/lib.rs set_status function
 #[ink(message)]
         pub fn set_status (
             &mut self,
-            token_id: u64, 
+            token_id: u64,
             hungry: u32,
             health: u32,
             happy: u32
-        ) -> Result<(), PSP34Error>{ 
+        ) -> Result<(), PSP34Error>{
             self.ensure_exists_and_get_owner(Id::U64(token_id).clone())?;
             self.asset_status.insert(&Id::U64(token_id),&Status {hungry,health,happy});
             Ok(())
@@ -164,6 +176,7 @@ The contract presents many methods
 ```
 
 3. set_particular_status
+
 ```rust:crates/multiasset/src/lib.rs set_particular_status
 pub fn set_full_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
             self.set_status(token_id, 0, 100, 100)?;
@@ -183,20 +196,20 @@ pub fn set_death_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
                 // In case the token_id doesn't exist in the asset_status map, we just return a default status with all fields set to 0.
                 Status { hungry: 0, health: 0, happy: 0 }
             });
-    
+
             let hungry_status: u32;
             if original_status.hungry > number {
                 hungry_status = original_status.hungry - number;
             } else {
                 hungry_status = 0;
             }
-        
+
             let new_status = Status {
                 hungry: hungry_status,
                 health: original_status.health + number,
                 happy: original_status.happy + number,
             };
-        
+
             self.asset_status.insert(&Id::U64(token_id), &new_status);
             Ok(())
         }
@@ -208,19 +221,20 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
 ```
 
 4. get_status
+
 ```rust:crates/multiasset/src/lib.rs get_status
 #[ink(message)]
         pub fn get_status(&self, token_id: u64) -> Option<Status> {
             self.asset_status.get(&Id::U64(token_id))
         }
-    
+
 
 #[ink(message)]
         pub fn get_current_status(&self, token_id: u64) -> Option<Status> {
 
             //　get the current time
             let current_time = Self::env().block_timestamp();
-    
+
             // get the last eaten time
             let last_checked_time = self.last_eaten.get(&Id::U64(token_id)).unwrap_or(Default::default());
 
@@ -231,23 +245,23 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
                     happy: 0,
                 });
             } else {
-            
+
                 let past_time = current_time - last_checked_time;
-    
+
                 // 60 seconds（60 ※ 1000 miliseconds）
                 let past_day = past_time / (60 * 1000) ;
                 // Assuming a hypothetical decrease of 5 per unit
                 let change_status = past_day * 5;
-    
+
                 let original_status = self.get_status(token_id.clone()).unwrap_or_else(|| {
                     // In case the token_id doesn't exist in the asset_status map, we just return a default status with all fields set to 0.
                     Status { hungry: 0, health: 0, happy: 0 }
                 });
-    
+
                 let new_hungy_status = original_status.hungry + (change_status as u32);
                 let new_health_status = original_status.health.saturating_sub(change_status as u32);
                 let new_happy_status = original_status.happy.saturating_sub(change_status as u32);
-    
+
                 return Some(Status {
                     hungry: new_hungy_status,
                     health: new_health_status,
@@ -257,7 +271,8 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
         }
 ```
 
-5. call_psp22_transfer 
+5. call_psp22_transfer
+
 ```rust:crates/multiasset/src/lib.rs call_psp22_transfer function
 #[ink(message)]
         pub fn call_psp22_transfer(&mut self, target_account_id:AccountId, to: AccountId, value: Balance, data: Vec<u8>)  -> Result<(), PSP22Error> {
@@ -269,6 +284,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
 ```
 
 6. buy_game_money function
+
 ```rust:crates/multiasset/src/lib.rs buy_game_money function
 #[ink(message)]
         pub fn buy_game_money(&mut self, target_account_id:AccountId, to: AccountId, data: Vec<u8>) -> Result<(), ContractError>{
@@ -286,6 +302,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
 ```
 
 7. set or get url
+
 ```rust:crates/multiasset/src/lib.rs set get url
 // normal
         #[ink(message)]
@@ -328,6 +345,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
 ```
 
 8. get_total_status
+
 ```rust:crates/multiasset/src/lib.rs get_total_status function
 #[ink(message)]
         pub fn get_total_status(&self, token_id: u64) -> u32 {
@@ -335,13 +353,13 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
                 // In case the token_id doesn't exist in the asset_status map, we just return a default status with all fields set to 0.
                 Status { hungry: 0, health: 0, happy: 0 }
             });
-        
+
             let new_status = Status {
                 hungry: original_status.hungry,
                 health: original_status.health,
                 happy: original_status.happy,
             };
-    
+
             let total_status = new_status.health as i32 + new_status.happy as i32 - new_status.hungry as i32;
             let result = if total_status > 0 { total_status } else { 0 };
             result as u32
@@ -349,6 +367,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
 ```
 
 9. get_condition function
+
 ```rust:crates/multiasset/src/lib.rs get_condition function
 #[ink(message)]
         pub fn get_condition(&self , token_id: u64) -> u32 {
@@ -356,11 +375,11 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
             // bad condition
             if condition < 100 {
                 0
-            } 
+            }
             // normal condition
             else if condition < 200 {
                 1
-            } 
+            }
             // good condition
             else {
                 2
@@ -368,7 +387,8 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
         }
 ```
 
-10. get_condition_url 
+10. get_condition_url
+
 ```rust:crates/multiasset/src/lib.rs get_condition_url function
 #[ink(message)]
         pub fn get_condition_url(&self , token_id: u64) -> String {
@@ -384,6 +404,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
 ```
 
 11. eat_an_apple function
+
 ```rust:crates/multiasset/src/lib.rs eat_an_apple function
 #[ink(message)]
         pub fn eat_an_apple(&mut self, token_id: u64, account_id: AccountId) -> Result<(),ContractError> {
@@ -396,7 +417,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
             if has_passed ==false {
                 Err(ContractError::TimeHasNotPassed.into())
             } else {
-                // get current time 
+                // get current time
                 let current_time = Self::env().block_timestamp();
                 //  set last eaten time
                 self.set_last_eaten(Id::U64(token_id).clone(), current_time);
@@ -417,12 +438,13 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
                 } else {
                     self.set_death_status(token_id)?;
                     Ok(())
-                } 
+                }
             }
         }
 ```
 
 12. token_uri function
+
 ```rust:crates/multiasset/src/lib.rs token_uri function
 #[ink(message)]
         pub fn token_uri(&self , token_id: u64) -> String {
@@ -450,16 +472,17 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
                 // _ => "0".to_string()
                 Id::Bytes(value) => ink::prelude::string::String::from_utf8(value.clone()).unwrap(),
             };
-    
+
             let base_uri:String = self.get_condition_url(token_id.clone());
             let tmp_uri: ink::prelude::string::String = ink::prelude::string::String::from_utf8(base_uri).unwrap();
             let uri:ink::prelude::string::String = tmp_uri + &id_string;
-    
+
             uri.into_bytes()
         }
 ```
 
 13. get set function
+
 ```rust:crates/multiasset/src/lib.rs get set function
 #[ink(message)]
         pub fn get_your_apple(&self, account_id: AccountId) -> u16 {
@@ -482,7 +505,8 @@ pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
         }
 ```
 
-14. stake_your_money 
+14. stake_your_money
+
 ```rust:crates/multiasset/src/lib.rs stake_your_money function
 #[ink(message)]
         pub fn stake_your_money(&mut self, account_id: AccountId, stake_money: u64) -> Result<(), ContractError> {
@@ -516,19 +540,20 @@ pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
 ```
 
 15. get_your_staked_money
+
 ```rust:crates/multiasset/src/lib.rs get_your_staked_money function
 #[ink(message)]
         pub fn get_your_staked_money(&self, account_id: AccountId) -> u64 {
 
             //　get the current time
             let current_time = Self::env().block_timestamp();
-    
+
             // get your_staked_money
             let staked_money = self
                 .your_staked_money
                 .get(&account_id)
                 .unwrap_or(Default::default());
-    
+
             // get last_staked_time
             let last_staked_time = self
                 .last_staked
@@ -548,13 +573,14 @@ pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
 ```
 
 16. withdraw_your_money
+
 ```rust:crates/multiasset/src/lib.rs withdraw_your_money function
 #[ink(message)]
         pub fn withdraw_your_money(&mut self, account_id: AccountId) -> Result<(), ContractError> {
             let staked_money = self.get_your_staked_money(account_id);
-    
+
             let current_money = self.get_your_money(account_id.clone());
-    
+
             if staked_money == 0 {
                 Err(ContractError::NotEnoughMoney.into())
             } else {
@@ -563,8 +589,8 @@ pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
                 self
                 .your_staked_money
                 .insert(&account_id, &0);
-    
-                // set your_money 
+
+                // set your_money
                 self
                     .your_money
                     .insert(&account_id, &result_money);
@@ -574,13 +600,14 @@ pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
 ```
 
 17. buy_an_apple function
+
 ```rust:crates/multiasset/src/lib.rs buy_an_apple function
 #[ink(message)]
         pub fn buy_an_apple(&mut self, account_id: AccountId) -> Result<(), ContractError>{
 
             // the apple price is 20
             self.subtract_your_money(account_id, 20)?;
-    
+
             // add 1
             let after_apple = self.get_your_apple(account_id) + 1;
             self.apple_number.insert(&account_id, &after_apple);
@@ -589,17 +616,18 @@ pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
 ```
 
 18. plus or subtract function
+
 ```rust:crates/multiasset/src/lib.rs plus or subtract function
 pub fn subtract_your_apple(&mut self, account_id: AccountId) -> Result<(), ContractError> {
-        
+
             // get apple number
             let apple_number = self.get_your_apple(account_id);
-    
+
             if apple_number < 1 {
                 Err(ContractError::NotEnoughApple.into())
             } else {
                 let after_apple = apple_number - 1;
-    
+
                 self
                 .apple_number
                 .insert(&account_id, &after_apple);
@@ -608,10 +636,10 @@ pub fn subtract_your_apple(&mut self, account_id: AccountId) -> Result<(), Contr
         }
 
 pub fn subtract_your_money(&mut self, account_id: AccountId, change_money: u64) -> Result<(), ContractError> {
-        
+
             // get current game money
             let money = self.get_your_money(account_id);
-    
+
             if money < change_money {
                 Err(ContractError::NotEnoughMoney.into())
             } else {
@@ -622,21 +650,22 @@ pub fn subtract_your_money(&mut self, account_id: AccountId, change_money: u64) 
         }
 
 pub fn plus_your_money(&mut self, account_id: AccountId, change_money: u64) {
-        
+
             // get current game money
             let money = self.get_your_money(account_id);
-    
+
             let after_money = money + change_money;
             self.set_your_money(account_id, after_money);
         }
 ```
 
 19. daily_bonus function
+
 ```rust:crates/multiasset/src/lib.rs daily_bonus function
 #[ink(message)]
         pub fn daily_bonus(&mut self, account_id: AccountId) -> Result<(), ContractError> {
 
-            // Get the time when the last bonus was obtained. In case of error, return 0 
+            // Get the time when the last bonus was obtained. In case of error, return 0
             let last_bonus = self.get_last_bonus(account_id);
             // Function of whether a predetermined amount of time has elapsed.
             let has_passed = self.five_minutes_has_passed(last_bonus);
@@ -659,6 +688,7 @@ pub fn plus_your_money(&mut self, account_id: AccountId, change_money: u64) {
 ```
 
 20. get or set time function
+
 ```rust:crates/multiasset/src/lib.rs get or set time function
 #[ink(message)]
         pub fn get_last_eaten(&self, token_id: Id) -> u64 {
@@ -672,7 +702,7 @@ pub fn set_last_eaten(&mut self, token_id: Id, current_time: u64) {
 #[ink(message)]
         pub fn get_last_bonus(&self, account_id: AccountId) -> u64 {
             self.last_bonus.get(&account_id).unwrap_or(Default::default())
-        } 
+        }
 
 pub fn set_last_bonus(&mut self, account_id: AccountId, current_time: u64) {
             self.last_bonus.insert(&account_id, &current_time);
@@ -680,10 +710,11 @@ pub fn set_last_bonus(&mut self, account_id: AccountId, current_time: u64) {
 ```
 
 21. check function
+
 ```rust:crates/multiasset/src/lib.rs check function
 pub fn is_nft_owner(&self, token_id: Id) -> bool {
             let token_owner = self.owner_of(token_id.clone()).unwrap();
-    
+
             if token_owner == Self::env().caller() {
                 true
             } else {
@@ -700,9 +731,11 @@ pub fn is_account_id(&self, account_id: AccountId) -> bool {
             }
         }
 ```
+
 ## PSP22 Contract
 
 `OpenBrush`から変更していない部分は除きます。メインコントラクトから呼び出しを行うための実装です。
+
 ```rust:examples/psp22_extensions/mintable/lib.rs
 #[ink(message)]
         pub fn transfer_from_contract(&mut self, from: AccountId, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error> {
@@ -715,6 +748,7 @@ pub fn is_account_id(&self, account_id: AccountId) -> bool {
             self.balance_of(owner)
         }
 ```
+
 `OpenBrush`については[こちら](https://github.com/Supercolony-net/openbrush-contracts)
 
 ## PSP37 Contract
@@ -726,6 +760,7 @@ pub fn is_account_id(&self, account_id: AccountId) -> bool {
 フロントエンドは`index.tsx`と`components`フォルダからなります。
 
 一部を抜粋します。
+
 ```rust:src/components/ConnectWalletButton.tsx/
 async function connectWallet() {
     if (contract === null) {
@@ -793,6 +828,7 @@ export default async function getContractButton(
   }
 }
 ```
+
 ```rust:src/components/DailyBonus.tsx/
 async function dailyBonus () {
     const { web3FromSource} = await import(
@@ -835,6 +871,7 @@ async function dailyBonus () {
     }
   }
 ```
+
 ```rust:src/components/TokenUri.tsx/
 async function tokenUri() {
     if (contract !== null) {
@@ -868,8 +905,8 @@ async function tokenUri() {
 ```
 
 ## Testing
-WASMのコントラクトでは、`#[ink::test]`を使用し、テストを行うことができます。
 
+WASM のコントラクトでは、`#[ink::test]`を使用し、テストを行うことができます。
 
 ```
 cd examples/equippable
@@ -933,7 +970,7 @@ fn get_current_status_works() {
     // Let's simulate the passage of time
     set_block_timestamp(61 * 1000); // 61 seconds
     let status_after_time = contract.get_current_status(token_id.clone()).unwrap();
-    
+
     // // We need to manually calculate the expected new statuses because they are time-dependent
     let expected_status = Status {
         hungry: 105, // 100 + 5 (1 minute passed, so status increases by 5)
@@ -968,7 +1005,7 @@ fn get_current_status_works() {
 fn buy_an_apple_works() {
     let mut contract = Contract::default();
     let accounts = test::default_accounts::<Environment>();
-    
+
     contract.set_your_money(accounts.alice, 50);
 
     assert!(contract.buy_an_apple(accounts.alice).is_ok());
@@ -1010,9 +1047,9 @@ fn eat_an_apple_works() {
     contract.set_last_eaten(Id::U64(token_id).clone(), 1 * 1000); // 1 second
 
     set_block_timestamp(6000 * 1000); // 600 seconds (10 minutes)
-    
+
     assert!(contract.eat_an_apple(token_id, accounts.alice).is_ok());
-    
+
     assert_eq!(contract.get_your_apple(accounts.alice), 0);
 }
 
@@ -1033,29 +1070,14 @@ fn eat_an_apple_works_without_enough_time() {
     contract.set_last_eaten(Id::U64(token_id).clone(), 590 * 1000); // 590 seconds
 
     set_block_timestamp(600 * 1000); // 600 seconds (only 10 seconds has passed)
-    
+
     assert!(contract.eat_an_apple(token_id, accounts.alice).is_err());
-    
+
     assert_eq!(contract.get_your_apple(accounts.alice), 1);
 }
 ```
 
 # ここまでです！
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -1095,6 +1117,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
 # Specific description of this project below
 
 ## Explanation of the values
@@ -1103,20 +1126,25 @@ In this dapps, several values are set.
 Since this is a showcase project, all the values are short so that you can easily check the effect of the project.
 
 ### 1 Daily Bonus
+
 - Acquisition point: 100
 - Cooldown period: 5 minutes
 
 ### 2 Staking
+
 - 1% increase every 10 seconds
 
 ### 3 Buy an Apple
+
 - Get 1 for 20 game points
 
 ### 4 Get Status
+
 - Status changes every minute
 - +5 for hungry, -5 for healthy and happy
 
 ### 5 Eat an Apple
+
 - The following statuses occur with equal probability (for simplicity) (listed in the order of hungry, health, happy)
 - 1 Normal change (-30, +30, +30)
 - 2 Full status (0, 100, 100)
@@ -1126,11 +1154,12 @@ Since this is a showcase project, all the values are short so that you can easil
 - Cooldown period: 5 minutes
 
 ### 6 Buy Game Money
+
 - Spend 500 psp22 and get 300 game points
 
 ### 7 Number of NFTs (psp34, psp37) acquired
-- The number of NFTs acquired is limited to 1. If you try to get more than that, an error will occur.
 
+- The number of NFTs acquired is limited to 1. If you try to get more than that, an error will occur.
 
 ## Explanation of URLs
 
@@ -1159,9 +1188,9 @@ The multiAsset::setDefault function can also be used to facilitate initializatio
 
 ### 1 About Connect Wallet button
 
-Connect Wallet connection.  
+Connect Wallet connection.
 
-Polkadot.js, Talisman, etc. are supported.  
+Polkadot.js, Talisman, etc. are supported.
 
 Once connected, the wallet address and source (which wallet you are connecting with) will be displayed.  
 (Initially it was set up on the front, but now it is displayed on the CONSOLE screen.)
@@ -1170,13 +1199,13 @@ Once connected, the wallet address and source (which wallet you are connecting w
 
 ### 2 About the Get Contract button
 
-To get contract, you have to get contract by ContractPromise from provider, api as shown below.  
+To get contract, you have to get contract by ContractPromise from provider, api as shown below.
 
 ![](src/images/2_getContract.png)
 
-It is also necessary to set up a json file, which can be done when creating the contract.  
+It is also necessary to set up a json file, which can be done when creating the contract.
 
-Without it, you will not be able to execute functions, etc.  
+Without it, you will not be able to execute functions, etc.
 
 ![](src/images/3_metadata.png)
 
@@ -1184,7 +1213,7 @@ Without it, you will not be able to execute functions, etc.
 
 #### 1） Setting the waiting period
 
-The waiting period is set as shown below. 
+The waiting period is set as shown below.
 
 After setting, the current time is written to the contract and used to determine the next time the DailyBonus is executed.
 
@@ -1193,7 +1222,7 @@ In this case, for the model case, it is set to 5 minutes.
 
 #### 2） Setting up the in-game currency
 
-The in-game currency is set as Mapping in the contract.  
+The in-game currency is set as Mapping in the contract.
 
 This time, the value is set to 100 as a solid value, but it can be made more versatile by making it a function so that it can be set to any value.
 
@@ -1201,29 +1230,29 @@ This time, the value is set to 100 as a solid value, but it can be made more ver
 
 ### 4 About the Get Status function
 
-Get Status.  
+Get Status.
 
-There are three statuses: "Hungry", "Happy", and "Health", and they decrease with time (Hungry increases).  
+There are three statuses: "Hungry", "Happy", and "Health", and they decrease with time (Hungry increases).
 
-The decrease in status starts from the last time you ate an apple.  
+The decrease in status starts from the last time you ate an apple.
 
 If an apple has never been eaten before, all statuses are initially set to 0
 
 #### 1） Obtain the time of the last time an apple was eaten
 
-The time when the apple was last eaten is acquired by "last_eaten".  
+The time when the apple was last eaten is acquired by "last_eaten".
 
-If the apple has never been eaten, the status is set to 0.  
+If the apple has never been eaten, the status is set to 0.
 
 ![](src/images/6_getCurrentStatus1.png)
 
 #### 2） Determine the status decrement
 
-Subtract "last_eaten" from the current time to obtain the elapsed time.  
+Subtract "last_eaten" from the current time to obtain the elapsed time.
 
-In this case, the unit is m seconds.  
+In this case, the unit is m seconds.
 
-In this case, as shown in the figure, the time is set to change by 5 in increments of 1 minute.  
+In this case, as shown in the figure, the time is set to change by 5 in increments of 1 minute.
 
 The current status is also obtained. If the current status cannot be obtained, 0 is obtained.
 
@@ -1231,20 +1260,20 @@ The current status is also obtained. If the current status cannot be obtained, 0
 
 #### 3） Obtain the status after the change
 
-Based on the changing status, obtain the status after the change.  
+Based on the changing status, obtain the status after the change.
 
-Here, the "saturating_sub" function is used to return 0 if it is less than 0.  
+Here, the "saturating_sub" function is used to return 0 if it is less than 0.
 
 ![](src/images/8_getCurrentStatus3.png)
 
 ### 5 "Your Apple", "Your Money" and "Staked" functions
 
-Retrieve the data held by the contract.  
+Retrieve the data held by the contract.
 
 The data is in a Mapping structure as shown below.　　
 ![](src/images/9_getYourApple1.png)
 
-Use the "unwrap_or_default" function in case the data cannot be obtained.  　　
+Use the "unwrap_or_default" function in case the data cannot be obtained. 　　
 ![](src/images/10_getYourAppleFunction.png)
 
 ### 6 Staking function
@@ -1275,9 +1304,9 @@ If not an error, find the total amount after withdrawal and set
 
 ### 8 About Buy an Apple feature
 
-Buy one apple with 20 in-game money  
+Buy one apple with 20 in-game money
 
-First, check if you have more than 20 money, if not, display an error.  
+First, check if you have more than 20 money, if not, display an error.
 
 If no problem, overwrite with the changed money.
 ![](src/images/16_buyAnApple.png)
@@ -1382,7 +1411,7 @@ Used to buy in-game tokens
 
 https://contracts-ui.substrate.io/contract/WG7GLbCQLnuCyiURRaFsCsmg2E87mwbjoNvT675rxs5tgXe
 
-- psp37 
+- psp37
 
 Used as a souvenir; limited to 1 NFT per person.
 

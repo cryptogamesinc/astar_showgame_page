@@ -134,500 +134,485 @@ Now that you understand what the dApp does, let us take a closer look to its str
 The contract presents many methods
 
 ```rust:crates/multiasset/src/lib.rs set_default function
-fn set_default(&mut self, account_id: AccountId) -> Result<()> {
-        self.set_bad_uri(String::from("ipfs://QmV1VxGsrM4MLNn1qwR9Hmu5DGFfWjzHmhHFXpTT2fevMQ/"))?;
-        self.set_normal_uri(String::from("ipfs://QmTBf9GJLiw97v84Q7aEPPFHUXdyqXWC6AUp97VnLFZtWr/"))?;
-        self.set_good_uri(String::from("ipfs://QmQUxL1RSWbZAWhQfWnJJrMVZsPm4Stc5C64kRuSnXe56Q/"))?;
-        self.set_your_apple(account_id, 10)?;
-        self.set_your_money(account_id, 500)?;
-        Ok(())
-}
+#[ink(message)]
+        #[modifiers(only_owner)]
+        pub fn set_default(&mut self, account_id: AccountId) -> Result<(), PSP34Error> {
+            self.set_bad_uri(String::from("ipfs://QmV1VxGsrM4MLNn1qwR9Hmu5DGFfWjzHmhHFXpTT2fevMQ/"))?;
+            self.set_normal_uri(String::from("ipfs://QmTBf9GJLiw97v84Q7aEPPFHUXdyqXWC6AUp97VnLFZtWr/"))?;
+            self.set_good_uri(String::from("ipfs://QmQUxL1RSWbZAWhQfWnJJrMVZsPm4Stc5C64kRuSnXe56Q/"))?;
+            self.set_your_apple(account_id, 10);
+            self.set_your_money(account_id, 500);
+            Ok(())
+        }
 ```
 
 ```rust:crates/multiasset/src/lib.rs set_status function
-fn set_status (
-        &mut self,
-        token_id: Id, 
-        hungry: u32,
-        health: u32,
-        happy: u32
-    ) -> Result<()>{ 
-        self.ensure_exists_and_get_owner(&token_id)?;
-        self.data::<MultiAssetData>()
-            .asset_status
-            .insert(
-                token_id,
-                &Status {
-                    hungry,
-                    health,
-                    happy,
-                },
-            );
-        Ok(())
-    }
+#[ink(message)]
+        pub fn set_status (
+            &mut self,
+            token_id: u64, 
+            hungry: u32,
+            health: u32,
+            happy: u32
+        ) -> Result<(), PSP34Error>{ 
+            self.ensure_exists_and_get_owner(Id::U64(token_id).clone())?;
+            self.asset_status.insert(&Id::U64(token_id),&Status {hungry,health,happy});
+            Ok(())
+        }
 ```
 
 ```rust:crates/multiasset/src/lib.rs set_particular_status
-fn set_full_status(&mut self, token_id: Id) -> Result<()> {
-        self.set_status(token_id, 0, 100, 100)
-}
+pub fn set_full_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
+            self.set_status(token_id, 0, 100, 100)?;
+            Ok(())
+        }
 
-fn set_death_status(&mut self, token_id: Id) -> Result<()> {
-	self.set_status(token_id, 80, 0, 0)
-}
+pub fn set_death_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
+            self.set_status(token_id, 80, 0, 0)?;
+            Ok(())
+        }
 
 // to change some status
-fn change_some_status(&mut self, token_id: Id, number: u32) -> Result<()> {
-	let original_status = self.get_current_status(token_id.clone()).unwrap_or_else(|| {
-	    // In case the token_id doesn't exist in the asset_status map, we just return a default status with all fields set to 0.
-	    Status { hungry: 0, health: 0, happy: 0 }
-	});
-
-	let hungry_status: u32;
-	if original_status.hungry > number {
-	    hungry_status = original_status.hungry - number;
-	} else {
-	    hungry_status = 0;
-	}
-
-	let new_status = Status {
-	    hungry: hungry_status,
-	    health: original_status.health + number,
-	    happy: original_status.happy + number,
-	};
-
-	self.data::<MultiAssetData>()
-	    .asset_status
-	    .insert(token_id, &new_status);
-	Ok(())
-}
-
-fn set_lucky_status(&mut self, token_id: Id) -> Result<()> {
-	self.change_some_status(token_id.clone(),50)
-}
-```
-
-```rust:crates/multiasset/src/lib.rs get_status
-fn get_status(&self, token_id: Id) -> Option<Status> {
-        self.data::<MultiAssetData>()
-            .asset_status
-            .get(token_id)
-    }
-
-    fn get_current_status(&self, token_id: Id) -> Option<Status> {
-
-        //　get the current time
-        let current_time = Self::env().block_timestamp();
-
-         // get the last eaten time
-         let last_checked_time = self.data::<MultiAssetData>()
-            .last_eaten
-            .get(&token_id)
-            .unwrap_or(Default::default());
-        if last_checked_time == 0 {
-            return Some(Status {
-                hungry: 0,
-                health: 0,
-                happy: 0,
-            });
-        } else {
-        
-            let past_time = current_time - last_checked_time;
-
-            // 60 seconds（60 ※ 1000 miliseconds）
-            let past_day = past_time / (60 * 1000) ;
-            // Assuming a hypothetical decrease of 5 per unit
-            let change_status = past_day * 5;
-
-            let original_status = self.get_status(token_id.clone()).unwrap_or_else(|| {
+#[ink(message)]
+        pub fn change_some_status(&mut self, token_id: u64, number: u32) -> Result<(), PSP34Error> {
+            self.ensure_exists_and_get_owner(Id::U64(token_id).clone())?;
+            let original_status = self.get_current_status(token_id.clone()).unwrap_or_else(|| {
                 // In case the token_id doesn't exist in the asset_status map, we just return a default status with all fields set to 0.
                 Status { hungry: 0, health: 0, happy: 0 }
             });
-
-            let new_hungy_status = original_status.hungry + (change_status as u32);
-            let new_health_status = original_status.health.saturating_sub(change_status as u32);
-            let new_happy_status = original_status.happy.saturating_sub(change_status as u32);
-
-            return Some(Status {
-                hungry: new_hungy_status,
-                health: new_health_status,
-                happy: new_happy_status,
-            });
+    
+            let hungry_status: u32;
+            if original_status.hungry > number {
+                hungry_status = original_status.hungry - number;
+            } else {
+                hungry_status = 0;
+            }
+        
+            let new_status = Status {
+                hungry: hungry_status,
+                health: original_status.health + number,
+                happy: original_status.happy + number,
+            };
+        
+            self.asset_status.insert(&Id::U64(token_id), &new_status);
+            Ok(())
         }
-    }
+
+pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
+            self.change_some_status(token_id.clone(),50)?;
+            Ok(())
+        }
+```
+
+```rust:crates/multiasset/src/lib.rs get_status
+#[ink(message)]
+        pub fn get_status(&self, token_id: u64) -> Option<Status> {
+            self.asset_status.get(&Id::U64(token_id))
+        }
+    
+
+#[ink(message)]
+        pub fn get_current_status(&self, token_id: u64) -> Option<Status> {
+
+            //　get the current time
+            let current_time = Self::env().block_timestamp();
+    
+            // get the last eaten time
+            let last_checked_time = self.last_eaten.get(&Id::U64(token_id)).unwrap_or(Default::default());
+
+            if last_checked_time == 0 {
+                return Some(Status {
+                    hungry: 0,
+                    health: 0,
+                    happy: 0,
+                });
+            } else {
+            
+                let past_time = current_time - last_checked_time;
+    
+                // 60 seconds（60 ※ 1000 miliseconds）
+                let past_day = past_time / (60 * 1000) ;
+                // Assuming a hypothetical decrease of 5 per unit
+                let change_status = past_day * 5;
+    
+                let original_status = self.get_status(token_id.clone()).unwrap_or_else(|| {
+                    // In case the token_id doesn't exist in the asset_status map, we just return a default status with all fields set to 0.
+                    Status { hungry: 0, health: 0, happy: 0 }
+                });
+    
+                let new_hungy_status = original_status.hungry + (change_status as u32);
+                let new_health_status = original_status.health.saturating_sub(change_status as u32);
+                let new_happy_status = original_status.happy.saturating_sub(change_status as u32);
+    
+                return Some(Status {
+                    hungry: new_hungy_status,
+                    health: new_health_status,
+                    happy: new_happy_status,
+                });
+            }
+        }
 ```
 
 ```rust:crates/multiasset/src/lib.rs call_psp22_transfer function
- fn call_psp22_transfer(&mut self, target_account_id:AccountId, to: AccountId, value: Balance, data: Vec<u8>) -> Result<()>{
-        let mut interface: ContractRef = ink::env::call::FromAccountId::from_account_id(target_account_id);
-        let from = Self::env().caller();
-        interface.transfer_from_contract(from, to, value, data);
-        Ok(())
-    }
+#[ink(message)]
+        pub fn call_psp22_transfer(&mut self, target_account_id:AccountId, to: AccountId, value: Balance, data: Vec<u8>)  -> Result<(), PSP22Error> {
+            let mut interface: Psp22ContractRef = ink::env::call::FromAccountId::from_account_id(target_account_id);
+            let from = Self::env().caller();
+            interface.transfer_from_contract(from, to, value, data)?;
+            Ok(())
+        }
 ```
 
 ```rust:crates/multiasset/src/lib.rs buy_game_money function
-fn buy_game_money(&mut self, target_account_id:AccountId, to: AccountId, data: Vec<u8>) -> Result<()>{
-        let mut interface: ContractRef = ink::env::call::FromAccountId::from_account_id(target_account_id);
-        let from = Self::env().caller();
-        let money = interface.balance_of_contract(from);
-        if money < 500 {
-            Err(RmrkError::NotEnoughMoney.into())
-        } else {
-            self.call_psp22_transfer(target_account_id, to, 500, data);
-            self.plus_your_money(from, 300);
-            Ok(())
+#[ink(message)]
+        pub fn buy_game_money(&mut self, target_account_id:AccountId, to: AccountId, data: Vec<u8>) -> Result<(), ContractError>{
+            let interface: Psp22ContractRef = ink::env::call::FromAccountId::from_account_id(target_account_id);
+            let from = Self::env().caller();
+            let money = interface.balance_of_contract(from);
+            if money < 500 {
+                Err(ContractError::NotEnoughMoney.into())
+            } else {
+                self.call_psp22_transfer(target_account_id, to, 500, data)?;
+                self.plus_your_money(from, 300);
+                Ok(())
+            }
         }
-    }
 ```
 
 ```rust:crates/multiasset/src/lib.rs set get url
- #[modifiers(only_role(CONTRIBUTOR))]
-    fn set_normal_uri(&mut self, normal_uri:String) -> Result<()>{
-        self.data::<MultiAssetData>()
-        .normal_uri = normal_uri;
-        Ok(())
-    }
+// normal
+        #[ink(message)]
+        #[modifiers(only_owner)]
+        pub fn set_normal_uri(&mut self, normal_uri:String) -> Result<(), PSP34Error> {
+            self.normal_uri = normal_uri;
+            Ok(())
+        }
 
-    fn get_normal_uri(&self) -> String {
-        self.data::<MultiAssetData>()
-            .normal_uri.clone()
-    }
+        #[ink(message)]
+        pub fn get_normal_uri(&self) -> String {
+            self.normal_uri.clone()
+        }
 
-    // 2) good uri
-    #[modifiers(only_role(CONTRIBUTOR))]
-    fn set_good_uri(&mut self, good_uri:String) -> Result<()>{
-        self.data::<MultiAssetData>()
-        .good_uri = good_uri;
-        Ok(())
-    }
+        // good
+        #[ink(message)]
+        #[modifiers(only_owner)]
+        pub fn set_good_uri(&mut self, good_uri:String) -> Result<(), PSP34Error> {
+            self.good_uri = good_uri;
+            Ok(())
+        }
 
-    
-    fn get_good_uri(&self) -> String {
-        self.data::<MultiAssetData>()
-            .good_uri.clone()
-    }
+        #[ink(message)]
+        pub fn get_good_uri(&self) -> String {
+            self.good_uri.clone()
+        }
 
-    // 3) bad uri
-    #[modifiers(only_role(CONTRIBUTOR))]
-    fn set_bad_uri(&mut self, bad_uri:String) -> Result<()>{
-        self.data::<MultiAssetData>()
-        .bad_uri = bad_uri;
-        Ok(())
-    }
+        // bad
+        #[ink(message)]
+        #[modifiers(only_owner)]
+        pub fn set_bad_uri(&mut self, bad_uri:String) -> Result<(), PSP34Error>{
+            self.bad_uri = bad_uri;
+            Ok(())
+        }
 
-    fn get_bad_uri(&self) -> String {
-        self.data::<MultiAssetData>()
-            .bad_uri.clone()
-    }
+        #[ink(message)]
+        pub fn get_bad_uri(&self) -> String {
+            self.bad_uri.clone()
+        }
 ```
 
 ```rust:crates/multiasset/src/lib.rs get_total_status function
-fn get_total_status(&self, token_id: Id) -> u32 {
-        let original_status = self.get_current_status(token_id.clone()).unwrap_or_else(|| {
-            // In case the token_id doesn't exist in the asset_status map, we just return a default status with all fields set to 0.
-            Status { hungry: 0, health: 0, happy: 0 }
-        });
+#[ink(message)]
+        pub fn get_total_status(&self, token_id: u64) -> u32 {
+            let original_status = self.get_current_status(token_id.clone()).unwrap_or_else(|| {
+                // In case the token_id doesn't exist in the asset_status map, we just return a default status with all fields set to 0.
+                Status { hungry: 0, health: 0, happy: 0 }
+            });
+        
+            let new_status = Status {
+                hungry: original_status.hungry,
+                health: original_status.health,
+                happy: original_status.happy,
+            };
     
-        let new_status = Status {
-            hungry: original_status.hungry,
-            health: original_status.health,
-            happy: original_status.happy,
-        };
-
-        let total_status = new_status.health as i32 + new_status.happy as i32 - new_status.hungry as i32;
-        let result = if total_status > 0 { total_status } else { 0 };
-        result as u32
-    }
+            let total_status = new_status.health as i32 + new_status.happy as i32 - new_status.hungry as i32;
+            let result = if total_status > 0 { total_status } else { 0 };
+            result as u32
+        }
 ```
 
 ```rust:crates/multiasset/src/lib.rs get_condition function
-fn get_condition(&self , token_id: Id) -> u32 {
-        let condition = self.get_total_status(token_id);
-        // bad condition
-        if condition < 100 {
-            0
-        } 
-        // normal condition
-        else if condition < 200 {
-            1
-        } 
-        // good condition
-        else {
-            2
+#[ink(message)]
+        pub fn get_condition(&self , token_id: u64) -> u32 {
+            let condition = self.get_total_status(token_id);
+            // bad condition
+            if condition < 100 {
+                0
+            } 
+            // normal condition
+            else if condition < 200 {
+                1
+            } 
+            // good condition
+            else {
+                2
+            }
         }
-    }
 ```
 
 ```rust:crates/multiasset/src/lib.rs get_condition_url function
-fn get_condition_url(&self , token_id: Id) -> String {
-        let condition = self.get_condition(token_id);
-        if condition == 0 {
-            self.get_bad_uri()
-        } else if condition == 1 {
-            self.get_normal_uri()
-        } else {
-            self.get_good_uri()
+#[ink(message)]
+        pub fn get_condition_url(&self , token_id: u64) -> String {
+            let condition = self.get_condition(token_id);
+            if condition == 0 {
+                self.get_bad_uri()
+            } else if condition == 1 {
+                self.get_normal_uri()
+            } else {
+                self.get_good_uri()
+            }
         }
-    }
 ```
 
 ```rust:crates/multiasset/src/lib.rs eat_an_apple function
-fn eat_an_apple(&mut self, token_id: Id, account_id: AccountId) -> Result<()> {
+#[ink(message)]
+        pub fn eat_an_apple(&mut self, token_id: u64, account_id: AccountId) -> Result<(),ContractError> {
 
-        // get last eaten time
-        let last_eaten = self.get_last_eaten(token_id.clone());
-        // get whether time passed
-        let has_passed = self.five_minutes_has_passed(last_eaten);
+            // get last eaten time
+            let last_eaten = self.get_last_eaten(Id::U64(token_id).clone());
+            // get whether time passed
+            let has_passed = self.five_minutes_has_passed(last_eaten);
 
-        if has_passed ==false {
-            Err(RmrkError::TimeHasNotPassed.into())
-        } else {
-            // get current time 
-            let current_time = Self::env().block_timestamp();
-            //  set last eaten time
-            self.set_last_eaten(token_id.clone(), current_time)?;
-            //  minus apple
-            self.minus_your_apple(account_id)?;
-
-            // branching by pseudo random
-            let random = self.get_pseudo_random(100);
-            if random < 25 {
-                self.change_some_status(token_id, 30)
-            } else if random < 50 {
-                self.set_full_status(token_id)
-            } else if random < 75 {
-                self.set_lucky_status(token_id)
+            if has_passed ==false {
+                Err(ContractError::TimeHasNotPassed.into())
             } else {
-                self.set_death_status(token_id)
-            } 
+                // get current time 
+                let current_time = Self::env().block_timestamp();
+                //  set last eaten time
+                self.set_last_eaten(Id::U64(token_id).clone(), current_time);
+                //  minus apple
+                self.subtract_your_apple(account_id)?;
+
+                // branching by pseudo random
+                let random = self.get_pseudo_random(100);
+                if random < 25 {
+                    self.change_some_status(token_id, 30)?;
+                    Ok(())
+                } else if random < 50 {
+                    self.set_full_status(token_id)?;
+                    Ok(())
+                } else if random < 75 {
+                    self.set_lucky_status(token_id)?;
+                    Ok(())
+                } else {
+                    self.set_death_status(token_id)?;
+                    Ok(())
+                } 
+            }
         }
-        
-    }
 ```
 
 ```rust:crates/multiasset/src/lib.rs token_uri function
-fn token_uri(&self , token_id: Id) -> String {
-        let id_string:ink::prelude::string::String = match token_id.clone() {
-            Id::U8(u8) => {
-                let tmp: u8 = u8;
-                tmp.to_string()
-            }
-            Id::U16(u16) => {
-                let tmp: u16 = u16;
-                tmp.to_string()
-            }
-            Id::U32(u32) => {
-                let tmp: u32 = u32;
-                tmp.to_string()
-            }
-            Id::U64(u64) => {
-                let tmp: u64 = u64;
-                tmp.to_string()
-            }
-            Id::U128(u128) => {
-                let tmp: u128 = u128;
-                tmp.to_string()
-            }
-            // _ => "0".to_string()
-            Id::Bytes(value) => ink::prelude::string::String::from_utf8(value.clone()).unwrap(),
-        };
-
-        let base_uri:String = self.get_condition_url(token_id.clone());
-        let tmp_uri: ink::prelude::string::String = ink::prelude::string::String::from_utf8(base_uri).unwrap();
-        let uri:ink::prelude::string::String = tmp_uri + &id_string;
-
-        uri.into_bytes()
-    }
+#[ink(message)]
+        pub fn token_uri(&self , token_id: u64) -> String {
+            let id_string:ink::prelude::string::String = match Id::U64(token_id).clone() {
+                Id::U8(u8) => {
+                    let tmp: u8 = u8;
+                    tmp.to_string()
+                }
+                Id::U16(u16) => {
+                    let tmp: u16 = u16;
+                    tmp.to_string()
+                }
+                Id::U32(u32) => {
+                    let tmp: u32 = u32;
+                    tmp.to_string()
+                }
+                Id::U64(u64) => {
+                    let tmp: u64 = u64;
+                    tmp.to_string()
+                }
+                Id::U128(u128) => {
+                    let tmp: u128 = u128;
+                    tmp.to_string()
+                }
+                // _ => "0".to_string()
+                Id::Bytes(value) => ink::prelude::string::String::from_utf8(value.clone()).unwrap(),
+            };
+    
+            let base_uri:String = self.get_condition_url(token_id.clone());
+            let tmp_uri: ink::prelude::string::String = ink::prelude::string::String::from_utf8(base_uri).unwrap();
+            let uri:ink::prelude::string::String = tmp_uri + &id_string;
+    
+            uri.into_bytes()
+        }
 ```
 
 ```rust:crates/multiasset/src/lib.rs get set function
-fn get_your_apple(&self, account_id: AccountId) -> u16 {
-        self.data::<MultiAssetData>()
-            .apple_number
-            .get(&account_id)
-            .unwrap_or_default()
-    }
-
-    fn set_your_apple(&mut self, account_id: AccountId, after_apple: u16) -> Result<()> {
-        self.data::<MultiAssetData>()
-            .apple_number
-            .insert(account_id, &after_apple);
-        Ok(())
-    }
+#[ink(message)]
+        pub fn get_your_apple(&self, account_id: AccountId) -> u16 {
+            self.apple_number.get(&account_id).unwrap_or_default()
+        }
 
 
-    fn get_your_money(&self, account_id: AccountId) -> u64 {
-        self.data::<MultiAssetData>()
-            .your_money
-            .get(&account_id)
-            .unwrap_or_default()
-    }
+pub fn set_your_apple(&mut self, account_id: AccountId, after_apple: u16) {
+            self.apple_number.insert(&account_id, &after_apple);
+        }
 
-    fn set_your_money(&mut self, account_id: AccountId, after_money: u64) -> Result<()> {
-        self.data::<MultiAssetData>()
-            .your_money
-            .insert(account_id, &after_money);
-        Ok(())
-    }
+
+#[ink(message)]
+        pub fn get_your_money(&self, account_id: AccountId) -> u64 {
+            self.your_money.get(&account_id).unwrap_or_default()
+        }
+
+pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
+            self.your_money.insert(&account_id, &after_money);
+        }
 ```
 
 ```rust:crates/multiasset/src/lib.rs stake_your_money function
-fn stake_your_money(&mut self, account_id: AccountId, stake_money: u64) -> Result<()> {
+#[ink(message)]
+        pub fn stake_your_money(&mut self, account_id: AccountId, stake_money: u64) -> Result<(), ContractError> {
 
-        //　get the current time
-        let current_time = Self::env().block_timestamp();
+            //　get the current time
+            let current_time = Self::env().block_timestamp();
 
-        //　get the current money
-        let current_money = self.get_your_money(account_id.clone());
+            //　get the current money
+            let current_money = self.get_your_money(account_id.clone());
 
-        //　get the current staked money
-        let current_staked_money = self.get_your_staked_money(account_id.clone());
+            //　get the current staked money
+            let current_staked_money = self.get_your_staked_money(account_id.clone());
 
-        if current_money == 0 || current_money < stake_money {
-            Err(RmrkError::NotEnoughMoney.into())
-        } else {
-            let after_money = current_money - stake_money;
+            if current_money == 0 || current_money < stake_money {
+                Err(ContractError::NotEnoughMoney.into())
+            } else {
+                let after_money = current_money - stake_money;
 
-            let after_staked_money = current_staked_money + stake_money;
-            // set your_money 0
-            self.data::<MultiAssetData>()
-                .your_money
-                .insert(account_id, &after_money);
+                let after_staked_money = current_staked_money + stake_money;
+                // set your_money 0
+                self.your_money.insert(&account_id, &after_money);
 
-            // set your_staked_money
-            self.data::<MultiAssetData>()
-                .your_staked_money
-                .insert(account_id, &after_staked_money);
+                // set your_staked_money
+                self.your_staked_money.insert(&account_id, &after_staked_money);
 
-            // set last_staked
-            self.data::<MultiAssetData>()
-                .last_staked
-                .insert(account_id, &current_time);
-            Ok(())
+                // set last_staked
+                self.last_staked.insert(&account_id, &current_time);
+                Ok(())
+            }
         }
-    }
 ```
 
 ```rust:crates/multiasset/src/lib.rs get_your_staked_money function
-fn get_your_staked_money(&self, account_id: AccountId) -> u64 {
+#[ink(message)]
+        pub fn get_your_staked_money(&self, account_id: AccountId) -> u64 {
 
-        //　get the current time
-        let current_time = Self::env().block_timestamp();
-
-        // get your_staked_money
-        let staked_money = self.data::<MultiAssetData>()
-            .your_staked_money
-            .get(&account_id)
-            .unwrap_or(Default::default());
-
-        // get last_staked_time
-        let last_staked_time = self.data::<MultiAssetData>()
-            .last_staked
-            .get(&account_id)
-            .unwrap_or(Default::default());
-        if last_staked_time == 0 || staked_money == 0 {
-            return 0
-        } else {
-            let past_time = current_time - last_staked_time;
-            // 60 seconds（60 ※ 1000 miliseconds）
-            let past_day = past_time / (10 * 1000) ;
-            // Assuming a hypothetical decrease of 5 per unit
-            let change_patio = past_day * 1;
-            return staked_money + staked_money * change_patio / 100
+            //　get the current time
+            let current_time = Self::env().block_timestamp();
+    
+            // get your_staked_money
+            let staked_money = self
+                .your_staked_money
+                .get(&account_id)
+                .unwrap_or(Default::default());
+    
+            // get last_staked_time
+            let last_staked_time = self
+                .last_staked
+                .get(&account_id)
+                .unwrap_or(Default::default());
+            if last_staked_time == 0 || staked_money == 0 {
+                return 0
+            } else {
+                let past_time = current_time - last_staked_time;
+                // 60 seconds（60 ※ 1000 miliseconds）
+                let past_day = past_time / (10 * 1000) ;
+                // Assuming a hypothetical decrease of 5 per unit
+                let change_patio = past_day * 1;
+                return staked_money + staked_money * change_patio / 100
+            }
         }
-    }
 ```
 ```rust:crates/multiasset/src/lib.rs withdraw_your_money function
-fn withdraw_your_money(&mut self, account_id: AccountId) -> Result<()> {
-        let staked_money = self.get_your_staked_money(account_id);
-
-        let current_money = self.get_your_money(account_id.clone());
-
-        if staked_money == 0 {
-            Err(RmrkError::NotEnoughMoney.into())
-        } else {
-            let result_money = current_money + staked_money;
-            // set your_staked_money 0
-            self.data::<MultiAssetData>()
-            .your_staked_money
-            .insert(account_id, &0);
-
-            // set your_money 
-            self.data::<MultiAssetData>()
-                .your_money
-                .insert(account_id, &result_money);
-            Ok(())
+#[ink(message)]
+        pub fn withdraw_your_money(&mut self, account_id: AccountId) -> Result<(), ContractError> {
+            let staked_money = self.get_your_staked_money(account_id);
+    
+            let current_money = self.get_your_money(account_id.clone());
+    
+            if staked_money == 0 {
+                Err(ContractError::NotEnoughMoney.into())
+            } else {
+                let result_money = current_money + staked_money;
+                // set your_staked_money 0
+                self
+                .your_staked_money
+                .insert(&account_id, &0);
+    
+                // set your_money 
+                self
+                    .your_money
+                    .insert(&account_id, &result_money);
+                Ok(())
+            }
         }
-    }
 ```
 ```rust:crates/multiasset/src/lib.rs buy_an_apple function
-fn buy_an_apple(&mut self, account_id: AccountId) -> Result<()>{
+#[ink(message)]
+        pub fn buy_an_apple(&mut self, account_id: AccountId) -> Result<(), ContractError>{
 
-        // the apple price is 20
-        self.minus_your_money(account_id, 20)?;
-
-        // add 1
-        let after_apple = self.get_your_apple(account_id) + 1;
-
-        self.data::<MultiAssetData>()
-            .apple_number
-            .insert(account_id, &after_apple);
-
-        Ok(())
-
-    }
+            // the apple price is 20
+            self.subtract_your_money(account_id, 20)?;
+    
+            // add 1
+            let after_apple = self.get_your_apple(account_id) + 1;
+            self.apple_number.insert(&account_id, &after_apple);
+            Ok(())
+        }
 ```
 ```rust:crates/multiasset/src/lib.rs plus, minus function
-fn minus_your_apple(&mut self, account_id: AccountId) -> Result<()> {
+pub fn subtract_your_apple(&mut self, account_id: AccountId) -> Result<(), ContractError> {
         
-        // get apple number
-        let apple_number = self.get_your_apple(account_id);
-
-        if apple_number < 1 {
-            Err(RmrkError::NotEnoughApple.into())
-        } else {
-            let after_apple = apple_number - 1;
-
-            self.data::<MultiAssetData>()
-            .apple_number
-            .insert(account_id, &after_apple);
-            Ok(())
+            // get apple number
+            let apple_number = self.get_your_apple(account_id);
+    
+            if apple_number < 1 {
+                Err(ContractError::NotEnoughApple.into())
+            } else {
+                let after_apple = apple_number - 1;
+    
+                self
+                .apple_number
+                .insert(&account_id, &after_apple);
+                Ok(())
+            }
         }
-    }
 
-    fn minus_your_money(&mut self, account_id: AccountId, change_money: u64) -> Result<()> {
+pub fn subtract_your_money(&mut self, account_id: AccountId, change_money: u64) -> Result<(), ContractError> {
         
-        // get current game money
-        let money = self.get_your_money(account_id);
-
-        if money < change_money {
-            Err(RmrkError::NotEnoughMoney.into())
-        } else {
-            let after_money = money - change_money;
-            self.set_your_money(account_id, after_money)?;
-            Ok(())
+            // get current game money
+            let money = self.get_your_money(account_id);
+    
+            if money < change_money {
+                Err(ContractError::NotEnoughMoney.into())
+            } else {
+                let after_money = money - change_money;
+                self.set_your_money(account_id, after_money);
+                Ok(())
+            }
         }
-    }
 
-    fn plus_your_money(&mut self, account_id: AccountId, change_money: u64) -> Result<()> {
+pub fn plus_your_money(&mut self, account_id: AccountId, change_money: u64) {
         
-        // get current game money
-        let money = self.get_your_money(account_id);
-
-        let after_money = money + change_money;
-        self.set_your_money(account_id, after_money)?;
-        Ok(())
-    }
+            // get current game money
+            let money = self.get_your_money(account_id);
+    
+            let after_money = money + change_money;
+            self.set_your_money(account_id, after_money);
+        }
 ```
 ```rust:crates/multiasset/src/lib.rs daily_bonus function
-fn daily_bonus(&mut self, account_id: AccountId) -> Result<()> {
+#[ink(message)]
+        pub fn daily_bonus(&mut self, account_id: AccountId) -> Result<(), ContractError> {
 
-        let is_account_id = self.is_account_id(account_id);
-
-        if is_account_id == false {
-            Err(RmrkError::InvalidAccountId.into())
-        } else {
             // Get the time when the last bonus was obtained. In case of error, return 0 
             let last_bonus = self.get_last_bonus(account_id);
             // Function of whether a predetermined amount of time has elapsed.
@@ -635,88 +620,73 @@ fn daily_bonus(&mut self, account_id: AccountId) -> Result<()> {
 
             //  If the allotted time has not elapsed
             if has_passed ==false {
-                Err(RmrkError::TimeHasNotPassed.into())
+                Err(ContractError::TimeHasNotPassed.into())
             } else {
             //　Get the current time
             let current_time = Self::env().block_timestamp();
             //  Put current time in last_bonus
-            self.set_last_bonus(account_id, current_time)?;
+            self.set_last_bonus(account_id, current_time);
 
             let after_money = self.get_your_money(account_id) + 100;
-            self.set_your_money(account_id, after_money)?;
+            self.set_your_money(account_id, after_money);
 
             Ok(())
             }
-        
         }
-    }
 ```
 ```rust:crates/multiasset/src/lib.rs get set time function
-fn get_last_eaten(&self, token_id: Id) -> u64 {
-        self.data::<MultiAssetData>()
-            .last_eaten
-            .get(&token_id)
-            .unwrap_or(Default::default())
-    }
+#[ink(message)]
+        pub fn get_last_eaten(&self, token_id: Id) -> u64 {
+            self.last_eaten.get(&token_id).unwrap_or(Default::default())
+        }
 
-    fn set_last_eaten(&mut self, token_id: Id, current_time: u64) -> Result<()> {
-        self.data::<MultiAssetData>()
-            .last_eaten
-            .insert(token_id, &current_time);
-        Ok(())
-    }
+pub fn set_last_eaten(&mut self, token_id: Id, current_time: u64) {
+            self.last_eaten.insert(&token_id, &current_time);
+        }
 
-    fn get_last_bonus(&self, account_id: AccountId) -> u64 {
-        self.data::<MultiAssetData>()
-            .last_bonus
-            .get(&account_id)
-            .unwrap_or(Default::default())
-    }
+#[ink(message)]
+        pub fn get_last_bonus(&self, account_id: AccountId) -> u64 {
+            self.last_bonus.get(&account_id).unwrap_or(Default::default())
+        } 
 
-    fn set_last_bonus(&mut self, account_id: AccountId, current_time: u64) -> Result<()> {
-        self.data::<MultiAssetData>()
-            .last_bonus
-            .insert(account_id, &current_time);
-        Ok(())
-    }
+pub fn set_last_bonus(&mut self, account_id: AccountId, current_time: u64) {
+            self.last_bonus.insert(&account_id, &current_time);
+        }
 ```
 ```rust:crates/multiasset/src/lib.rs check function
-fn is_nft_owner(&self, token_id: Id) -> bool {
-        let token_owner = self
-            .data::<psp34::Data<enumerable::Balances>>()
-            .owner_of(token_id.clone())
-            .unwrap();
-
-        if token_owner == Self::env().caller() {
-            true
-        } else {
-            false
+pub fn is_nft_owner(&self, token_id: Id) -> bool {
+            let token_owner = self.owner_of(token_id.clone()).unwrap();
+    
+            if token_owner == Self::env().caller() {
+                true
+            } else {
+                false
+            }
         }
-    }
 
-    fn is_account_id(&self, account_id: AccountId) -> bool {
-        let caller = Self::env().caller();
-        if caller == account_id {
-            true
-        } else {
-            false
+pub fn is_account_id(&self, account_id: AccountId) -> bool {
+            let caller = Self::env().caller();
+            if caller == account_id {
+                true
+            } else {
+                false
+            }
         }
-    }
 ```
 ## PSP22 Contract
 
 `OpenBrush`から変更していない部分は除きます。メインコントラクトから呼び出しを行うための実装です。
 ```rust:examples/psp22_extensions/mintable/lib.rs
 #[ink(message)]
-pub fn transfer_from_contract(&mut self, from: AccountId, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error> {
-    self._transfer_from_to(from, to, value, data)?;
-    Ok(())
-}
+        pub fn transfer_from_contract(&mut self, from: AccountId, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error> {
+            self._transfer_from_to(from, to, value, data)?;
+            Ok(())
+        }
 
 #[ink(message)]
-pub fn balance_of_contract(&self, owner: AccountId) -> Balance  {
-    self.balance_of(owner)
-}
+        pub fn balance_of_contract(&self, owner: AccountId) -> Balance  {
+            self.balance_of(owner)
+        }
 ```
 `OpenBrush`については[こちら](https://github.com/Supercolony-net/openbrush-contracts)
 
@@ -739,7 +709,7 @@ async function connectWallet() {
         "@polkadot/extension-dapp"
       );
   
-      const allInjected = await web3Enable('my dapp');
+      const allInjected = await web3Enable("my dapp");
     
       if (allInjected.length === 0) {
         return;
@@ -805,7 +775,7 @@ async function dailyBonus () {
         if (typeof humanOutput === 'object' && humanOutput !== null && 'Ok' in humanOutput && typeof humanOutput.Ok === 'object' && humanOutput.Ok !== null && 'Err' in humanOutput.Ok && typeof humanOutput.Ok.Err === 'object' && humanOutput.Ok.Err !== null && 'Rmrk' in humanOutput.Ok.Err) {
           alert("Time(5min) has not passed");
         } else {
-          await contract.tx['multiAsset::dailyBonus'](
+          await contract.tx["multiAsset::dailyBonus"](
             {
               gasLimit: gasLimit,
               storageDepositLimit,
@@ -836,7 +806,7 @@ const TokenUri: React.FC<TokenUriProps> = ({ contract, address, gasLimit, setTok
     if (contract !== null) {
       const token_number = await ownersTokenByIndex(contract, address, gasLimit);
 
-      const { output }  = await contract.query['multiAsset::tokenUri'](address,
+      const { output }  = await contract.query["multiAsset::tokenUri"](address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
@@ -857,119 +827,175 @@ const TokenUri: React.FC<TokenUriProps> = ({ contract, address, gasLimit, setTok
 ```
 
 ## Testing
-WASMのコントラクトでは、`#[ink::test]`を使用し、テストを行うことができます。なお、テストは網羅的に行うことが望ましいですが、インクのテスト環境では、タイムスタンプの取得（`Self::env().block_timestamp()`）の際に常に0を返します。
+WASMのコントラクトでは、`#[ink::test]`を使用し、テストを行うことができます。
 
-そのため、時刻関連のテストはマニュアルテストで実施しています。テストは、下記のコマンドで実施します。
+
 ```
 cd examples/equippable
 cargo +nightly-2023-02-07 test
 ```
 
 ```rust:examples/equippable/lib.rs/
- // money test
-        #[ink::test]
-        fn set_and_get_your_money_works() {
-            let accounts = default_accounts();
-            let mut rmrk = init();
+ // default_apple_value test
+#[ink::test]
+fn default_apple_value() {
+    let contract = Contract::new();
+    let account = AccountId::from([0x0; 32]);
+    assert_eq!(contract.get_your_apple(account), 0);
+}
 
-            let initial_money = rmrk.get_your_money(accounts.alice);
-            assert_eq!(initial_money, 0); 
+ // set_and_get_apple test
+#[ink::test]
+fn set_and_get_apple() {
+    let mut contract = Contract::new();
+    let account = AccountId::from([0x1; 32]);
+    contract.set_your_apple(account, 10);
+    assert_eq!(contract.get_your_apple(account), 10);
+}
 
-            let after_money: u64 = 1000;
-            assert!(rmrk.set_your_money(accounts.alice, after_money).is_ok());
+// set_and_get_apple test
+#[ink::test]
+fn set_default_works() {
+    let accounts = default_accounts();
+    let mut contract = Contract::new_with_owner(accounts.alice);
 
-            let money_after_setting = rmrk.get_your_money(accounts.alice);
-            assert_eq!(money_after_setting, after_money);
-        }
+    set_caller(accounts.alice);
+    assert!(contract.set_default(accounts.alice.clone()).is_ok());
 
-        // url test
-        #[ink::test]
-        fn normal_uri_works() {
-            let mut rmrk = init();
+    assert_eq!(contract.get_bad_uri(), String::from("ipfs://QmV1VxGsrM4MLNn1qwR9Hmu5DGFfWjzHmhHFXpTT2fevMQ/"));
+    assert_eq!(contract.get_normal_uri(), String::from("ipfs://QmTBf9GJLiw97v84Q7aEPPFHUXdyqXWC6AUp97VnLFZtWr/"));
+    assert_eq!(contract.get_good_uri(), String::from("ipfs://QmQUxL1RSWbZAWhQfWnJJrMVZsPm4Stc5C64kRuSnXe56Q/"));
+    assert_eq!(contract.get_your_apple(accounts.alice.clone()), 10);
+    assert_eq!(contract.get_your_money(accounts.alice.clone()), 500);
+}
 
-            let test_url = "test_url1";
-            let test_url_bytes = test_url.as_bytes().to_vec();
-            assert!(rmrk.set_normal_uri(test_url_bytes.clone()).is_ok());
+// set_and_get_apple test
+#[ink::test]
+fn get_current_status_works() {
+    let accounts = default_accounts();
+    set_caller(accounts.alice);
+    let mut contract = Contract::new_with_owner(accounts.alice);
+    let token_id: u64 = 1;
+        // mint a new token
+    assert!(contract.mint(accounts.alice, Id::U64(token_id).clone()).is_ok());
 
-            assert_eq!(rmrk.get_normal_uri(), test_url_bytes);
+    contract.set_status(token_id.clone(), 100, 100, 100).unwrap();
+    let initial_status = contract.get_status(token_id.clone()).unwrap();
+    assert_eq!(initial_status, Status { hungry: 100, health: 100, happy: 100 });
 
-            let new_test_url = "test_url2";
-            let new_test_url_bytes = new_test_url.as_bytes().to_vec();
-            assert!(rmrk.set_normal_uri(new_test_url_bytes.clone()).is_ok());
+    // get current time. but return 0 in test environment
+    // let current_time = ink::env::block_timestamp::<ink::env::DefaultEnvironment>().into();
 
-            assert_eq!(rmrk.get_normal_uri(), new_test_url_bytes);
-        }
+    // assume already eaten an apple at 1 second
+    contract.set_last_eaten(Id::U64(token_id).clone(), 1 * 1000); // 1 second
 
-        // staking test
-        #[ink::test]
-        fn staking_your_money_works() {
-            let mut rmrk = init();
-            let accounts = default_accounts();
+    // Let's simulate the passage of time
+    set_block_timestamp(61 * 1000); // 61 seconds
+    let status_after_time = contract.get_current_status(token_id.clone()).unwrap();
+    
+    // // We need to manually calculate the expected new statuses because they are time-dependent
+    let expected_status = Status {
+        hungry: 105, // 100 + 5 (1 minute passed, so status increases by 5)
+        health: 95, // 100 - 5
+        happy: 95, // 100 - 5
+    };
+    assert_eq!(status_after_time, expected_status);
 
-            // Assume we start with some initial money
-            let initial_money: u64 = 1000;
-            assert!(rmrk.set_your_money(accounts.alice, initial_money).is_ok());
+    let total_status = contract.get_total_status(token_id.clone());
 
-            // Alice decides to stake some of her money
-            let stake_money: u64 = 400;
-            assert!(rmrk.stake_your_money(accounts.alice, stake_money).is_ok());
+    assert_eq!(total_status, 85); // 95 + 95 - 105
 
-            // Check if the money has been correctly staked
-            let remaining_money = rmrk.get_your_money(accounts.alice);
+    set_block_timestamp(6000 * 1000); // 6000 seconds (100 minutes)
 
-            assert_eq!(remaining_money, initial_money - stake_money);
+    let status_after_many_time_passed = contract.get_current_status(token_id.clone()).unwrap();
 
-            // Now, Alice tries to stake more money than she has
-            let too_much_money: u64 = 10000;
-            assert!(rmrk.stake_your_money(accounts.alice, too_much_money).is_err());
-        }
+    let expected_status_many_time_passed = Status {
+        hungry: 595, // 100 + 5 * 99 (100 minute passed, so status increases by 5)
+        health: 0, // 100 - 5 * 99 , but not less than 0
+        happy: 0, // 100 - 5 * 99 , but not less than 0
+    };
+    assert_eq!(status_after_many_time_passed, expected_status_many_time_passed);
 
-        // default test
-        #[ink::test]
-        fn set_default_works() {
-            let accounts = default_accounts();
-            let mut rmrk = init();
+    let total_status_many_time_passed = contract.get_total_status(token_id.clone());
 
-            set_sender(accounts.alice);
-            assert!(rmrk.set_default(accounts.alice.clone()).is_ok());
+    assert_eq!(total_status_many_time_passed, 0); // 0 + 0 - 595, but not less than 0
 
-            assert_eq!(rmrk.get_bad_uri(), String::from("ipfs://QmV1VxGsrM4MLNn1qwR9Hmu5DGFfWjzHmhHFXpTT2fevMQ/"));
-            assert_eq!(rmrk.get_normal_uri(), String::from("ipfs://QmTBf9GJLiw97v84Q7aEPPFHUXdyqXWC6AUp97VnLFZtWr/"));
-            assert_eq!(rmrk.get_good_uri(), String::from("ipfs://QmQUxL1RSWbZAWhQfWnJJrMVZsPm4Stc5C64kRuSnXe56Q/"));
-            assert_eq!(rmrk.get_your_apple(accounts.alice.clone()), 10);
-            assert_eq!(rmrk.get_your_money(accounts.alice.clone()), 500);
-        }
+}
 
-        // claim test
-        #[ink::test]
-        fn claim_a_nft_works() {
-            // Create new contract instance
-            let mut contract = init();
-            // Caller does not have a NFT, claim should be successful
-            assert_eq!(contract.claim_a_nft().is_ok(), true);
-            // Caller already has a NFT, claim should return an error
-            assert_eq!(contract.claim_a_nft().is_err(), true);
-        }
+// set_and_get_apple test
+#[ink::test]
+fn buy_an_apple_works() {
+    let mut contract = Contract::default();
+    let accounts = test::default_accounts::<Environment>();
+    
+    contract.set_your_money(accounts.alice, 50);
 
-        // status test
-        #[ink::test]
-        fn set_full_status_works() {
-            let accounts = default_accounts();
-            let mut rmrk = init();
-            let token_id = Id::U64(1); // Assuming token_id is 1
+    assert!(contract.buy_an_apple(accounts.alice).is_ok());
 
-            assert_eq!(rmrk.claim_a_nft().is_ok(), true);
+    assert_eq!(contract.get_your_apple(accounts.alice), 1);
+}
 
-            set_sender(accounts.alice);
-            assert!(rmrk.set_full_status(token_id.clone()).is_ok());
+// set_and_get_apple test
+#[ink::test]
+fn buy_an_apple_fails_without_enough_money() {
+    let mut contract = Contract::default();
+    let accounts = test::default_accounts::<Environment>();
 
-            if let Some(status) = rmrk.get_status(token_id) {
-                assert_eq!(status.health, 100);
-                assert_eq!(status.happy, 100);
-                assert_eq!(status.hungry, 0);
-            } else {
-                panic!("Failed to get status.");
-            }
+    assert!(contract.buy_an_apple(accounts.alice).is_err());
+}
+
+// set_and_get_apple test
+#[ink::test]
+fn get_your_apple_works() {
+    let contract = Contract::default();
+    let accounts = test::default_accounts::<Environment>();
+
+    assert_eq!(contract.get_your_apple(accounts.alice), 0);
+}
+
+// set_and_get_apple test
+#[ink::test]
+fn eat_an_apple_works() {
+    let mut contract = Contract::default();
+    let accounts = test::default_accounts::<Environment>();
+    let token_id: u64 = 1;
+
+    assert!(contract.mint(accounts.alice, Id::U64(token_id).clone()).is_ok());
+
+    contract.set_your_money(accounts.alice, 50);
+
+    contract.buy_an_apple(accounts.alice).unwrap();
+
+    contract.set_last_eaten(Id::U64(token_id).clone(), 1 * 1000); // 1 second
+
+    set_block_timestamp(6000 * 1000); // 600 seconds (10 minutes)
+    
+    assert!(contract.eat_an_apple(token_id, accounts.alice).is_ok());
+    
+    assert_eq!(contract.get_your_apple(accounts.alice), 0);
+}
+
+// set_and_get_apple test
+#[ink::test]
+fn eat_an_apple_works_without_enough_time() {
+    let mut contract = Contract::default();
+    let accounts = test::default_accounts::<Environment>();
+    let token_id: u64 = 1;
+
+        // mint a new token
+    assert!(contract.mint(accounts.alice, Id::U64(token_id).clone()).is_ok());
+
+    contract.set_your_money(accounts.alice, 50);
+
+    contract.buy_an_apple(accounts.alice).unwrap();
+
+    contract.set_last_eaten(Id::U64(token_id).clone(), 590 * 1000); // 590 seconds
+
+    set_block_timestamp(600 * 1000); // 600 seconds (only 10 seconds has passed)
+    
+    assert!(contract.eat_an_apple(token_id, accounts.alice).is_err());
+    
+    assert_eq!(contract.get_your_apple(accounts.alice), 1);
 }
 ```
 

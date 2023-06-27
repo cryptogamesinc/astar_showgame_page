@@ -133,6 +133,7 @@ Now that you understand what the dApp does, let us take a closer look to its str
 
 The contract presents many methods
 
+1. set_default
 ```rust:crates/multiasset/src/lib.rs set_default function
 #[ink(message)]
         #[modifiers(only_owner)]
@@ -146,6 +147,7 @@ The contract presents many methods
         }
 ```
 
+2. set_status function
 ```rust:crates/multiasset/src/lib.rs set_status function
 #[ink(message)]
         pub fn set_status (
@@ -161,6 +163,7 @@ The contract presents many methods
         }
 ```
 
+3. set_particular_status
 ```rust:crates/multiasset/src/lib.rs set_particular_status
 pub fn set_full_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
             self.set_status(token_id, 0, 100, 100)?;
@@ -204,6 +207,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
         }
 ```
 
+4. get_status
 ```rust:crates/multiasset/src/lib.rs get_status
 #[ink(message)]
         pub fn get_status(&self, token_id: u64) -> Option<Status> {
@@ -253,6 +257,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
         }
 ```
 
+5. call_psp22_transfer 
 ```rust:crates/multiasset/src/lib.rs call_psp22_transfer function
 #[ink(message)]
         pub fn call_psp22_transfer(&mut self, target_account_id:AccountId, to: AccountId, value: Balance, data: Vec<u8>)  -> Result<(), PSP22Error> {
@@ -263,6 +268,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
         }
 ```
 
+6. buy_game_money function
 ```rust:crates/multiasset/src/lib.rs buy_game_money function
 #[ink(message)]
         pub fn buy_game_money(&mut self, target_account_id:AccountId, to: AccountId, data: Vec<u8>) -> Result<(), ContractError>{
@@ -279,6 +285,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
         }
 ```
 
+7. set or get url
 ```rust:crates/multiasset/src/lib.rs set get url
 // normal
         #[ink(message)]
@@ -320,6 +327,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
         }
 ```
 
+8. get_total_status
 ```rust:crates/multiasset/src/lib.rs get_total_status function
 #[ink(message)]
         pub fn get_total_status(&self, token_id: u64) -> u32 {
@@ -340,6 +348,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
         }
 ```
 
+9. get_condition function
 ```rust:crates/multiasset/src/lib.rs get_condition function
 #[ink(message)]
         pub fn get_condition(&self , token_id: u64) -> u32 {
@@ -359,6 +368,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
         }
 ```
 
+10. get_condition_url 
 ```rust:crates/multiasset/src/lib.rs get_condition_url function
 #[ink(message)]
         pub fn get_condition_url(&self , token_id: u64) -> String {
@@ -373,6 +383,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
         }
 ```
 
+11. eat_an_apple function
 ```rust:crates/multiasset/src/lib.rs eat_an_apple function
 #[ink(message)]
         pub fn eat_an_apple(&mut self, token_id: u64, account_id: AccountId) -> Result<(),ContractError> {
@@ -411,6 +422,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
         }
 ```
 
+12. token_uri function
 ```rust:crates/multiasset/src/lib.rs token_uri function
 #[ink(message)]
         pub fn token_uri(&self , token_id: u64) -> String {
@@ -447,6 +459,7 @@ pub fn set_lucky_status(&mut self, token_id: u64) -> Result<(), PSP34Error> {
         }
 ```
 
+13. get set function
 ```rust:crates/multiasset/src/lib.rs get set function
 #[ink(message)]
         pub fn get_your_apple(&self, account_id: AccountId) -> u16 {
@@ -469,6 +482,7 @@ pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
         }
 ```
 
+14. stake_your_money 
 ```rust:crates/multiasset/src/lib.rs stake_your_money function
 #[ink(message)]
         pub fn stake_your_money(&mut self, account_id: AccountId, stake_money: u64) -> Result<(), ContractError> {
@@ -501,6 +515,7 @@ pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
         }
 ```
 
+15. get_your_staked_money
 ```rust:crates/multiasset/src/lib.rs get_your_staked_money function
 #[ink(message)]
         pub fn get_your_staked_money(&self, account_id: AccountId) -> u64 {
@@ -531,6 +546,8 @@ pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
             }
         }
 ```
+
+16. withdraw_your_money
 ```rust:crates/multiasset/src/lib.rs withdraw_your_money function
 #[ink(message)]
         pub fn withdraw_your_money(&mut self, account_id: AccountId) -> Result<(), ContractError> {
@@ -555,6 +572,8 @@ pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
             }
         }
 ```
+
+17. buy_an_apple function
 ```rust:crates/multiasset/src/lib.rs buy_an_apple function
 #[ink(message)]
         pub fn buy_an_apple(&mut self, account_id: AccountId) -> Result<(), ContractError>{
@@ -568,7 +587,9 @@ pub fn set_your_money(&mut self, account_id: AccountId, after_money: u64)  {
             Ok(())
         }
 ```
-```rust:crates/multiasset/src/lib.rs plus, minus function
+
+18. plus or subtract function
+```rust:crates/multiasset/src/lib.rs plus or subtract function
 pub fn subtract_your_apple(&mut self, account_id: AccountId) -> Result<(), ContractError> {
         
             // get apple number
@@ -609,6 +630,8 @@ pub fn plus_your_money(&mut self, account_id: AccountId, change_money: u64) {
             self.set_your_money(account_id, after_money);
         }
 ```
+
+19. daily_bonus function
 ```rust:crates/multiasset/src/lib.rs daily_bonus function
 #[ink(message)]
         pub fn daily_bonus(&mut self, account_id: AccountId) -> Result<(), ContractError> {
@@ -634,7 +657,9 @@ pub fn plus_your_money(&mut self, account_id: AccountId, change_money: u64) {
             }
         }
 ```
-```rust:crates/multiasset/src/lib.rs get set time function
+
+20. get or set time function
+```rust:crates/multiasset/src/lib.rs get or set time function
 #[ink(message)]
         pub fn get_last_eaten(&self, token_id: Id) -> u64 {
             self.last_eaten.get(&token_id).unwrap_or(Default::default())
@@ -653,6 +678,8 @@ pub fn set_last_bonus(&mut self, account_id: AccountId, current_time: u64) {
             self.last_bonus.insert(&account_id, &current_time);
         }
 ```
+
+21. check function
 ```rust:crates/multiasset/src/lib.rs check function
 pub fn is_nft_owner(&self, token_id: Id) -> bool {
             let token_owner = self.owner_of(token_id.clone()).unwrap();
@@ -704,35 +731,46 @@ async function connectWallet() {
     if (contract === null) {
       alert("Now connecting contract. Please wait for a minutes");
     } else {
-
-    const { web3Accounts, web3Enable} = await import(
+      const { web3Accounts, web3Enable } = await import(
         "@polkadot/extension-dapp"
       );
-  
+
       const allInjected = await web3Enable("my dapp");
-    
+
       if (allInjected.length === 0) {
         return;
       }
       const accounts = await web3Accounts();
-  
+
       const account = accounts[0];
       setAccount(account);
-  
-      const address = account?.address
-      const source = account?.meta?.source
-  
-      console.log("address",address)
-      console.log("source",source)
-  
+
+      const address = account?.address;
+      const source = account?.meta?.source;
+
+      console.log("address", address);
+      console.log("source", source);
+
       setAddress(address);
       setSource(source);
       setConnected(true);
 
-    onConnected(account, address, source);
+      onConnected(account, address, source);
 
-    if (contract !== null) {
-      await getInfoFunction(contract,address, gasLimit,nftName, nftDescription, nftImageUri, setNftName, setNftDescription, setNftImageUri, flag );
+      if (contract !== null) {
+        await getInfoFunction(
+          contract,
+          address,
+          gasLimit,
+          nftName,
+          nftDescription,
+          nftImageUri,
+          setNftName,
+          setNftDescription,
+          setNftImageUri,
+          flag
+        );
+      }
     }
   }
 ```
@@ -798,31 +836,34 @@ async function dailyBonus () {
   }
 ```
 ```rust:src/components/TokenUri.tsx/
-const TokenUri: React.FC<TokenUriProps> = ({ contract, address, gasLimit, setTokenUri }) => {
-
-  const storageDepositLimit = null;
-  async function tokenUri () {
-
+async function tokenUri() {
     if (contract !== null) {
-      const token_number = await ownersTokenByIndex(contract, address, gasLimit);
+      const token_number = await ownersTokenByIndex(
+        contract,
+        address,
+        gasLimit
+      );
 
-      const { output }  = await contract.query["multiAsset::tokenUri"](address,
+      const { output } = await contract.query["multiAsset::tokenUri"](
+        address,
         {
           gasLimit: gasLimit,
           storageDepositLimit,
-        },{u64:token_number})
-  
-        console.log("output",output)
-        const humanOutput = output?.toHuman();
-        if (
-          humanOutput &&
-          typeof humanOutput === 'object' &&
-          'Ok' in humanOutput 
-        ) {
-          let a = console.log("aaa",humanOutput?.Ok)
-          setTokenUri(String(humanOutput?.Ok));
-        }
+        },
+        { u64: token_number }
+      );
+
+      console.log("output", output);
+      const humanOutput = output?.toHuman();
+      if (
+        humanOutput &&
+        typeof humanOutput === "object" &&
+        "Ok" in humanOutput
+      ) {
+        let a = console.log("aaa", humanOutput?.Ok);
+        setTokenUri(String(humanOutput?.Ok));
       }
+    }
   }
 ```
 

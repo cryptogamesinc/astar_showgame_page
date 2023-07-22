@@ -365,20 +365,88 @@ Push the apple image, and you can check your apple number.
 
 ### 5 Eat an apple
 
+Push "EATANAPPLE" button and make a transaction.
+
 ![](src/images/demo_11.png)
+
+Push this house image.
 
 ![](src/images/demo_12.png)
 
+Pushing "GET STATUS" button and you can see the status.
+This status was determined randomly when eat an apple.
+
 ![](src/images/demo_13.png)
+
+Afeter 5 munites passed, the status chanded.
+(hungry was added by 5 and health and happly was substracted by 5)
 
 ![](src/images/demo_14.png)
 
+If the total status(health + happy - hungry) is 200 and more than 200, the image, image and description have changed like this.
+
+![](src/images/demo_15.png)
+
+This is the image in the main screen.
+![](src/images/demo_16.png)
+
+The total status is 100 and more than 100 and less than 200, the image, name and description have changed, too.
+![](src/images/demo_17.png)
+
+### 6 Stake your game money 
+
+You push a factory icon and this popup occurs.
+
+Enter the amount you want to stake and push "STAKING" button
+![](src/images/demo_18.png)
+
+When you push "staked" button, you can confirm the withdrawal amount. 
+
+![](src/images/demo_19.png)
+
+This amount is increasing over time.
+
+When you push "WITHDRAW" button, you can withdraw all the amount.
+![](src/images/demo_20.png)
+
+After finising the transaction, game point is increased and staked point become 0.
+![](src/images/demo_21.png)
+
+### 7 Get psp37 nft
+
+You can get psp37 nft per account.
+This is memorable item.
+
+After pushing house image, you push "CLAIM" button.
+![](src/images/demo_22.png)
+
+After finishing the transaction, you can confirm your psp37 nft by pushing "GET INFO" button.
+![](src/images/demo_23.png)
+
 ## possible actions
 
+### 1 Increasing the variety of items.
+
+You may increase the variety of items.
+
+Now we have only item, apple. 
+
+It's interesting that there are many items and they have different effects. For example, if the character eat "golden apple", their stastus become good absolutely
 
 
+### 2 Using game point by psp22 
 
+In this game, the game point is not psp22.
 
+If the game point became psp22 token, you can use the currency outside the game.
+
+### 3 using random function after implementing that function to ink! 
+
+In this game , when the character eat an apple , the status changed pseudo-randamly, not randomly.
+
+This is because random function disapperd from ink version 4. So now I made pseudo-randam function that astar network suggested using block timestamp.
+
+So if random function was implemented to ink, modifying random function in this code is preferrable.
 
 
 

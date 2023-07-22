@@ -1,136 +1,407 @@
 # WasmShowCase
 
-WasmShowCase はフルオンチェーンのキャラクターの育成ゲームです。
+WasmShowCase is a full-on chain of character development games.
 
-リンゴを食べさせることにより、３つのステータス（空腹、健康、幸福）がランダムに変化します。
-時間の経過とともに、これらのステータスは下がってしまいますので（空腹は上がります。）注意して育成してください。
+By feeding apples, three statuses (Hunger, Health, and Happiness) are randomly changed.
+Over time, these statuses will decrease (hunger will increase). Please train with caution.
 
-また、スタータスの合計値によって、彼らの画像や名前も変化します。リンゴを買うにはゲーム内通貨を使用する必要があります。
+Their images and names will also change depending on the total amount of staratus. To buy apples, you must use in-game currency.
 
-ゲーム内通貨を取得するには、購入、デイリーボーナス、ステーキングなどさまざまなオプションがあります。あなただけのキャラクターを育ててください。
+There are various options for acquiring in-game currency, including purchases, daily bonuses, and staking. Develop your own character.
 
 ![](https://storage.googleapis.com/zenn-user-upload/17d5f5c3d1eb-20230531.png)
 
----
 
 # Starting the Game
 
-ゲームを始めるために、２つの選択肢があります。
+To start the game, you have two options.
 
-1. 直接ゲームを始める場合
-2. Github からローカルに落として遊ぶ場合
+1. directly start the game
+2. drop the game locally from Github and play.
 
-## 直接ゲームを始める場合
+## Starting the Game Directly
 
-始める前に、Polkadot 系のウォレットを取得してください。
+Before starting, please get a Polkadot wallet.
 
-推奨：`タリスマン`、もしくは`Polkadot.js`を使用してください。メタマスクなどの EVM 系のウォレットでは動作しません。
+Recommended: use `Talisman` or `Polkadot.js`. 
 
-次に、ガス代である、`Shibuya`を取得します。持っていない場合には、`Faucet`から`Shibuya`を取得してください。ウォレットの準備ができ、`Shibuya`の取得ができれば、準備完了です。
+EVM-based wallets such as MetaMask will not work.
 
-まずは種のボタンを押して、あなただけのキャラクター NFT（`psp34`）を取得しましょう。なお、キャラクター NFT はアカウントにつき、１体しかミントすることができません。
+Next, get `Shibuya`, the gas money. If you do not have it, get `Shibuya` from `Faucet`. Once your wallet is ready and you have obtained `Shibuya`, you are ready to go.
 
-## Github からローカルに落として遊ぶ場合
+First, press the seed button to obtain your own character NFT (`psp34`). Note that only one character NFT can be minted per account.
 
-次のように、Github を使用し、ローカルで立ち上げを行います。
+## To play by dropping locally from Github
 
-### メインコントラクト
+Use Github to start up locally as follows.
 
-まずは、`メインコントラクト`をデプロイします。
+### Main Contract
 
-:::message
-ここに該当の Github
-:::
-まずは git clone を行います。
+First, deploy the `main contract`.
+
+:warning: **Here is the corresponding Github**
+
+First, do a git clone.
 
 ```sh
-git clone <後で>
+git clone <afterwards>.
 ```
 
-その後コントラクトの build を行います。
+Then, build the contract.
 
 ```sh
 cd examples/equippable
-cargo +cnightly-2023-02-07 contract build
+cargo contract build
 ```
 
-最後に、`substrate`でコントラクトのデプロイを行います。
+Finally, deploy the contract with ``substrate``.
 https://contracts-ui.substrate.io/
 
-その際に`target > ink > rmrk_example_equippable`内にある`rmrk_example_equippable.contract`ファイルを使用します。
+Use the `rmrk_example_equippable.contract` file in `target > ink > rmrk_example_equippable` for that.
 
-### psp22 コントラクト, psp ３７コントラクト
+### psp22 contract, psp 37 contract
 
-次に、`psp22`,`psp３７`用コントラクトをデプロイします。
+Next, deploy the `psp22` and `psp37` contracts.
 
-:::message
-ここに該当の Github
-:::
-まずは git clone を行います。
+:warning: **Here is the corresponding Github**
+
+First, do a git clone.
 
 ```sh
-git clone <後で>
+git clone <afterwards>.
 ```
 
-その後コントラクトの build を行います。
+Then, build the contract.
 
-`psp22`
+``psp22``
 
 ```sh
 cd examples/psp22_extensions/mintable
-cargo +cnightly-2023-02-07 contract build
+cargo contract build
 ```
 
-`psp37`
+``psp37``
 
 ```sh
 cd examples/psp37_extensions/mintable
-cargo +cnightly-2023-02-07 contract build
+cargo contract build
 ```
 
-最後に、`substrate`でコントラクトのデプロイを行います。
+Finally, deploy the contract with `substrate`.
 https://contracts-ui.substrate.io/
 
 `psp22`
-その際に`psp22_extensions > mintable > target > ink`内にある`my_psp22_mintable.contractt`ファイルを使用します。
+
+Use the `my_psp22_mintable.contractt` file in `psp22_extensions > mintable > target > ink` for that.
 
 `psp37`
-その際に`psp37_extensions > mintable > target > ink`内にある`my_psp37_mintable.contract`ファイルを使用します。
 
-### フロントエンド
+Use the `my_psp37_mintable.contract` file located in `psp37_extensions > mintable > target > ink`.
 
-最後に、フロントエンドを立ち上げます。
+### Front end
 
-:::message
-ここに該当の Github
-:::
-git clone を行った後、`yarn`を実行します。
+Finally, launch the front end.
+
+:warning: **Here is the corresponding Github**
+
+After doing a git clone, run `yarn`.
 
 ```sh
-git clone <後で>
+git clone <afterwards>
 cd astar-showgame-page
 yarn
 ```
 
-`src > pages`内の`index.tsx`について、コントラクトアドレスを上で取得したものに変更します。
+For ``index.tsx`` in ``src > pages``, change the contract address to the one you got above.
 
 ```js
-const mainContractAddress = <Main Contract Address>
+const mainContractAddress = <Main Contract Address
 const psp22ContractAddress = <psp22 Contract Address>
 const psp37ContractAddress = <psp37 Contract Address>
-```
+````
 
-ゲーム内通貨を購入した際の売上が入るアドレスを設定します。
+Sets the address where the proceeds from in-game currency purchases will go.
 
 ```js
 const ownerAddress = <Wallet Address>
 ```
 
-最後に、`yarn dev`で立ち上げ、`http://localhost:3000/`で確認を行います。
+Finally, start up with ``yarn dev`` and confirm with ``http://localhost:3000/``.
 
-後は「直接ゲームを始める場合」のやり方に沿って進めていきます。
+The rest of the process will follow the `Starting the Game Directly'.
 
 ---
+
+## Main building blocks
+
+This contract is implemented with three contracts, PSP34, PSP34Mintable and PSP34Enumerable.
+
+```rust
+impl PSP34 for Contract {}
+
+impl PSP34Mintable for Contract {}
+
+impl PSP34Enumerable for Contract {}
+```
+
+### 1 Set Status
+
+The Character has three status.
+By eating an apple their status change like this function.
+
+```rust
+#[ink(message)]
+pub fn set_status (
+        &mut self,
+        token_id: u64, 
+        hungry: u32,
+        health: u32,
+        happy: u32
+    ) -> Result<(), PSP34Error>{ 
+        self.ensure_exists_and_get_owner(Id::U64(token_id).clone())?;
+        self.asset_status.insert(&Id::U64(token_id),&Status {hungry,health,happy});
+        Ok(())
+    }
+```
+
+### 2 Change Status over time
+
+The character's staus is changing over time like this code.
+This is example code, so the status change over 60 seconds.
+
+If you want to change the duration, you may change the time.
+
+```rust
+#[ink(message)]
+pub fn get_current_status(&self, token_id: u64) -> Option<Status> {
+
+    //　get the current time
+    let current_time = Self::env().block_timestamp();
+
+    // get the last eaten time
+    let last_checked_time = self.last_eaten.get(&Id::U64(token_id)).unwrap_or(Default::default());
+
+    ...
+    ...
+    ...
+
+        // 60 seconds（60 ※ 1000 miliseconds）
+        let past_day = past_time / (60 * 1000) ;
+        // Assuming a hypothetical decrease of 5 per unit
+        let change_status = past_day * 5;
+
+        let original_status = self.get_status(token_id.clone()).unwrap_or_else(|| {
+            // In case the token_id doesn't exist in the asset_status map, we just return a default status with all fields set to 0.
+            Status { hungry: 0, health: 0, happy: 0 }
+        });
+
+        let new_hungy_status = original_status.hungry + (change_status as u32);
+        let new_health_status = original_status.health.saturating_sub(change_status as u32);
+        let new_happy_status = original_status.happy.saturating_sub(change_status as u32);
+
+    ...
+    ...
+    ...
+
+    }
+}
+```
+
+### 3 Daily Bonus
+
+You can earn game money by using daily bonus.
+This is example code, so the status change over 5 minutes.
+
+If you want to change the duration, you may change the time.
+
+```rust
+#[ink(message)]
+pub fn daily_bonus(&mut self, account_id: AccountId) -> Result<(), ContractError> {
+
+    // Get the time when the last bonus was obtained. In case of error, return 0 
+    let last_bonus = self.get_last_bonus(account_id);
+    // Function of whether a predetermined amount of time has elapsed.
+    let has_passed = self.five_minutes_has_passed(last_bonus);
+
+    //  If the allotted time has not elapsed
+    if has_passed ==false {
+        Err(ContractError::TimeHasNotPassed.into())
+    } else {
+
+        ...
+        ...
+        ...
+
+    }
+}
+```
+
+### 4 Claim a NFT
+
+In this game, anyone can mint a NFT only one time.
+
+If you already has an NFT, an erro occurs.
+
+ ```rust
+ #[ink(message)]
+pub fn claim_a_nft(&mut self) -> Result<(), ContractError> {
+
+    let to = Self::env().caller();
+
+    let token_id = self.current_token_id.checked_add(1).ok_or(ContractError::NumberOverflowError)?;
+
+    let nft_balance = self.balance_of(to.clone());
+
+    if nft_balance > 0 {
+        Err(ContractError::AlreadyHadOneNft.into())
+    } else {
+        self.mint(to,Id::U64(token_id))?;
+        self.current_token_id = token_id;
+        Ok(())
+    }
+}
+ 
+```
+
+### 5 Stake Money
+
+You can stake your game money like this function
+```rust
+#[ink(message)]
+pub fn get_your_staked_money(&self, account_id: AccountId) -> u64 {
+
+        ...
+        ...
+        ...
+
+    } else {
+        let past_time = current_time - last_staked_time;
+        // 60 seconds（60 ※ 1000 miliseconds）
+        let past_day = past_time / (10 * 1000) ;
+        // Assuming a hypothetical decrease of 5 per unit
+        let change_patio = past_day * 1;
+        return staked_money + staked_money * change_patio / 100
+    }
+}
+```
+
+## Interaction between contracts
+
+This main contract(psp34) can interactive with psp22 contract.
+
+You can swap 500 amount of psp22 contract money into 300 amount of game money.
+psp22 contract money is transferred to accounts for opperations.
+
+You can change the amount and psp22 contract to original one.
+```rust
+#[ink(message)]
+pub fn buy_game_money(&mut self, target_account_id:AccountId, to: AccountId, data: String) -> Result<(), ContractError>{
+    let interface: Psp22ContractRef = ink::env::call::FromAccountId::from_account_id(target_account_id);
+    let from = Self::env().caller();
+    let money = interface.balance_of(from);
+    if money < 500 {
+        Err(ContractError::NotEnoughMoney.into())
+    } else {
+        self.call_psp22_transfer(target_account_id, to, 500, data)?;
+        self.plus_your_money(from, 300);
+        Ok(())
+    }
+}
+```
+
+## How to play
+
+### 1 Connect wallet
+
+Push the "Connect Wallet" button
+
+![](src/images/demo_1.png)
+
+If the button changed to "Connected" you can connected your wallet.
+
+![](src/images/demo_2.png)
+
+
+### 2 Get your NFT
+
+Push the seed image and prompt you sign the transaction.
+![](src/images/demo_3.png)
+
+After about 10 ~ 30 seconds, this popup occurs.
+
+then push "connected" button.
+![](src/images/demo_4.png)
+
+Then you can see your psp34 character.
+
+![](src/images/demo_5.png)
+
+### 3 Get your Game Money
+
+Pushing "Point", you can check your game money.
+
+To get game money, push treasure image.
+![](src/images/demo_6.png)
+
+then push "DAILY BONUS" and sign the transaction.
+
+You may wait about 10 ~ 30 seconds
+![](src/images/demo_7.png)
+
+After that, the point changed.
+
+![](src/images/demo_8.png)
+
+
+### 4 Buy an apple
+
+Pushing shop image and make transaction, you can buy an apple.
+
+![](src/images/demo_9.png)
+
+
+Push the apple image, and you can check your apple number.
+![](src/images/demo_10.png)
+
+### 5 Eat an apple
+
+![](src/images/demo_11.png)
+
+![](src/images/demo_12.png)
+
+![](src/images/demo_13.png)
+
+![](src/images/demo_14.png)
+
+## possible actions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Structure of a dApp
 
